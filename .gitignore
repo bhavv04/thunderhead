@@ -1,0 +1,15 @@
+# Build output
+thunderhead.exe
+thunderhead
+
+# Go
+*.test
+*.out
+/vendor/
+
+# Config with sensitive data
+config.json
+
+# IDE
+.vscode/
+.idea/

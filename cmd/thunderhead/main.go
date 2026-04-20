@@ -29,8 +29,9 @@ func main() {
 	log.Printf("thunderhead starting on %s -> %s", cfg.ListenAddr, cfg.UpstreamURL)
 	log.Printf("thresholds: tarpit=%.0f block=%.0f", cfg.Thresholds.Tarpit, cfg.Thresholds.Block)
 
-	// TODO: parse robots.txt from upstream and pass disallowed paths
-	az := analyzer.New([]string{"/admin", "/private", "/internal"})
+	//parse robots.txt from upstream and pass disallowed paths
+	disallowed := analyzer.FetchDisallowedPaths(cfg.UpstreamURL)
+	az := analyzer.New(disallowed)
 
 	lg, err := logger.New(cfg.LogFile)
 	if err != nil {
