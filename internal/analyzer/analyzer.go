@@ -25,6 +25,7 @@ type clientState struct {
 	mu             sync.Mutex
 	requests       []requestRecord
 	robotsViolated bool
+	lastScore      float64
 }
 
 // Analyzer tracks per-IP state and scores intent
@@ -111,6 +112,7 @@ func (a *Analyzer) Score(r *http.Request, ip string) float64 {
 	if score > 100 {
 		score = 100
 	}
+	client.lastScore = score
 	return score
 }
 
@@ -190,4 +192,27 @@ func min(a, b float64) float64 {
 		return a
 	}
 	return b
+}
+
+type ClientStatus struct {
+	Score          float64 `json:"score"`
+	RequestCount   int     `json:"request_count"`
+	RobotsViolated bool    `json:"robots_violated"`
+}
+
+func (a *Analyzer) Status() map[string]ClientStatus {
+	a.mu.RLock()
+	defer a.mu.RUnlock()
+
+	out := make(map[string]ClientStatus, len(a.clients))
+	for ip, client := range a.clients {
+		client.mu.Lock()
+		out[ip] = ClientStatus{
+			Score:          client.lastScore,
+			RequestCount:   len(client.requests),
+			RobotsViolated: client.robotsViolated,
+		}
+		client.mu.Unlock()
+	}
+	return out
 }

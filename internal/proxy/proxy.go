@@ -1,6 +1,7 @@
 package proxy
 
 import (
+	"encoding/json"
 	"net"
 	"net/http"
 	"net/http/httputil"
@@ -33,6 +34,11 @@ func New(cfg *config.Config, az *analyzer.Analyzer, log *logger.Logger) (*Proxy,
 }
 
 func (p *Proxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path == "/thunderhead/status" {
+		p.handleStatus(w, r)
+		return
+	}
+
 	ip := extractIP(r)
 	score := p.analyzer.Score(r, ip)
 
@@ -59,10 +65,17 @@ func (p *Proxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	case "tarpit":
 		time.Sleep(p.cfg.Tarpit.Delay)
-		// fall through to upstream after delay
 	}
 
 	p.upstream.ServeHTTP(w, r)
+}
+
+func (p *Proxy) handleStatus(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	status := p.analyzer.Status()
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"clients": status,
+	})
 }
 
 func extractIP(r *http.Request) string {
