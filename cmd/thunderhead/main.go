@@ -9,6 +9,8 @@ import (
 	"github.com/bhav/thunderhead/internal/config"
 	"github.com/bhav/thunderhead/internal/logger"
 	"github.com/bhav/thunderhead/internal/proxy"
+	"github.com/bhav/thunderhead/internal/allowlist"
+	
 )
 
 func main() {
@@ -38,7 +40,8 @@ func main() {
 		log.Fatalf("failed to init logger: %v", err)
 	}
 
-	p, err := proxy.New(cfg, az, lg)
+	al := allowlist.New(cfg.Allowlist)
+	p, err := proxy.New(cfg, az, lg, al)
 	if err != nil {
 		log.Fatalf("failed to init proxy: %v", err)
 	}

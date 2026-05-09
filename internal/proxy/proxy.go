@@ -11,25 +11,28 @@ import (
 	"github.com/bhav/thunderhead/internal/analyzer"
 	"github.com/bhav/thunderhead/internal/config"
 	"github.com/bhav/thunderhead/internal/logger"
+	"github.com/bhav/thunderhead/internal/allowlist"
 )
 
 type Proxy struct {
-	cfg      *config.Config
-	analyzer *analyzer.Analyzer
-	logger   *logger.Logger
-	upstream *httputil.ReverseProxy
+	cfg       *config.Config
+	analyzer  *analyzer.Analyzer
+	logger    *logger.Logger
+	upstream  *httputil.ReverseProxy
+	allowlist *allowlist.Allowlist
 }
 
-func New(cfg *config.Config, az *analyzer.Analyzer, log *logger.Logger) (*Proxy, error) {
+func New(cfg *config.Config, az *analyzer.Analyzer, log *logger.Logger, al *allowlist.Allowlist) (*Proxy, error) {
 	target, err := url.Parse(cfg.UpstreamURL)
 	if err != nil {
 		return nil, err
 	}
 	return &Proxy{
-		cfg:      cfg,
-		analyzer: az,
-		logger:   log,
-		upstream: httputil.NewSingleHostReverseProxy(target),
+		cfg:       cfg,
+		analyzer:  az,
+		logger:    log,
+		upstream:  httputil.NewSingleHostReverseProxy(target),
+		allowlist: al,
 	}, nil
 }
 
@@ -40,6 +43,10 @@ func (p *Proxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ip := extractIP(r)
+	if p.allowlist.IsAllowed(ip, r.Header.Get("User-Agent")) {
+		p.upstream.ServeHTTP(w, r)
+		return
+	}
 	score := p.analyzer.Score(r, ip)
 
 	action := "allow"

@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"os"
 	"time"
+
+	"github.com/bhav/thunderhead/internal/allowlist"
 )
 
 type Action string
@@ -24,11 +26,12 @@ type TarpitConfig struct {
 }
 
 type Config struct {
-	ListenAddr  string       `json:"listen_addr"`  // e.g. ":8080"
-	UpstreamURL string       `json:"upstream_url"` // e.g. "http://localhost:3000"
-	Thresholds  Thresholds   `json:"thresholds"`
-	Tarpit      TarpitConfig `json:"tarpit"`
-	LogFile     string       `json:"log_file"` // path to log file, "" = stdout
+	ListenAddr  string           `json:"listen_addr"`
+	UpstreamURL string           `json:"upstream_url"`
+	Thresholds  Thresholds       `json:"thresholds"`
+	Tarpit      TarpitConfig     `json:"tarpit"`
+	LogFile     string           `json:"log_file"`
+	Allowlist   allowlist.Config `json:"allowlist"`
 }
 
 func Default() *Config {
@@ -42,8 +45,12 @@ func Default() *Config {
 		Tarpit: TarpitConfig{
 			Delay: 5 * time.Second,
 		},
-		LogFile: "",
-	}
+			LogFile: "",
+			Allowlist: allowlist.Config{
+				IPs:        []string{},
+				UserAgents: []string{"Googlebot", "Bingbot", "archive.org_bot"},
+			},
+		}
 }
 
 func Load(path string) (*Config, error) {
@@ -59,3 +66,4 @@ func Load(path string) (*Config, error) {
 	}
 	return cfg, nil
 }
+
