@@ -5,6 +5,8 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/bhav/thunderhead/internal/store"
 )
 
 // Signal weights — all add up to produce a score 0–100
@@ -26,6 +28,7 @@ type clientState struct {
 	requests       []requestRecord
 	robotsViolated bool
 	lastScore      float64
+	lastSeen       time.Time
 }
 
 // Analyzer tracks per-IP state and scores intent
@@ -35,15 +38,23 @@ type Analyzer struct {
 	robots  map[string]struct{} // disallowed paths from robots.txt
 }
 
-func New(disallowedPaths []string) *Analyzer {
+func New(disallowedPaths []string, initial map[string]store.ClientRecord) *Analyzer {
 	robots := make(map[string]struct{}, len(disallowedPaths))
 	for _, p := range disallowedPaths {
 		robots[p] = struct{}{}
 	}
-	return &Analyzer{
+	a := &Analyzer{
 		clients: make(map[string]*clientState),
 		robots:  robots,
 	}
+	for ip, rec := range initial {
+		a.clients[ip] = &clientState{
+			robotsViolated: rec.RobotsViolated,
+			lastScore:      rec.LastScore,
+			lastSeen:       rec.LastSeen,
+		}
+	}
+	return a
 }
 
 func (a *Analyzer) getClient(ip string) *clientState {
@@ -113,6 +124,7 @@ func (a *Analyzer) Score(r *http.Request, ip string) float64 {
 		score = 100
 	}
 	client.lastScore = score
+	client.lastSeen = time.Now()
 	return score
 }
 
@@ -211,6 +223,23 @@ func (a *Analyzer) Status() map[string]ClientStatus {
 			Score:          client.lastScore,
 			RequestCount:   len(client.requests),
 			RobotsViolated: client.robotsViolated,
+		}
+		client.mu.Unlock()
+	}
+	return out
+}
+
+func (a *Analyzer) Snapshot() map[string]store.ClientRecord {
+	a.mu.RLock()
+	defer a.mu.RUnlock()
+
+	out := make(map[string]store.ClientRecord, len(a.clients))
+	for ip, client := range a.clients {
+		client.mu.Lock()
+		out[ip] = store.ClientRecord{
+			LastScore:      client.lastScore,
+			RobotsViolated: client.robotsViolated,
+			LastSeen:       client.lastSeen,
 		}
 		client.mu.Unlock()
 	}
