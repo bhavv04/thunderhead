@@ -11,6 +11,7 @@ import (
 
 	"github.com/bhav/thunderhead/internal/allowlist"
 	"github.com/bhav/thunderhead/internal/analyzer"
+	"github.com/bhav/thunderhead/internal/blocklist"
 	"github.com/bhav/thunderhead/internal/config"
 	"github.com/bhav/thunderhead/internal/logger"
 	"github.com/bhav/thunderhead/internal/proxy"
@@ -54,7 +55,8 @@ func main() {
 	}
 
 	al := allowlist.New(cfg.Allowlist)
-	p, err := proxy.New(cfg, az, lg, al)
+	bl := blocklist.New(cfg.Blocklist)
+	p, err := proxy.New(cfg, az, lg, al, bl)
 	if err != nil {
 		log.Fatalf("failed to init proxy: %v", err)
 	}

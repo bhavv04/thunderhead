@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/bhav/thunderhead/internal/allowlist"
+	"github.com/bhav/thunderhead/internal/blocklist"
 )
 
 type Action string
@@ -32,6 +33,7 @@ type Config struct {
 	Tarpit      TarpitConfig     `json:"tarpit"`
 	LogFile     string           `json:"log_file"`
 	Allowlist   allowlist.Config `json:"allowlist"`
+	Blocklist blocklist.Config `json:"blocklist"`
 }
 
 func Default() *Config {
@@ -45,11 +47,15 @@ func Default() *Config {
 		Tarpit: TarpitConfig{
 			Delay: 5 * time.Second,
 		},
-			LogFile: "",
-			Allowlist: allowlist.Config{
-				IPs:        []string{},
-				UserAgents: []string{"Googlebot", "Bingbot", "archive.org_bot"},
-			},
+		LogFile: "",
+		Allowlist: allowlist.Config{
+			IPs:        []string{},
+			UserAgents: []string{"Googlebot", "Bingbot", "archive.org_bot"},
+		},
+		Blocklist: blocklist.Config{
+			CIDRs: []string{},
+			IPs:   []string{},
+		},
 		}
 }
 

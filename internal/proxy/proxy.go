@@ -12,6 +12,7 @@ import (
 
 	"github.com/bhav/thunderhead/internal/allowlist"
 	"github.com/bhav/thunderhead/internal/analyzer"
+	"github.com/bhav/thunderhead/internal/blocklist"
 	"github.com/bhav/thunderhead/internal/config"
 	"github.com/bhav/thunderhead/internal/logger"
 )
@@ -22,9 +23,10 @@ type Proxy struct {
 	logger    *logger.Logger
 	upstream  *httputil.ReverseProxy
 	allowlist *allowlist.Allowlist
+	blocklist *blocklist.Blocklist
 }
 
-func New(cfg *config.Config, az *analyzer.Analyzer, log *logger.Logger, al *allowlist.Allowlist) (*Proxy, error) {
+func New(cfg *config.Config, az *analyzer.Analyzer, log *logger.Logger, al *allowlist.Allowlist, bl *blocklist.Blocklist) (*Proxy, error) {
 	target, err := url.Parse(cfg.UpstreamURL)
 	if err != nil {
 		return nil, err
@@ -35,6 +37,7 @@ func New(cfg *config.Config, az *analyzer.Analyzer, log *logger.Logger, al *allo
 		logger:    log,
 		upstream:  httputil.NewSingleHostReverseProxy(target),
 		allowlist: al,
+		blocklist: bl,
 	}, nil
 }
 
@@ -49,6 +52,20 @@ func (p *Proxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		p.upstream.ServeHTTP(w, r)
 		return
 	}
+
+	if p.blocklist.IsBlocked(ip) {
+		p.logger.Log(logger.Entry{
+			IP:        ip,
+			Method:    r.Method,
+			Path:      r.URL.Path,
+			Score:     100,
+			Action:    "blocklist",
+			UserAgent: r.Header.Get("User-Agent"),
+		})
+		http.Error(w, "Forbidden", http.StatusForbidden)
+		return
+	}
+
 	score := p.analyzer.Score(r, ip)
 
 	action := "allow"

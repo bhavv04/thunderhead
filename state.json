@@ -1,9 +1,9 @@
 {
   "clients": {
     "::1": {
-      "last_score": 31,
+      "last_score": 7.5,
       "robots_violated": false,
-      "last_seen": "2026-05-16T14:52:54.6812369-04:00"
+      "last_seen": "2026-05-16T15:05:44.7872424-04:00"
     }
   }
 }
