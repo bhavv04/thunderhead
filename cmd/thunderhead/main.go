@@ -9,13 +9,13 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/bhav/thunderhead/internal/allowlist"
-	"github.com/bhav/thunderhead/internal/analyzer"
-	"github.com/bhav/thunderhead/internal/blocklist"
-	"github.com/bhav/thunderhead/internal/config"
-	"github.com/bhav/thunderhead/internal/logger"
-	"github.com/bhav/thunderhead/internal/proxy"
-	"github.com/bhav/thunderhead/internal/store"
+	"github.com/bhavv04/thunderhead/internal/allowlist"
+	"github.com/bhavv04/thunderhead/internal/analyzer"
+	"github.com/bhavv04/thunderhead/internal/blocklist"
+	"github.com/bhavv04/thunderhead/internal/config"
+	"github.com/bhavv04/thunderhead/internal/logger"
+	"github.com/bhavv04/thunderhead/internal/proxy"
+	"github.com/bhavv04/thunderhead/internal/store"
 )
 
 func main() {

@@ -5,8 +5,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/bhav/thunderhead/internal/allowlist"
-	"github.com/bhav/thunderhead/internal/blocklist"
+	"github.com/bhavv04/thunderhead/internal/allowlist"
+	"github.com/bhavv04/thunderhead/internal/blocklist"
 )
 
 type Action string
