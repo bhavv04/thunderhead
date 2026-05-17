@@ -7,6 +7,7 @@
   --color-signal: #22c55e;
   --color-warn: #f59e0b;
   --color-danger: #ef4444;
+  --color-threat: #dc2626;
 
   --shadow-brutal: 4px 4px 0px #1a1a1a;
   --shadow-brutal-lg: 6px 6px 0px #1a1a1a;
@@ -17,3 +18,11 @@ body {
   color: var(--color-ink);
 }
 
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease forwards;
+}

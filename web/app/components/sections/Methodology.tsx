@@ -1,3 +1,5 @@
+import Diagram from "../ui/Diagram";
+
 const signals = [
   {
     signal: "robots.txt violation",
@@ -50,7 +52,7 @@ const actions = [
     range: "75 – 100",
     action: "Block",
     description: "Return 403 Forbidden immediately",
-    bg: "bg-danger/80",
+    bg: "bg-threat/80",
     border: "border-ink",
   },
 ];
@@ -61,7 +63,7 @@ export default function Methodology() {
       <div className="max-w-5xl mx-auto">
 
         {/* Header */}
-        <div className="inline-flex items-center gap-2 bg-cream text-ink text-xs font-bold px-3 py-1.5 rounded-full mb-8 border-2 border-ink shadow-brutal">
+        <div className="inline-flex items-center gap-2 bg-cream text-ink text-xs font-bold px-3 py-1.5 rounded-full mb-8 border-2 border-ink shadow-brutal hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all">
           Methodology
         </div>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 md:mb-16">
@@ -75,7 +77,7 @@ export default function Methodology() {
         </div>
 
         {/* Signals */}
-        <div className="flex flex-col gap-3 mb-12 md:mb-16">
+        <div className="flex flex-col gap-3 mb-12">
           {signals.map((s, i) => (
             <div
               key={i}
@@ -84,21 +86,23 @@ export default function Methodology() {
               <span className={`border-2 font-black text-sm px-3 py-1 rounded-lg w-fit ${s.color}`}>
                 {s.weight}
               </span>
-              <span className="font-mono text-sm font-bold sm:min-w-48">{s.signal}</span>
+              <span className="text-sm font-bold sm:min-w-48">{s.signal}</span>
               <span className="text-ink/60 text-sm">{s.description}</span>
             </div>
           ))}
         </div>
 
+        <Diagram />
+
         {/* Actions */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-12">
           {actions.map((a, i) => (
             <div
               key={i}
-              className={`${a.bg} border-2 ${a.border} rounded-xl p-6 shadow-brutal`}
+              className={`${a.bg} border-2 ${a.border} rounded-xl p-6 shadow-brutal hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all `}
             >
               <div className="font-black text-2xl mb-1">{a.action}</div>
-              <div className="font-mono text-xs mb-3 opacity-70">Score {a.range}</div>
+              <div className="text-xs mb-3 opacity-70">Score {a.range}</div>
               <div className="text-sm opacity-80">{a.description}</div>
             </div>
           ))}

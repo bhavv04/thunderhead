@@ -7,26 +7,26 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="border-b-2 border-ink bg-cream sticky top-0 z-50">
+    <nav className="bg-ink text-cream border-b-2 border-cream sticky top-0 z-50">
       {/* Main row */}
       <div className="flex items-center justify-between px-6 py-4">
         <span className="font-black text-xl tracking-tight"> thunderhead</span>
 
         {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium">
-          <a href="#methodology" className="hover:text-punch transition-colors">
+        <div className="hidden md:flex items-center gap-6 text-sm">
+          <a href="#methodology" className="text-cream/70 hover:text-cream transition-colors">
             Methodology
           </a>
-          <a href="#features" className="hover:text-punch transition-colors">
+          <a href="#features" className="text-cream/70 hover:text-cream transition-colors">
             Features
           </a>
-          <a href="#quickstart" className="hover:text-punch transition-colors">
+          <a href="#quickstart" className="text-cream/70 hover:text-cream transition-colors">
             Quickstart
           </a>
           <a
-            href="https://github.com/bhavv04/thunderhead"
+          href="https://github.com/bhavv04/thunderhead"
             target="_blank"
-            className="bg-ink text-cream px-4 py-2 rounded-lg border-2 border-ink shadow-brutal hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] transition-all font-bold text-sm"
+            className="bg-ink px-4 py-2 rounded-lg border-2 border-cream font-bold text-sm shadow-[4px_4px_0px_#f8f4ef] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] transition-all"
           >
             GitHub →
           </a>
@@ -34,7 +34,7 @@ export default function Navbar() {
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden border-2 border-ink rounded-lg p-2 shadow-brutal hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
+          className="md:hidden border-2 border-cream rounded-lg p-2 shadow-[4px_4px_0px_#f8f4ef] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
           onClick={() => setOpen(!open)}
         >
           {open ? <X size={20} /> : <Menu size={20} />}
@@ -66,9 +66,9 @@ export default function Navbar() {
             Quickstart
           </a>
           <a
-            href="https://github.com/bhavv04/thunderhead"
+          href="https://github.com/bhavv04/thunderhead"
             target="_blank"
-            className="bg-ink text-cream px-4 py-2 rounded-lg border-2 border-ink text-center font-bold"
+            className="bg-ink px-4 py-2 rounded-lg border-2 border-cream font-bold text-sm shadow-[4px_4px_0px_#f8f4ef] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] transition-all text-center"
           >
             GitHub →
           </a>

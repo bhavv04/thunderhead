@@ -4,44 +4,38 @@ const features = [
   {
     icon: ScanSearch,
     title: "Passive Scoring",
-    description:
-      "No JS challenges or CAPTCHAs. Thunderhead watches silently and scores behavior without interrupting legitimate users.",
-    accent: "bg-punch/40 border-punch",
+    description: "No JS challenges or CAPTCHAs. Thunderhead watches silently and scores behavior without interrupting legitimate users.",
+    color: "text-punch",
   },
   {
     icon: Bot,
     title: "robots.txt Aware",
-    description:
-      "Automatically fetches and parses your upstream's robots.txt on startup. Violations immediately spike the intent score.",
-    accent: "bg-signal/40 border-signal",
+    description: "Automatically fetches and parses your upstream's robots.txt on startup. Violations immediately spike the intent score.",
+    color: "text-signal",
   },
   {
     icon: Shield,
     title: "Allowlist & Blocklist",
-    description:
-      "Whitelist Googlebot, Bingbot, and trusted IPs. Block known bad actors by IP or entire CIDR subnet ranges.",
-    accent: "bg-warn/40 border-warn",
+    description: "Whitelist Googlebot, Bingbot, and trusted IPs. Block known bad actors by IP or entire CIDR subnet ranges.",
+    color: "text-warn",
   },
   {
     icon: HardDrive,
     title: "Persistent State",
-    description:
-      "Client scores survive restarts. Thunderhead saves state to disk and reloads on startup — bans don't reset.",
-    accent: "bg-danger/40 border-danger",
+    description: "Client scores survive restarts. Thunderhead saves state to disk and reloads on startup — bans don't reset.",
+    color: "text-danger",
   },
   {
     icon: LayoutDashboard,
     title: "Live Dashboard",
-    description:
-      "Built-in dashboard at /thunderhead/status shows live scores, request counts, and actions per IP in real time.",
-    accent: "bg-punch/40 border-punch",
+    description: "Built-in dashboard at /thunderhead/status shows live scores, request counts, and actions per IP in real time.",
+    color: "text-punch",
   },
   {
     icon: Zap,
     title: "Single Binary",
-    description:
-      "One Go binary, zero external dependencies. Drop it in front of any HTTP upstream and you're protected.",
-    accent: "bg-signal/40 border-signal",
+    description: "One Go binary, zero external dependencies. Drop it in front of any HTTP upstream and you're protected.",
+    color: "text-signal",
   },
 ];
 
@@ -52,7 +46,7 @@ export default function Features() {
       <div className="max-w-5xl mx-auto">
 
         {/* Header */}
-        <div className="inline-flex items-center gap-2 bg-cream text-ink text-xs font-bold px-3 py-1.5 rounded-full mb-8 border-2 border-ink shadow-brutal">
+        <div className="inline-flex items-center gap-2 bg-cream text-ink text-xs font-bold px-3 py-1.5 rounded-full mb-8 border-2 border-ink shadow-brutal hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all">
           Features
         </div>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
@@ -70,17 +64,16 @@ export default function Features() {
           {features.map((f, i) => (
             <div
               key={i}
-              className={`border-2 ${f.accent} rounded-xl p-6 shadow-brutal hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all bg-cream`}
+              className={`border-2 rounded-xl p-6 shadow-brutal hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all bg-cream`}
             >
               <div className="mb-4">
-                <f.icon size={28} strokeWidth={2} />
+                <f.icon size={28} strokeWidth={2} className={f.color} />
               </div>
               <h3 className="font-black text-lg mb-2 tracking-tight">{f.title}</h3>
               <p className="text-ink/60 text-sm leading-relaxed">{f.description}</p>
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );
