@@ -7,12 +7,11 @@ import Quickstart from "./components/sections/Quickstart";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen">
       <Navbar />
       <Hero />
       <Methodology />
       <Features />
-      <Quickstart />
       <Footer />
     </main>
   );

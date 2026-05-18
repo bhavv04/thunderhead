@@ -1,74 +1,140 @@
-import { ExternalLink } from "lucide-react";
+"use client";
 
 export default function Footer() {
   return (
-    <footer className="px-8 py-16 border-t-2 border-ink bg-ink text-cream">
-      <div className="max-w-5xl mx-auto">
+    <footer style={{
+      borderTop: "1px solid var(--border)",
+      background: "var(--gray-950)",
+      paddingBlock: "var(--space-16)",
+      paddingInline: "var(--space-6)",
+    }}>
+      <div style={{ maxWidth: 1200, marginInline: "auto" }}>
 
         {/* Top row */}
-        <div className="flex flex-col md:flex-row justify-between gap-12 mb-12">
+        <div style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          gap: "var(--space-12)",
+          marginBottom: "var(--space-12)",
+          flexWrap: "wrap",
+        }}>
+
           {/* Brand */}
-          <div className="max-w-xs">
-            <div className="font-black text-2xl tracking-tight mb-3">thunderhead</div>
-            <p className="text-cream/50 text-sm leading-relaxed">
+          <div style={{ maxWidth: 300 }}>
+            <div style={{
+              fontFamily: "var(--font-sans)",
+              fontSize: "var(--text-base)",
+              fontWeight: 600,
+              color: "var(--white)",
+              letterSpacing: "-0.02em",
+              marginBottom: "var(--space-3)",
+            }}>
+              thunderhead
+            </div>
+            <p style={{
+              fontFamily: "var(--font-sans)",
+              fontSize: "var(--text-sm)",
+              color: "var(--gray-600)",
+              lineHeight: 1.65,
+              margin: 0,
+              maxWidth: "36ch",
+            }}>
               Passive intent-scoring reverse proxy. Silently watches, scores,
               and mitigates bot traffic — no CAPTCHAs, no challenges, just behavior.
             </p>
           </div>
 
           {/* Links */}
-          <div className="flex gap-16">
+          <div style={{ display: "flex", gap: "var(--space-16)", flexWrap: "wrap" }}>
+
             <div>
-              <div className="text-xs font-bold uppercase tracking-widest text-cream/30 mb-4">
+              <div style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "var(--text-xs)",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase" as const,
+                color: "var(--gray-700)",
+                marginBottom: "var(--space-4)",
+              }}>
                 Project
               </div>
-              <div className="flex flex-col gap-3 text-sm">
-                <a
-                  href="https://github.com/bhavv04/thunderhead"
-                  target="_blank"
-                  className="text-cream/70 hover:text-cream transition-colors flex items-center gap-1"
-                >
-                  <ExternalLink size={14} /> GitHub
-                </a>
-                <a
-                  href="https://github.com/bhavv04/thunderhead/blob/main/LICENSE"
-                  target="_blank"
-                  className="text-cream/70 hover:text-cream transition-colors flex items-center gap-1"
-                >
-                  <ExternalLink size={14} /> License
-                </a>
-                <a
-                  href="https://github.com/bhavv04/thunderhead/issues"
-                  target="_blank"
-                  className="text-cream/70 hover:text-cream transition-colors flex items-center gap-1"
-                >
-                  <ExternalLink size={14} /> Issues
-                </a>
+              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+                {[
+                  { label: "GitHub",  href: "https://github.com/bhavv04/thunderhead" },
+                  { label: "License", href: "https://github.com/bhavv04/thunderhead/blob/main/LICENSE" },
+                  { label: "Issues",  href: "https://github.com/bhavv04/thunderhead/issues" },
+                ].map((link) => (
+                  <a key={link.label} href={link.href} target="_blank" style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "var(--text-sm)",
+                    color: "var(--gray-500)",
+                    textDecoration: "none",
+                    transition: "color var(--duration-fast) var(--ease-out)",
+                  }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--white)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--gray-500)")}
+                  >
+                    {link.label}
+                  </a>
+                ))}
               </div>
             </div>
 
             <div>
-              <div className="text-xs font-bold uppercase tracking-widest text-cream/30 mb-4">
+              <div style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "var(--text-xs)",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase" as const,
+                color: "var(--gray-700)",
+                marginBottom: "var(--space-4)",
+              }}>
                 Docs
               </div>
-              <div className="flex flex-col gap-3 text-sm">
-                <a href="#quickstart" className="text-cream/70 hover:text-cream transition-colors">
-                  Quickstart
-                </a>
-                <a href="#methodology" className="text-cream/70 hover:text-cream transition-colors">
-                  Methodology
-                </a>
-                <a href="#features" className="text-cream/70 hover:text-cream transition-colors">
-                  Features
-                </a>
+              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+                {[
+                  { label: "Quickstart",   href: "#quickstart"   },
+                  { label: "Methodology",  href: "#methodology"  },
+                  { label: "Features",     href: "#features"     },
+                ].map((link) => (
+                  <a key={link.label} href={link.href} style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "var(--text-sm)",
+                    color: "var(--gray-500)",
+                    textDecoration: "none",
+                    transition: "color var(--duration-fast) var(--ease-out)",
+                  }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--white)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--gray-500)")}
+                  >
+                    {link.label}
+                  </a>
+                ))}
               </div>
             </div>
+
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="border-t border-cream/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-cream/30">
-          <span>© 2026 Bhavdeep Arora. MIT License.</span>
+        {/* Bottom row */}
+        <div style={{
+          borderTop: "1px solid var(--border)",
+          paddingTop: "var(--space-8)",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          gap: "var(--space-4)",
+          flexWrap: "wrap",
+        }}>
+          <span style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: "var(--text-xs)",
+            color: "var(--gray-700)",
+          }}>
+            © 2026 Bhavdeep Arora · MIT License
+          </span>
         </div>
 
       </div>

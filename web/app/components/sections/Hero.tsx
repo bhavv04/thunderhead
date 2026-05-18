@@ -1,43 +1,138 @@
-import LogFeed from "../ui/Logfeed";
+"use client";
+
+import { useEffect, useState } from "react";
+import CopyButton from "../ui/Hero/CopyButton";
 
 export default function Hero() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setMounted(true), 80);
+    return () => clearTimeout(t);
+  }, []);
+
+  const fadeUp = (delay: number) => ({
+    opacity: mounted ? 1 : 0,
+    transform: mounted ? "translateY(0)" : "translateY(12px)",
+    transition: `opacity 700ms var(--ease-out) ${delay}ms, transform 700ms var(--ease-out) ${delay}ms`,
+  });
+
   return (
-<section className="px-8 py-24 border-b-2 border-ink bg-gradient-to-br from-white to-[#E1E4EF]">
-      <div className="max-w-5xl mx-auto">
-        
-        {/* Top badge */}
-        <div className="inline-flex items-center gap-2 bg-punch text-cream text-xs font-bold px-3 py-1.5 rounded-full mb-8 border-2 border-ink shadow-brutal hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all">
-          Open Source · MIT License
+    <section style={{
+      position: "relative",
+      minHeight: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      overflow: "hidden",
+      background: "var(--black)",
+      paddingBlock: "var(--space-32)",
+      paddingInline: "var(--space-6)",
+    }}>
+
+      <div style={{
+        position: "relative",
+        zIndex: 1,
+        width: "100%",
+        maxWidth: 1200,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "var(--space-16)",
+      }}>
+
+        {/* Badge */}
+        <div style={fadeUp(0)}>
+          <div style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            padding: "5px 12px 5px 8px",
+            borderRadius: 999,
+            border: "1px solid rgba(59,130,246,0.25)",
+            background: "rgba(59,130,246,0.07)",
+            fontFamily: "var(--font-mono)",
+            fontSize: 12,
+            letterSpacing: "0.04em",
+            color: "var(--accent)",
+          }}>
+            Open source · No third-party services
+          </div>
         </div>
 
         {/* Headline */}
-        <h1 className="text-7xl font-black tracking-tighter leading-none mb-6 max-w-3xl">
-          Bots don't belong on your site.
-        </h1>
+        <div style={{
+          textAlign: "center",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "var(--space-6)",
+          maxWidth: 760,
+        }}>
+          <h1 style={{
+            ...fadeUp(80),
+            fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
+            letterSpacing: "-0.05em",
+            fontWeight: 700,
+            lineHeight: 1.05,
+            color: "var(--white)",
+          }}>
+            Bot detection.
+            <br />
+            <span style={{
+              background: "linear-gradient(135deg, var(--gray-200) 0%, var(--gray-500) 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}>
+              No JS. No CAPTCHAs.
+            </span>
+          </h1>
 
-        <p className="text-xl text-ink/60 max-w-xl mb-10 leading-relaxed">
-          Thunderhead scores the intent of every request — silently, passively, instantly.
-          No CAPTCHAs. No Cloudflare. No JS challenges. Just behavior.
-        </p>
-
-        {/* CTA row */}
-        <div className="flex items-center gap-4 mb-16">
-          <a
-            href="#quickstart"
-            className="bg-punch text-cream font-bold px-6 py-3 rounded-lg border-2 border-ink shadow-brutal hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] transition-all"
-          >
-            Get started →
-          </a>
-          <a
-            href="https://github.com/bhavv04/thunderhead"
-            target="_blank"
-            className="bg-cream text-ink font-bold px-6 py-3 rounded-lg border-2 border-ink shadow-brutal hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] transition-all"
-          >
-            View on GitHub →
-          </a>
+          <p style={{
+            ...fadeUp(160),
+            fontSize: "var(--text-lg)",
+            color: "var(--gray-400)",
+            lineHeight: 1.65,
+            maxWidth: "52ch",
+            margin: 0,
+          }}>
+            Thunderhead is a lightweight reverse proxy that silently scores every
+            incoming HTTP request 0–100. Bots get tarpitted or blocked.
+            Humans never notice.
+          </p>
         </div>
 
-        <LogFeed />
+        {/* CTAs */}
+        <div style={{
+          ...fadeUp(240),
+          display: "flex",
+          alignItems: "center",
+          gap: "var(--space-3)",
+          flexWrap: "wrap",
+          justifyContent: "center",
+        }}>
+          <a href="https://github.com/bhavv04/thunderhead" className="btn btn-primary" style={{ gap: 8 }}>
+            View on GitHub
+          </a>
+
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            padding: "9px 14px",
+            borderRadius: 8,
+            background: "var(--gray-950)",
+            border: "1px solid var(--border)",
+          }}>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: 13, color: "var(--gray-400)" }}>
+              <span style={{ color: "var(--gray-600)" }}>$</span>{" "}
+              <span style={{ color: "var(--gray-200)" }}>go run ./cmd/thunderhead</span>
+            </span>
+            <CopyButton text="go run ./cmd/thunderhead" />
+          </div>
+        </div>
       </div>
     </section>
   );

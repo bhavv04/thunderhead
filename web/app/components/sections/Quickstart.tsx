@@ -23,11 +23,11 @@ const steps = [
 
 export default function Quickstart() {
   return (
-    <section id="quickstart" className="px-8 py-24 border-b-2 border-ink bg-cream">
+    <section id="quickstart" className="px-8 py-24">
       <div className="max-w-5xl mx-auto">
 
         {/* Header */}
-        <div className="inline-flex items-center gap-2 bg-cream text-ink text-xs font-bold px-3 py-1.5 rounded-full mb-8 border-2 border-ink shadow-brutal hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all">
+        <div className="inline-flex items-center gap-2 text-ink text-xs font-bold px-3 py-1.5 rounded-full mb-8 border-2 border-ink shadow-brutal hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all">
           Quickstart
         </div>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
