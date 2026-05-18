@@ -1,6 +1,7 @@
 package proxy
 
 import (
+	_ "embed"
 	"encoding/json"
 	"fmt"
 	"net"
@@ -8,6 +9,7 @@ import (
 	"net/http/httputil"
 	"net/url"
 	"strings"
+	"text/template"
 	"time"
 
 	"github.com/bhavv04/thunderhead/internal/allowlist"
@@ -24,6 +26,22 @@ type Proxy struct {
 	upstream  *httputil.ReverseProxy
 	allowlist *allowlist.Allowlist
 	blocklist *blocklist.Blocklist
+}
+
+//go:embed dashboard.html
+var dashboardHTML string
+
+//go:embed dashboard.css
+var dashboardCSS string
+
+type dashboardData struct {
+	CSS             string
+	ListenAddr      string
+	UpstreamURL     string
+	ClientCount     int
+	TarpitThreshold float64
+	BlockThreshold  float64
+	Rows            string
 }
 
 func New(cfg *config.Config, az *analyzer.Analyzer, log *logger.Logger, al *allowlist.Allowlist, bl *blocklist.Blocklist) (*Proxy, error) {
@@ -146,77 +164,26 @@ func renderDashboard(status map[string]analyzer.ClientStatus, cfg *config.Config
 		rows = `<tr><td colspan="5" class="empty">No clients tracked yet</td></tr>`
 	}
 
-	return fmt.Sprintf(`<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="refresh" content="5">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Thunderhead</title>
-	<style>
-		body {
-			font-family: monospace;
-			padding: 2rem;
-		}
-		table {
-			border-collapse: collapse;
-		}
-		th, td {
-			border: 1px solid #000;
-			padding: 0.5rem 1rem;
-			text-align: left;
-		}
-		th {
-			background: #f0f0f0;
-		}
-	</style>
-</head>
-<body>
-	<header>
-		<div>
-			<h1>Thunderhead</h1>
-			<p>Passive intent-scoring reverse proxy · refreshes every 5s</p>
-		</div>
-		<span class="tag">%s → %s</span>
-	</header>
-	<div class="stats">
-		<div class="stat-card">
-			<div class="label">Clients Tracked</div>
-			<div class="value">%d</div>
-		</div>
-		<div class="stat-card">
-			<div class="label">Tarpit Threshold</div>
-			<div class="value">%.0f</div>
-		</div>
-		<div class="stat-card">
-			<div class="label">Block Threshold</div>
-			<div class="value">%.0f</div>
-		</div>
-	</div>
-	<table>
-		<thead>
-			<tr>
-				<th>IP Address</th>
-				<th>Score</th>
-				<th>Requests</th>
-				<th>Robots Violated</th>
-				<th>Action</th>
-			</tr>
-		</thead>
-		<tbody>
-			%s
-		</tbody>
-	</table>
-	<footer>thunderhead · upstream %s</footer>
-</body>
-</html>`,
-		cfg.ListenAddr, cfg.UpstreamURL,
-		len(status),
-		cfg.Thresholds.Tarpit,
-		cfg.Thresholds.Block,
-		rows,
-		cfg.UpstreamURL,
-	)
+	tmpl, err := template.New("dashboard").Parse(dashboardHTML)
+	if err != nil {
+		return "template error: " + err.Error()
+	}
+
+	data := dashboardData{
+		CSS:             dashboardCSS,
+		ListenAddr:      cfg.ListenAddr,
+		UpstreamURL:     cfg.UpstreamURL,
+		ClientCount:     len(status),
+		TarpitThreshold: cfg.Thresholds.Tarpit,
+		BlockThreshold:  cfg.Thresholds.Block,
+		Rows:            rows,
+	}
+
+	var buf strings.Builder
+	if err := tmpl.Execute(&buf, data); err != nil {
+		return "render error: " + err.Error()
+	}
+	return buf.String()
 }
 
 func extractIP(r *http.Request) string {

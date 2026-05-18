@@ -2,7 +2,7 @@ import LogFeed from "../ui/Logfeed";
 
 export default function Hero() {
   return (
-    <section className="px-8 py-24 border-b-2 border-ink bg-cream">
+<section className="px-8 py-24 border-b-2 border-ink bg-gradient-to-br from-white to-[#E1E4EF]">
       <div className="max-w-5xl mx-auto">
         
         {/* Top badge */}
@@ -33,7 +33,7 @@ export default function Hero() {
             target="_blank"
             className="bg-cream text-ink font-bold px-6 py-3 rounded-lg border-2 border-ink shadow-brutal hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] transition-all"
           >
-            View on GitHub
+            View on GitHub →
           </a>
         </div>
 

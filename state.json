@@ -1,9 +1,34 @@
 {
   "clients": {
-    "::1": {
+    "103.21.244.0": {
+      "last_score": 40.166666666666664,
+      "robots_violated": false,
+      "last_seen": "2026-05-17T22:05:38.4346057-04:00"
+    },
+    "185.220.101.45": {
+      "last_score": 40.166666666666664,
+      "robots_violated": false,
+      "last_seen": "2026-05-17T22:05:28.2598642-04:00"
+    },
+    "198.235.24.55": {
+      "last_score": 38.5,
+      "robots_violated": false,
+      "last_seen": "2026-05-17T22:05:48.6128908-04:00"
+    },
+    "45.142.212.100": {
       "last_score": 7.5,
       "robots_violated": false,
-      "last_seen": "2026-05-16T15:05:44.7872424-04:00"
+      "last_seen": "2026-05-17T22:06:26.6338981-04:00"
+    },
+    "91.108.4.100": {
+      "last_score": 38.5,
+      "robots_violated": false,
+      "last_seen": "2026-05-17T22:05:48.7532434-04:00"
+    },
+    "::1": {
+      "last_score": 38.333333333333336,
+      "robots_violated": false,
+      "last_seen": "2026-05-17T21:48:29.094938-04:00"
     }
   }
 }
