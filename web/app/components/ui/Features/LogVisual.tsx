@@ -9,30 +9,24 @@ export default function LogVisual({ animate }: { animate: boolean }) {
   ];
 
   return (
-    <div style={{
-      background: "var(--gray-950)",
-      border: "1px solid var(--border)",
-      borderRadius: 10,
-      overflow: "hidden",
-      fontFamily: "var(--font-mono)",
-      fontSize: 11,
-    }}>
-      <div style={{ padding: "10px 14px 6px", color: "rgba(255,255,255,0.08)", fontSize: 13 }}>{`{`}</div>
+    <div className="overflow-hidden rounded-xl border border-white/10 bg-zinc-950 text-sm">
+      <div className="px-4 pt-3 pb-1 text-white/10">{`{`}</div>
       {fields.map((f, i) => (
-        <div key={f.key} style={{
-          padding: "3px 14px 3px 28px",
-          display: "flex",
-          gap: 6,
-          opacity: animate ? 1 : 0,
-          transform: animate ? "translateX(0)" : "translateX(-6px)",
-          transition: `opacity 300ms ease ${i * 55}ms, transform 300ms ease ${i * 55}ms`,
-        }}>
-          <span style={{ color: "var(--gray-600)" }}>"{f.key}":</span>
+        <div
+          key={f.key}
+          className="flex gap-1.5 px-4 pl-6 py-0.5 transition-[opacity,transform] duration-300"
+          style={{
+            opacity: animate ? 1 : 0,
+            transform: animate ? "translateX(0)" : "translateX(-6px)",
+            transitionDelay: `${i * 55}ms`,
+          }}
+        >
+          <span className="text-zinc-500">"{f.key}":</span>
           <span style={{ color: f.color }}>{f.val}</span>
-          {i < fields.length - 1 && <span style={{ color: "rgba(255,255,255,0.1)" }}>,</span>}
+          {i < fields.length - 1 && <span className="text-white/10">,</span>}
         </div>
       ))}
-      <div style={{ padding: "6px 14px 10px", color: "rgba(255,255,255,0.08)", fontSize: 13 }}>{`}`}</div>
+      <div className="px-4 pb-3 pt-1 text-white/10">{`}`}</div>
     </div>
   );
 }

@@ -3,16 +3,16 @@
 import { useEffect, useRef, useState } from "react";
 
 const LOG_POOL = [
-  { ip: "185.220.101.45", method: "GET", path: "/admin", score: 91, action: "block" },
-  { ip: "66.249.64.1", method: "GET", path: "/", score: 0, action: "allow" },
-  { ip: "192.168.1.55", method: "GET", path: "/page34", score: 54, action: "tarpit" },
-  { ip: "45.142.212.100", method: "GET", path: "/private", score: 95, action: "block" },
-  { ip: "Mozilla/5.0", method: "GET", path: "/about", score: 8, action: "allow" },
-  { ip: "103.21.244.0", method: "GET", path: "/page12", score: 42, action: "tarpit" },
-  { ip: "198.235.24.55", method: "GET", path: "/internal", score: 88, action: "block" },
-  { ip: "66.249.64.12", method: "GET", path: "/blog", score: 2, action: "allow" },
-  { ip: "185.156.73.11", method: "GET", path: "/page01", score: 61, action: "tarpit" },
-  { ip: "91.108.4.100", method: "GET", path: "/secret", score: 99, action: "block" },
+  { ip: "185.220.101.45", method: "GET", path: "/admin",    score: 91, action: "block"  },
+  { ip: "66.249.64.1",    method: "GET", path: "/",         score: 0,  action: "allow"  },
+  { ip: "192.168.1.55",   method: "GET", path: "/page34",   score: 54, action: "tarpit" },
+  { ip: "45.142.212.100", method: "GET", path: "/private",  score: 95, action: "block"  },
+  { ip: "Mozilla/5.0",    method: "GET", path: "/about",    score: 8,  action: "allow"  },
+  { ip: "103.21.244.0",   method: "GET", path: "/page12",   score: 42, action: "tarpit" },
+  { ip: "198.235.24.55",  method: "GET", path: "/internal", score: 88, action: "block"  },
+  { ip: "66.249.64.12",   method: "GET", path: "/blog",     score: 2,  action: "allow"  },
+  { ip: "185.156.73.11",  method: "GET", path: "/page01",   score: 61, action: "tarpit" },
+  { ip: "91.108.4.100",   method: "GET", path: "/secret",   score: 99, action: "block"  },
 ];
 
 type LogEntry = (typeof LOG_POOL)[0] & { id: number; time: string };
@@ -23,165 +23,81 @@ function getTime() {
 
 function getBadge(action: string) {
   switch (action) {
-    case "block":
-      return "badge-red";
-    case "tarpit":
-      return "badge-amber";
-    default:
-      return "badge-green";
+    case "block":  return "badge badge-red";
+    case "tarpit": return "badge badge-amber";
+    default:       return "badge badge-green";
   }
 }
 
-function getScoreTone(action: string) {
+function getScoreColor(action: string) {
   switch (action) {
-    case "block":
-      return "var(--red)";
-    case "tarpit":
-      return "var(--amber)";
-    default:
-      return "var(--green)";
+    case "block":  return "var(--red)";
+    case "tarpit": return "var(--amber)";
+    default:       return "var(--green)";
   }
 }
 
 export default function LogFeed() {
-  const [logs, setLogs] = useState<LogEntry[]>([]);
+  const [logs, setLogs]       = useState<LogEntry[]>([]);
   const [counter, setCounter] = useState(0);
-  const logViewportRef = useRef<HTMLDivElement | null>(null);
-  const poolIndexRef = useRef(0);
+  const viewportRef           = useRef<HTMLDivElement | null>(null);
+  const poolIndexRef          = useRef(0);
 
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>;
     let isMounted = true;
 
     const scheduleNext = () => {
-      const delay = Math.floor(Math.random() * (3000 - 1000 + 1)) + 1000;
-
+      const delay = Math.floor(Math.random() * 2000) + 1000;
       timeout = setTimeout(() => {
-        if (!isMounted) {
-          return;
-        }
-
+        if (!isMounted) return;
         const entry = LOG_POOL[poolIndexRef.current % LOG_POOL.length];
-        const entryId = Date.now() + poolIndexRef.current;
         poolIndexRef.current += 1;
-
-        const newLog: LogEntry = {
-          ...entry,
-          id: entryId,
-          time: getTime(),
-        };
-
+        const newLog: LogEntry = { ...entry, id: Date.now() + poolIndexRef.current, time: getTime() };
         setLogs((prev) => [...prev, newLog].slice(-60));
         setCounter((c) => c + 1);
-
         scheduleNext();
       }, delay);
     };
 
     scheduleNext();
-    return () => {
-      isMounted = false;
-      clearTimeout(timeout);
-    };
+    return () => { isMounted = false; clearTimeout(timeout); };
   }, []);
 
   useEffect(() => {
-    const viewport = logViewportRef.current;
-    if (!viewport) {
-      return;
-    }
-
-    viewport.scrollTop = viewport.scrollHeight;
+    const vp = viewportRef.current;
+    if (vp) vp.scrollTop = vp.scrollHeight;
   }, [logs]);
 
   return (
     <div
-      className="card card-sm"
+      className="overflow-hidden rounded-xl border border-white/10 bg-zinc-950"
       style={{
-        marginTop: "var(--space-6)",
-        overflow: "hidden",
-        background: "linear-gradient(180deg, rgba(12, 12, 13, 0.96) 0%, rgba(0, 0, 0, 1) 100%)",
-        borderColor: "rgba(255, 255, 255, 0.14)",
+        background: "linear-gradient(180deg, rgba(12,12,13,0.98) 0%, rgba(0,0,0,1) 100%)",
       }}
     >
-
       {/* Header */}
-      <div
-        className="flex items-center justify-between"
-        style={{
-          paddingBottom: "var(--space-3)",
-          borderBottom: "1px solid var(--border)",
-        }}
-      >
-        <div className="flex items-center" style={{ gap: "var(--space-3)" }}>
-          <div className="flex" style={{ gap: "var(--space-1)" }}>
-            <span
-              style={{
-                width: "10px",
-                height: "10px",
-                borderRadius: "var(--radius-full)",
-                backgroundColor: "rgba(239, 68, 68, 0.8)",
-              }}
-            />
-            <span
-              style={{
-                width: "10px",
-                height: "10px",
-                borderRadius: "var(--radius-full)",
-                backgroundColor: "rgba(245, 158, 11, 0.8)",
-              }}
-            />
-            <span
-              style={{
-                width: "10px",
-                height: "10px",
-                borderRadius: "var(--radius-full)",
-                backgroundColor: "rgba(34, 197, 94, 0.8)",
-              }}
-            />
+      <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
+        <div className="flex items-center gap-3">
+          <div className="flex gap-1.5">
+            <span className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
+            <span className="h-2.5 w-2.5 rounded-full bg-amber-500/80" />
+            <span className="h-2.5 w-2.5 rounded-full bg-green-500/80" />
           </div>
-
-          <span className="label">request.log</span>
+          <span className="text-xs uppercase tracking-wide text-zinc-500">request.log</span>
         </div>
-
-        <div className="text-muted mono" style={{ fontSize: "var(--text-xs)", letterSpacing: "0.04em" }}>
+        <span className="text-xs text-zinc-500">
           {counter} requests processed
-        </div>
+        </span>
       </div>
 
       {/* Log body */}
       <div
-        ref={logViewportRef}
-        className="flex flex-col"
-        style={{
-          marginTop: "var(--space-3)",
-          height: "16rem",
-          overflowY: "auto",
-          paddingRight: "var(--space-1)",
-          fontFamily: "var(--font-mono)",
-          backgroundColor: "rgba(255, 255, 255, 0.01)",
-          border: "1px solid rgba(255, 255, 255, 0.06)",
-          borderRadius: "var(--radius-md)",
-        }}
+        ref={viewportRef}
+        className="flex h-64 flex-col overflow-y-auto bg-black/20 text-[10px] sm:text-[12px] scrollbar-none" //use px because xs is small enoughh
       >
-        <div
-          className="text-muted"
-          style={{
-            fontSize: "var(--text-xs)",
-            padding: "var(--space-2) var(--space-3)",
-            borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
-            letterSpacing: "0.04em",
-            textTransform: "uppercase",
-          }}
-        >
-          live request stream
-        </div>
-
         {logs.length === 0 && (
-          <div
-            className="text-muted animate-fade-in"
-            style={{ fontSize: "var(--text-sm)", padding: "var(--space-3)" }}
-          >
+          <div className="px-4 py-4 text-sm text-zinc-500 animate-fade-in">
             waiting for requests...
           </div>
         )}
@@ -189,47 +105,27 @@ export default function LogFeed() {
         {logs.map((log) => (
           <div
             key={log.id}
-            className="flex items-center animate-fade-in"
-            style={{
-              gap: "var(--space-3)",
-              fontSize: "var(--text-sm)",
-              padding: "0.4rem var(--space-3)",
-              borderBottom: "1px solid rgba(255, 255, 255, 0.04)",
-              whiteSpace: "nowrap",
-            }}
+            className="flex items-center gap-3 border-b border-white/5 px-4 py-2 whitespace-nowrap animate-fade-in"
           >
-            {/* Time */}
-            <span
-              className="text-muted mono"
-              style={{ fontSize: "var(--text-xs)", width: "19ch", flexShrink: 0, opacity: 0.85 }}
-            >
+            <span className="w-[19ch] shrink-0 text-zinc-600">
               {log.time}
             </span>
 
-            {/* Action badge */}
-            <span className={`badge ${getBadge(log.action)}`}>
-              {log.action}
-            </span>
+            <span className="text-zinc-500">{log.action}</span>
 
-            {/* Score */}
-            <span className="text-muted" style={{ fontSize: "var(--text-xs)" }}>score</span>
+            <span className="text-zinc-600">score</span>
             <span
-              className="mono"
-              style={{ width: "2.25rem", textAlign: "right", color: getScoreTone(log.action) }}
+              className="w-[2.5rem] text-right"
+              style={{ color: getScoreColor(log.action) }}
             >
               {log.score}
             </span>
 
-            {/* IP */}
-            <span
-              className="text-muted mono truncate"
-              style={{ width: "11rem", flexShrink: 0 }}
-            >
+            <span className="w-[11rem] shrink-0 truncate text-zinc-500">
               {log.ip}
             </span>
 
-            {/* Path */}
-            <span className="text-subtle truncate" style={{ flex: 1 }}>
+            <span className="flex-1 truncate text-zinc-300">
               {log.path}
             </span>
           </div>

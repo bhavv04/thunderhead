@@ -1,138 +1,64 @@
 "use client";
 
 export default function Footer() {
+  const projectLinks = [
+    { label: "GitHub",  href: "https://github.com/bhavv04/thunderhead" },
+    { label: "License", href: "https://github.com/bhavv04/thunderhead/blob/main/LICENSE" },
+    { label: "Issues",  href: "https://github.com/bhavv04/thunderhead/issues" },
+  ];
+
+  const docLinks = [
+    { label: "Quickstart",  href: "#quickstart"  },
+    { label: "Methodology", href: "#methodology" },
+    { label: "Features",    href: "#features"    },
+  ];
+
   return (
-    <footer style={{
-      borderTop: "1px solid var(--border)",
-      background: "var(--gray-950)",
-      paddingBlock: "var(--space-16)",
-      paddingInline: "var(--space-6)",
-    }}>
-      <div style={{ maxWidth: 1200, marginInline: "auto" }}>
+    <footer className="border-t border-white/10 bg-zinc-950 px-6 py-16">
+      <div className="mx-auto max-w-6xl">
 
         {/* Top row */}
-        <div style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          gap: "var(--space-12)",
-          marginBottom: "var(--space-12)",
-          flexWrap: "wrap",
-        }}>
+        <div className="mb-12 flex flex-wrap justify-between gap-12">
 
           {/* Brand */}
-          <div style={{ maxWidth: 300 }}>
-            <div style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "var(--text-base)",
-              fontWeight: 600,
-              color: "var(--white)",
-              letterSpacing: "-0.02em",
-              marginBottom: "var(--space-3)",
-            }}>
+          <div className="max-w-sm">
+            <div className="mb-3 text-base font-semibold tracking-tight text-white">
               thunderhead
             </div>
-            <p style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "var(--text-sm)",
-              color: "var(--gray-600)",
-              lineHeight: 1.65,
-              margin: 0,
-              maxWidth: "36ch",
-            }}>
+            <p className="m-0 max-w-[36ch] text-sm leading-relaxed text-zinc-500">
               Passive intent-scoring reverse proxy. Silently watches, scores,
               and mitigates bot traffic — no CAPTCHAs, no challenges, just behavior.
             </p>
           </div>
 
           {/* Links */}
-          <div style={{ display: "flex", gap: "var(--space-16)", flexWrap: "wrap" }}>
-
-            <div>
-              <div style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "var(--text-xs)",
-                letterSpacing: "0.1em",
-                textTransform: "uppercase" as const,
-                color: "var(--gray-700)",
-                marginBottom: "var(--space-4)",
-              }}>
-                Project
+          <div className="flex flex-wrap gap-12">
+            {[{ title: "Project", links: projectLinks }, { title: "Docs", links: docLinks }].map(({ title, links }) => (
+              <div key={title}>
+                <div className="mb-4 text-xs uppercase tracking-wide text-zinc-500">
+                  {title}
+                </div>
+                <div className="flex flex-col gap-3">
+                  {links.map((link) => (
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      target={link.href.startsWith("http") ? "_blank" : undefined}
+                      className="text-sm text-zinc-500 no-underline transition-colors duration-150 hover:text-white"
+                    >
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
               </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
-                {[
-                  { label: "GitHub",  href: "https://github.com/bhavv04/thunderhead" },
-                  { label: "License", href: "https://github.com/bhavv04/thunderhead/blob/main/LICENSE" },
-                  { label: "Issues",  href: "https://github.com/bhavv04/thunderhead/issues" },
-                ].map((link) => (
-                  <a key={link.label} href={link.href} target="_blank" style={{
-                    fontFamily: "var(--font-sans)",
-                    fontSize: "var(--text-sm)",
-                    color: "var(--gray-500)",
-                    textDecoration: "none",
-                    transition: "color var(--duration-fast) var(--ease-out)",
-                  }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--white)")}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--gray-500)")}
-                  >
-                    {link.label}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <div style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "var(--text-xs)",
-                letterSpacing: "0.1em",
-                textTransform: "uppercase" as const,
-                color: "var(--gray-700)",
-                marginBottom: "var(--space-4)",
-              }}>
-                Docs
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
-                {[
-                  { label: "Quickstart",   href: "#quickstart"   },
-                  { label: "Methodology",  href: "#methodology"  },
-                  { label: "Features",     href: "#features"     },
-                ].map((link) => (
-                  <a key={link.label} href={link.href} style={{
-                    fontFamily: "var(--font-sans)",
-                    fontSize: "var(--text-sm)",
-                    color: "var(--gray-500)",
-                    textDecoration: "none",
-                    transition: "color var(--duration-fast) var(--ease-out)",
-                  }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--white)")}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--gray-500)")}
-                  >
-                    {link.label}
-                  </a>
-                ))}
-              </div>
-            </div>
-
+            ))}
           </div>
+
         </div>
 
         {/* Bottom row */}
-        <div style={{
-          borderTop: "1px solid var(--border)",
-          paddingTop: "var(--space-8)",
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          gap: "var(--space-4)",
-          flexWrap: "wrap",
-        }}>
-          <span style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "var(--text-xs)",
-            color: "var(--gray-700)",
-          }}>
+        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-8">
+          <span className="text-xs text-zinc-600">
             © 2026 Bhavdeep Arora · MIT License
           </span>
         </div>

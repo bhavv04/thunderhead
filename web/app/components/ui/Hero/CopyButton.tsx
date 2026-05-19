@@ -15,16 +15,7 @@ export default function CopyButton({ text }: { text: string }) {
     <button
       onClick={copy}
       title="Copy command"
-      style={{
-        background: "none",
-        border: "none",
-        cursor: "pointer",
-        padding: 2,
-        color: copied ? "var(--green)" : "var(--gray-600)",
-        transition: "color 200ms ease",
-        display: "flex",
-        alignItems: "center",
-      }}
+      className={`flex items-center bg-transparent border-none cursor-pointer p-[2px] transition-colors duration-200 ${copied ? "text-green-500" : "text-zinc-600"}`}
     >
       {copied ? (
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

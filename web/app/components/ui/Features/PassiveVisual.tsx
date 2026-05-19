@@ -1,10 +1,10 @@
 export default function PassiveVisual({ animate }: { animate: boolean }) {
   const signals = [
-    { icon: "📄", label: "robots.txt check",       status: "passive" },
-    { icon: "📍", label: "Path sequence tracking", status: "passive" },
-    { icon: "⏱",  label: "Rate window (60s)",      status: "passive" },
-    { icon: "🔍", label: "Header inspection",       status: "passive" },
-    { icon: "📝", label: "Content-type analysis",  status: "passive" },
+    { icon: "", label: "robots.txt check"       },
+    { icon: "", label: "Path sequence tracking" },
+    { icon: "",  label: "Rate window (60s)"      },
+    { icon: "", label: "Header inspection"       },
+    { icon: "", label: "Content-type analysis"  },
   ];
 
   const blocked = [
@@ -15,61 +15,51 @@ export default function PassiveVisual({ animate }: { animate: boolean }) {
   ];
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-      <div style={{
-        background: "var(--gray-950)",
-        border: "1px solid var(--border)",
-        borderRadius: 10,
-        overflow: "hidden",
-        fontFamily: "var(--font-mono)",
-        fontSize: 11,
-      }}>
-        <div style={{ padding: "6px 12px", borderBottom: "1px solid var(--border)", fontSize: 9, color: "var(--gray-600)", letterSpacing: "0.08em" }}>
+    <div className="flex flex-col gap-3">
+
+      {/* Signals table */}
+      <div className="overflow-hidden rounded-xl border border-white/10 bg-zinc-950 text-sm">
+        <div className="border-b border-white/10 px-4 py-3 text-xs uppercase tracking-wide text-zinc-500">
           PASSIVE SIGNALS ONLY
         </div>
         {signals.map((s, i) => (
-          <div key={i} style={{
-            display: "flex", alignItems: "center", gap: 10,
-            padding: "6px 12px",
-            borderBottom: i < signals.length - 1 ? "1px solid rgba(255,255,255,0.03)" : "none",
-            opacity: animate ? 1 : 0,
-            transition: `opacity 300ms ease ${i * 50}ms`,
-          }}>
-            <span style={{ fontSize: 12 }}>{s.icon}</span>
-            <span style={{ color: "var(--gray-400)", flex: 1 }}>{s.label}</span>
-            <span style={{
-              fontSize: 9, letterSpacing: "0.06em",
-              background: "var(--green-dim)",
-              color: "var(--green)",
-              border: "1px solid rgba(34,197,94,0.2)",
-              borderRadius: 4,
-              padding: "1px 6px",
-            }}>
-              {s.status}
+          <div
+            key={i}
+            className={[
+              "flex items-center gap-2.5 px-4 py-2 transition-opacity duration-300",
+              i < signals.length - 1 ? "border-b border-white/5" : "",
+            ].join(" ")}
+            style={{
+              opacity: animate ? 1 : 0,
+              transitionDelay: `${i * 50}ms`,
+            }}
+          >
+            <span>{s.icon}</span>
+            <span className="flex-1 text-zinc-300">{s.label}</span>
+            <span className="rounded-full border border-green-500/20 bg-green-500/10 px-2 py-0.5 text-[10px] uppercase tracking-wide text-green-500">
+              passive
             </span>
           </div>
         ))}
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+      {/* Blocked methods grid */}
+      <div className="grid grid-cols-2 gap-1.5">
         {blocked.map((b, i) => (
-          <div key={i} style={{
-            display: "flex", alignItems: "center", gap: 6,
-            padding: "6px 10px",
-            borderRadius: 7,
-            background: "rgba(239,68,68,0.04)",
-            border: "1px solid rgba(239,68,68,0.1)",
-            fontFamily: "var(--font-mono)",
-            fontSize: 10,
-            color: "var(--gray-700)",
-            opacity: animate ? 1 : 0,
-            transition: `opacity 300ms ease ${300 + i * 50}ms`,
-          }}>
-            <span style={{ color: "rgba(239,68,68,0.4)", fontSize: 11, fontWeight: 700 }}>✕</span>
+          <div
+            key={i}
+            className="flex items-center gap-1.5 rounded-lg border border-red-500/10 bg-red-500/5 px-3 py-2 text-xs text-zinc-500 transition-opacity duration-300"
+            style={{
+              opacity: animate ? 1 : 0,
+              transitionDelay: `${300 + i * 50}ms`,
+            }}
+          >
+            <span className="text-red-500/40 font-bold">✕</span>
             <span>{b.label}</span>
           </div>
         ))}
       </div>
+
     </div>
   );
 }

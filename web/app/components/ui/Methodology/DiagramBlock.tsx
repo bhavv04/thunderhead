@@ -1,7 +1,6 @@
 import React from "react";
-import SectionLabel from "./SectionLabel";
+import SectionLabel from "../SectionLabel";
 import { useInView } from "./useInView";
-import { motion } from "framer-motion";
 
 export default function DiagramBlock({
   label, title, description, children, delay = 0,
@@ -9,44 +8,32 @@ export default function DiagramBlock({
   label: string;
   title: string;
   description: string;
-  children: React.ReactNode;
+  children: React.ReactElement<any>;
   delay?: number;
 }) {
   const { ref, inView } = useInView(0.15);
 
   return (
-    <div ref={ref} style={{
-      opacity: inView ? 1 : 0,
-      transform: inView ? "translateY(0)" : "translateY(24px)",
-      transition: `opacity 700ms ease ${delay}ms, transform 700ms cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
-      display: "flex",
-      flexDirection: "column",
-      gap: 20,
-    }}>
-      <div>
+    <div
+      ref={ref}
+      className="flex flex-col gap-4 transition-[opacity,transform] duration-700"
+      style={{
+        opacity: inView ? 1 : 0,
+        transform: inView ? "translateY(0)" : "translateY(24px)",
+        transitionDelay: `${delay}ms`,
+        transitionTimingFunction: "cubic-bezier(0.16,1,0.3,1)",
+      }}
+    >
+      <div className="space-y-2">
         <SectionLabel>{label}</SectionLabel>
-        <h3 style={{
-          fontFamily: "var(--font-sans)",
-          fontSize: "var(--text-xl)",
-          fontWeight: 600,
-          letterSpacing: "-0.03em",
-          color: "var(--white)",
-          marginBottom: 8,
-        }}>
+        <h3 className="text-xl font-semibold tracking-tight text-white">
           {title}
         </h3>
-        <p style={{
-          fontFamily: "var(--font-sans)",
-          fontSize: "var(--text-sm)",
-          color: "var(--gray-500)",
-          lineHeight: 1.65,
-          maxWidth: "52ch",
-          margin: 0,
-        }}>
+        <p className="max-w-2xl text-sm text-zinc-400 leading-relaxed">
           {description}
         </p>
       </div>
-      <motion.div>{React.cloneElement(children as React.ReactElement, { animate: inView })}</motion.div>
+      <div>{React.cloneElement(children, { animate: inView } as any)}</div>
     </div>
   );
 }

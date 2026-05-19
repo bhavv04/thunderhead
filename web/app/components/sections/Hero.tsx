@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import CopyButton from "../ui/Hero/CopyButton";
+import LogFeed from "../ui/Hero/Logfeed";
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
@@ -11,127 +12,98 @@ export default function Hero() {
     return () => clearTimeout(t);
   }, []);
 
-  const fadeUp = (delay: number) => ({
-    opacity: mounted ? 1 : 0,
-    transform: mounted ? "translateY(0)" : "translateY(12px)",
-    transition: `opacity 700ms var(--ease-out) ${delay}ms, transform 700ms var(--ease-out) ${delay}ms`,
-  });
-
   return (
-    <section style={{
-      position: "relative",
-      minHeight: "100vh",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      overflow: "hidden",
-      background: "var(--black)",
-      paddingBlock: "var(--space-32)",
-      paddingInline: "var(--space-6)",
-    }}>
+    <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-black px-6 py-24 md:py-32">
 
-      <div style={{
-        position: "relative",
-        zIndex: 1,
-        width: "100%",
-        maxWidth: 1200,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: "var(--space-16)",
-      }}>
+      <div className="relative z-10 flex w-full max-w-6xl flex-col gap-12 md:gap-16">
 
-        {/* Badge */}
-        <div style={fadeUp(0)}>
-          <div style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-            padding: "5px 12px 5px 8px",
-            borderRadius: 999,
-            border: "1px solid rgba(59,130,246,0.25)",
-            background: "rgba(59,130,246,0.07)",
-            fontFamily: "var(--font-mono)",
-            fontSize: 12,
-            letterSpacing: "0.04em",
-            color: "var(--accent)",
-          }}>
-            Open source · No third-party services
+        <div className="grid w-full grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-12">
+
+          {/* Left: copy */}
+          <div className="flex flex-col items-center gap-6 text-center md:items-start md:text-left">
+            {/* Badge */}
+            <div
+              className="transition-[opacity,transform] duration-700"
+              style={{
+                opacity: mounted ? 1 : 0,
+                transform: mounted ? "translateY(0)" : "translateY(12px)",
+                transitionDelay: "0ms",
+              }}
+            >
+              <div className="inline-flex items-center border border-white/20 px-3 py-1 text-xs text-zinc-400 rounded-full">
+                Open source · No third-party services
+              </div>
+            </div>
+
+            {/* Headline */}
+            <div className="flex max-w-3xl flex-col items-center gap-5 text-center md:items-start md:text-left">
+              <h1
+                className="text-balance text-4xl font-semibold tracking-tight text-white transition-[opacity,transform] duration-700 md:text-6xl"
+                style={{
+                  opacity: mounted ? 1 : 0,
+                  transform: mounted ? "translateY(0)" : "translateY(12px)",
+                  transitionDelay: "80ms",
+                }}
+              >
+                Bots don't belong on your site.
+                <br />
+                <span className="bg-gradient-to-br from-zinc-200 to-zinc-500 bg-clip-text text-transparent">
+                  Bot detection, No JS. No CAPTCHAs.
+                </span>
+              </h1>
+
+              <p
+                className="m-0 max-w-2xl text-base leading-relaxed text-zinc-400 transition-[opacity,transform] duration-700 md:text-lg"
+                style={{
+                  opacity: mounted ? 1 : 0,
+                  transform: mounted ? "translateY(0)" : "translateY(12px)",
+                  transitionDelay: "160ms",
+                }}
+              >
+                Thunderhead is a lightweight reverse proxy that silently scores every
+                incoming HTTP request 0–100. Bots get tarpitted or blocked.
+                Humans never notice.
+              </p>
+            </div>
+
+            {/* CTAs */}
+            <div
+              className="flex flex-wrap items-center justify-center gap-3 transition-[opacity,transform] duration-700 md:justify-start"
+              style={{
+                opacity: mounted ? 1 : 0,
+                transform: mounted ? "translateY(0)" : "translateY(12px)",
+                transitionDelay: "240ms",
+              }}
+            >
+              <a
+                href="https://github.com/bhavv04/thunderhead"
+                className="btn btn-primary"
+              >
+                View on GitHub
+              </a>
+
+              <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-zinc-950 px-4 py-2">
+                <span className="text-sm text-zinc-400">
+                  <span className="text-zinc-600">$</span>{" "}
+                  <span className="text-zinc-200">go run ./cmd/thunderhead</span>
+                </span>
+                <CopyButton text="go run ./cmd/thunderhead" />
+              </div>
+            </div>
           </div>
-        </div>
 
-        {/* Headline */}
-        <div style={{
-          textAlign: "center",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "var(--space-6)",
-          maxWidth: 760,
-        }}>
-          <h1 style={{
-            ...fadeUp(80),
-            fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
-            letterSpacing: "-0.05em",
-            fontWeight: 700,
-            lineHeight: 1.05,
-            color: "var(--white)",
-          }}>
-            Bot detection.
-            <br />
-            <span style={{
-              background: "linear-gradient(135deg, var(--gray-200) 0%, var(--gray-500) 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}>
-              No JS. No CAPTCHAs.
-            </span>
-          </h1>
-
-          <p style={{
-            ...fadeUp(160),
-            fontSize: "var(--text-lg)",
-            color: "var(--gray-400)",
-            lineHeight: 1.65,
-            maxWidth: "52ch",
-            margin: 0,
-          }}>
-            Thunderhead is a lightweight reverse proxy that silently scores every
-            incoming HTTP request 0–100. Bots get tarpitted or blocked.
-            Humans never notice.
-          </p>
-        </div>
-
-        {/* CTAs */}
-        <div style={{
-          ...fadeUp(240),
-          display: "flex",
-          alignItems: "center",
-          gap: "var(--space-3)",
-          flexWrap: "wrap",
-          justifyContent: "center",
-        }}>
-          <a href="https://github.com/bhavv04/thunderhead" className="btn btn-primary" style={{ gap: 8 }}>
-            View on GitHub
-          </a>
-
-          <div style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
-            padding: "9px 14px",
-            borderRadius: 8,
-            background: "var(--gray-950)",
-            border: "1px solid var(--border)",
-          }}>
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: 13, color: "var(--gray-400)" }}>
-              <span style={{ color: "var(--gray-600)" }}>$</span>{" "}
-              <span style={{ color: "var(--gray-200)" }}>go run ./cmd/thunderhead</span>
-            </span>
-            <CopyButton text="go run ./cmd/thunderhead" />
+          {/* Right: log feed */}
+          <div
+            className="transition-[opacity,transform] duration-700"
+            style={{
+              opacity: mounted ? 1 : 0,
+              transform: mounted ? "translateY(0)" : "translateY(12px)",
+              transitionDelay: "200ms",
+            }}
+          >
+            <LogFeed />
           </div>
+
         </div>
       </div>
     </section>

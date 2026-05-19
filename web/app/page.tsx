@@ -3,11 +3,10 @@ import Footer from "./components/layout/Footer";
 import Hero from "./components/sections/Hero";
 import Methodology from "./components/sections/Methodology";
 import Features from "./components/sections/Features";
-import Quickstart from "./components/sections/Quickstart";
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
+    <main id="top" className="min-h-screen font-sans">
       <Navbar />
       <Hero />
       <Methodology />
