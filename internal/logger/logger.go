@@ -18,7 +18,8 @@ type Entry struct {
 }
 
 type Logger struct {
-	enc *json.Encoder
+	enc  *json.Encoder
+	Feed chan Entry // non-nil when TUI is attached
 }
 
 func New(path string) (*Logger, error) {
@@ -36,4 +37,10 @@ func New(path string) (*Logger, error) {
 func (l *Logger) Log(e Entry) {
 	e.Time = time.Now()
 	_ = l.enc.Encode(e)
+	if l.Feed != nil {
+		select {
+		case l.Feed <- e:
+		default: // drop if TUI is behind — never block the proxy
+		}
+	}
 }

@@ -10,6 +10,8 @@ thunderhead
 # Config with sensitive data
 config.json
 
+thunderhead.log
+
 # IDE
 .vscode/
 .idea/

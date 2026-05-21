@@ -4,148 +4,39 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="refresh" content="5">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Thunderhead · Status</title>
-	<style>{{.CSS}}</style>
+	<title>Thunderhead</title>
 </head>
-    <body>
 
-        <div class="topbar">
-            <div class="brand">
-                thunderhead
-                <span class="brand-divider">/</span>
-                <span class="brand-page">status</span>
-            </div>
-            <div class="topbar-right">
-                <div class="upstream-pill">→ {{.UpstreamURL}}</div>
-                <div class="live-pill">
-                    <span class="live-dot"></span>
-                    live · 5s
-                </div>
-            </div>
-        </div>
+<body>
 
-        <div class="main">
+	<h2>thunderhead / status</h2>
 
-            <div class="sidebar">
-                <div class="sidebar-section">
-                    <div class="sidebar-label">Views</div>
-                    <div class="sidebar-item active" data-filter="all">All Clients <span class="sidebar-count">{{.ClientCount}}</span></div>
-                    <div class="sidebar-item" data-filter="block">Blocked</div>
-                    <div class="sidebar-item" data-filter="tarpit">Tarpitted</div>
-                    <div class="sidebar-item" data-filter="allow">Allowed</div>
-                </div>
-                <div class="sidebar-section">
-                    <div class="sidebar-label">Signals</div>
-                    <div class="sidebar-item">robots.txt</div>
-                    <div class="sidebar-item">Rate</div>
-                    <div class="sidebar-item">Headers</div>
-                    <div class="sidebar-item">Pattern</div>
-                </div>
-                <div class="sidebar-section">
-                    <div class="sidebar-label">Thresholds</div>
-                    <div class="sidebar-item">Tarpit <span class="sidebar-count">{{.TarpitThreshold}}</span></div>
-                    <div class="sidebar-item">Block <span class="sidebar-count">{{.BlockThreshold}}</span></div>
-                </div>
-            </div>
+	<p>upstream: {{.UpstreamURL}}</p>
+	<p>listening: {{.ListenAddr}}</p>
 
-            <div class="content">
+	<hr>
 
-                <div class="metrics">
-                    <div class="metric">
-                        <div class="metric-label">Clients Tracked</div>
-                        <div class="metric-value purple">{{.ClientCount}}</div>
-                        <div class="metric-sub">unique IPs</div>
-                    </div>
-                    <div class="metric">
-                        <div class="metric-label">Tarpit At</div>
-                        <div class="metric-value yellow">{{.TarpitThreshold}}</div>
-                        <div class="metric-sub">intent score</div>
-                    </div>
-                    <div class="metric">
-                        <div class="metric-label">Block At</div>
-                        <div class="metric-value red">{{.BlockThreshold}}</div>
-                        <div class="metric-sub">intent score</div>
-                    </div>
-                    <div class="metric">
-                        <div class="metric-label">Listening On</div>
-                        <div class="metric-value green" style="font-size:2rem;letter-spacing:0">{{.ListenAddr}}</div>
-                        <div class="metric-sub">proxy address</div>
-                    </div>
-                </div>
+	<p>clients: {{.ClientCount}}</p>
+	<p>tarpit threshold: {{.TarpitThreshold}}</p>
+	<p>block threshold: {{.BlockThreshold}}</p>
 
-                <div class="thresholds">
-                    <div class="threshold-item">
-                        <span class="threshold-dot" style="background:#22c55e"></span>
-                        <span class="threshold-label">allow</span>
-                        <span class="threshold-value">0 – {{.TarpitThreshold}}</span>
-                    </div>
-                    <div class="threshold-item">
-                        <span class="threshold-dot" style="background:#f59e0b"></span>
-                        <span class="threshold-label">tarpit</span>
-                        <span class="threshold-value">{{.TarpitThreshold}} – {{.BlockThreshold}}</span>
-                    </div>
-                    <div class="threshold-item">
-                        <span class="threshold-dot" style="background:#ef4444"></span>
-                        <span class="threshold-label">block</span>
-                        <span class="threshold-value">{{.BlockThreshold}} – 100</span>
-                    </div>
-                </div>
+	<hr>
 
-                <div class="section-header">
-                    <span class="section-title">Client Intent Scores</span>
-                    <span class="section-meta">auto-refresh every 5s</span>
-                </div>
+	<table border="1" cellpadding="6" cellspacing="0">
+		<thead>
+			<tr>
+				<th>IP</th>
+				<th>Score</th>
+				<th>Requests</th>
+				<th>Robots</th>
+				<th>Action</th>
+			</tr>
+		</thead>
 
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>IP Address</th>
-                                <th>Intent Score</th>
-                                <th>Requests</th>
-                                <th>Robots Violated</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>{{.Rows}}</tbody>
-                    </table>
-                </div>
+		<tbody>
+			{{.Rows}}
+		</tbody>
+	</table>
 
-            </div>
-        </div>
-
-        <div class="footer">
-            <span>thunderhead · passive intent scoring reverse proxy</span>
-            <span>upstream {{.UpstreamURL}}</span>
-        </div>
-
-        <script>
-            const sidebarItems = document.querySelectorAll('.sidebar-item[data-filter]');
-            const tableRows = document.querySelectorAll('tbody tr');
-
-            function filterRows(filter) {
-                tableRows.forEach(row => {
-                if (filter === 'all') {
-                    row.style.display = '';
-                } else {
-                    row.style.display = row.classList.contains(filter) ? '' : 'none';
-                }
-                });
-            }
-
-            function setActive(el) {
-                sidebarItems.forEach(i => i.classList.remove('active'));
-                el.classList.add('active');
-            }
-
-            sidebarItems.forEach(item => {
-                item.style.cursor = 'pointer';
-                item.addEventListener('click', () => {
-                const filter = item.dataset.filter;
-                filterRows(filter);
-                setActive(item);
-                });
-            });
-        </script>
-    </body>
+</body>
 </html>

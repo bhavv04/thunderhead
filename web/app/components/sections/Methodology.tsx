@@ -14,7 +14,7 @@ export default function Methodology() {
   const { ref: stepsRef,  inView: stepsInView  } = useInView(0.15);
 
   return (
-    <section id="methodology" className="relative overflow-hidden bg-black px-6 py-24 md:py-32">
+    <section id="methodology" className="relative overflow-hidden px-6 py-24 md:py-32">
 
       {/* Top border line */}
       <div className="absolute top-0 left-[10%] right-[10%] h-px pointer-events-none"

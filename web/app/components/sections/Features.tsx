@@ -72,7 +72,7 @@ export default function Features() {
   const { ref: headerRef, inView: headerInView } = useInView(0.2);
 
   return (
-    <section id="features" className="relative bg-black px-6 py-24 md:py-32">
+    <section id="features" className="relative px-6 py-24 md:py-32">
 
       {/* Top border line */}
       <div

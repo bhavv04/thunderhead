@@ -12,7 +12,7 @@ export default function Navbar() {
 	const [open, setOpen] = useState(false);
 
 	return (
-		<header className="sticky top-0 z-50 border-b border-white/10 bg-[var(--bg)]/90 backdrop-blur-xl">
+		<header className="sticky top-0 z-50 border-b border-white/10 bg-zinc-950/95 backdrop-blur-xl">
 			<div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
 				<a href="#top" className="flex items-center gap-3" onClick={() => setOpen(false)}>
 					<div>
@@ -69,7 +69,7 @@ export default function Navbar() {
 				</button>
 			</div>
 
-			<div className={`border-t border-white/10 bg-[var(--bg)]/95 px-4 pb-4 pt-2 backdrop-blur-xl md:hidden ${open ? "block" : "hidden"}`}>
+			<div className={`border-t border-white/10 bg-zinc-950/95 px-4 pb-4 pt-2 backdrop-blur-xl md:hidden ${open ? "block" : "hidden"}`}>
 				<nav className="mx-auto flex w-full max-w-7xl flex-col gap-2" aria-label="Mobile navigation">
 					{links.map((link) => (
 						<a

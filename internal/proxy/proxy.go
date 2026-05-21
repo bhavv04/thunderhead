@@ -17,6 +17,7 @@ import (
 	"github.com/bhavv04/thunderhead/internal/blocklist"
 	"github.com/bhavv04/thunderhead/internal/config"
 	"github.com/bhavv04/thunderhead/internal/logger"
+	"github.com/bhavv04/thunderhead/internal/metrics"
 )
 
 type Proxy struct {
@@ -26,13 +27,11 @@ type Proxy struct {
 	upstream  *httputil.ReverseProxy
 	allowlist *allowlist.Allowlist
 	blocklist *blocklist.Blocklist
+	metrics *metrics.Counters
 }
 
 //go:embed dashboard.html
 var dashboardHTML string
-
-//go:embed dashboard.css
-var dashboardCSS string
 
 type dashboardData struct {
 	CSS             string
@@ -49,11 +48,19 @@ func New(cfg *config.Config, az *analyzer.Analyzer, log *logger.Logger, al *allo
 	if err != nil {
 		return nil, err
 	}
+
+	rp := httputil.NewSingleHostReverseProxy(target)
+	rp.Director = func(req *http.Request) {
+		req.URL.Scheme = target.Scheme
+		req.URL.Host = target.Host
+		req.Host = target.Host
+	}
+
 	return &Proxy{
 		cfg:       cfg,
 		analyzer:  az,
 		logger:    log,
-		upstream:  httputil.NewSingleHostReverseProxy(target),
+		upstream:  rp,
 		allowlist: al,
 		blocklist: bl,
 	}, nil
@@ -102,6 +109,15 @@ func (p *Proxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		Action:    action,
 		UserAgent: r.Header.Get("User-Agent"),
 	})
+
+	if p.metrics != nil {
+		p.metrics.Total.Add(1)
+		switch action {
+		case "block":  p.metrics.Blocked.Add(1)
+		case "tarpit": p.metrics.Tarpit.Add(1)
+		default:       p.metrics.Allowed.Add(1)
+		}
+	}
 
 	switch action {
 	case "block":
@@ -170,7 +186,6 @@ func renderDashboard(status map[string]analyzer.ClientStatus, cfg *config.Config
 	}
 
 	data := dashboardData{
-		CSS:             dashboardCSS,
 		ListenAddr:      cfg.ListenAddr,
 		UpstreamURL:     cfg.UpstreamURL,
 		ClientCount:     len(status),
@@ -195,4 +210,12 @@ func extractIP(r *http.Request) string {
 		return r.RemoteAddr
 	}
 	return ip
+}
+
+func NewWithMetrics(cfg *config.Config, az *analyzer.Analyzer, log *logger.Logger,
+    al *allowlist.Allowlist, bl *blocklist.Blocklist, mx *metrics.Counters) (*Proxy, error) {
+    p, err := New(cfg, az, log, al, bl)
+    if err != nil { return nil, err }
+    p.metrics = mx
+    return p, nil
 }
