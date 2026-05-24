@@ -16,11 +16,6 @@ export default function Methodology() {
   return (
     <section id="methodology" className="relative overflow-hidden px-6 py-24 md:py-32">
 
-      {/* Top border line */}
-      <div className="absolute top-0 left-[10%] right-[10%] h-px pointer-events-none"
-        style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)" }}
-      />
-
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-16 md:gap-20">
 
         {/* Header */}

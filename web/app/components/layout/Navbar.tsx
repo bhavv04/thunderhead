@@ -12,7 +12,7 @@ export default function Navbar() {
 	const [open, setOpen] = useState(false);
 
 	return (
-		<header className="sticky top-0 z-50 border-b border-white/10 bg-zinc-950/95 backdrop-blur-xl">
+		<header className="sticky top-0 z-50 backdrop-blur-xl">
 			<div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
 				<a href="#top" className="flex items-center gap-3" onClick={() => setOpen(false)}>
 					<div>

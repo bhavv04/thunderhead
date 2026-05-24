@@ -14,9 +14,7 @@ export default function Hero() {
 
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-24 md:py-32">
-
       <div className="relative z-10 flex w-full max-w-6xl flex-col gap-12 md:gap-16">
-
         <div className="grid w-full grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-12">
 
           {/* Left: copy */}

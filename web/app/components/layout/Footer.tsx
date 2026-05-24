@@ -14,7 +14,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="border-t border-white/10 bg-zinc-950 backdrop-blur-xl px-6 py-16">
+    <footer className="border-t border-white/10 bg-zinc-950/95 backdrop-blur-xl px-6 py-16">
       <div className="mx-auto max-w-6xl">
 
         {/* Top row */}
