@@ -80,7 +80,7 @@ export default function Hero() {
                 View on GitHub
               </a>
 
-              <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-zinc-950 px-4 py-2">
+              <div className="flex items-center gap-2 rounded-lg border border-white/10 backdrop-blur-xl bg-black/70 px-4 py-2">
                 <span className="text-sm text-zinc-400">
                   <span className="text-zinc-600">$</span>{" "}
                   <span className="text-zinc-200">go run ./cmd/thunderhead</span>

@@ -69,7 +69,7 @@ export default function Navbar() {
 				</button>
 			</div>
 
-			<div className={`border-t border-white/10 bg-zinc-950/95 px-4 pb-4 pt-2 backdrop-blur-xl md:hidden ${open ? "block" : "hidden"}`}>
+			<div className={`px-4 pb-4 pt-2 backdrop-blur-xl md:hidden ${open ? "block" : "hidden"}`}>
 				<nav className="mx-auto flex w-full max-w-7xl flex-col gap-2" aria-label="Mobile navigation">
 					{links.map((link) => (
 						<a

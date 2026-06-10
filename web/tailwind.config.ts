@@ -43,6 +43,15 @@ const config: Config = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      animation: {
+        ripple: "ripple 3400ms ease infinite backwards",
+      },
+      keyframes: {
+        ripple: {
+          "0%, 100%": { transform: "translate(-50%, -50%) scale(1)" },
+          "50%": { transform: "translate(-50%, -50%) scale(0.9)" },
+        },
+      },
     },
   },
   plugins: [],
