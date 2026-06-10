@@ -22,7 +22,7 @@ export default function Footer() {
 
           {/* Brand */}
           <div className="max-w-sm">
-            <div className="mb-3 text-base font-semibold tracking-tight text-white">
+            <div className="mb-3 text-white">
               thunderhead
             </div>
             <p className="m-0 max-w-[36ch] text-sm leading-relaxed text-zinc-500">

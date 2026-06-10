@@ -1,107 +1,190 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const links = [
-	{ label: "Methodology", href: "#methodology" },
-	{ label: "Features", href: "#features" },
-	{ label: "GitHub", href: "https://github.com/bhavv04/thunderhead" },
+  { label: "Methodology", href: "#methodology" },
+  { label: "Features", href: "#features" },
+  { label: "Quickstart", href: "#quickstart" },
 ];
 
+const GITHUB_URL = "https://github.com/bhavv04/thunderhead";
+
 export default function Navbar() {
-	const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState("");
+  const [hoveringGithub, setHoveringGithub] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-	return (
-		<header className="sticky top-0 z-50 backdrop-blur-xl">
-			<div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-				<a href="#top" className="flex items-center gap-3" onClick={() => setOpen(false)}>
-					<div>
-						<div className="text-lg text-white/90">
-							thunderhead
-						</div>
-						<div className="text-xs text-white/45">
-							Passive intent scoring
-						</div>
-					</div>
-				</a>
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 20);
 
-				<nav className="hidden items-center gap-8 md:flex" aria-label="Primary navigation">
-					{links.map((link) => (
-						<a
-							key={link.label}
-							href={link.href}
-							className="text-sm text-white/65 transition-colors hover:text-white"
-						>
-							{link.label}
-						</a>
-					))}
-				</nav>
+      // Determine active section based on scroll position
+      const sectionIds = links.map((l) => l.href.replace("#", ""));
+      let current = "";
 
-				<div className="hidden items-center gap-3 md:flex">
-					<a
-						href="#methodology"
-						className="rounded-full border border-white/10 px-4 py-2 text-sm text-white/75 transition-colors hover:border-white/20 hover:text-white"
-					>
-						Learn more
-					</a>
-					<a
-						href="https://github.com/bhavv04/thunderhead"
-						target="_blank"
-						rel="noreferrer"
-						className="rounded-full bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-black transition-opacity hover:opacity-90"
-					>
-						View on GitHub
-					</a>
-				</div>
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 120) current = id;
+        }
+      }
 
-				<button
-					type="button"
-					className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/80 transition-colors hover:border-white/20 hover:bg-white/10 md:hidden"
-					aria-label={open ? "Close menu" : "Open menu"}
-					aria-expanded={open}
-					onClick={() => setOpen((value) => !value)}
-				>
-					<span className="flex flex-col gap-1.5">
-						<span className={`h-0.5 w-5 rounded-full bg-current transition-transform ${open ? "translate-y-2 rotate-45" : ""}`} />
-						<span className={`h-0.5 w-5 rounded-full bg-current transition-opacity ${open ? "opacity-0" : ""}`} />
-						<span className={`h-0.5 w-5 rounded-full bg-current transition-transform ${open ? "-translate-y-2 -rotate-45" : ""}`} />
-					</span>
-				</button>
-			</div>
+      // If scrolled near top, clear active
+      if (window.scrollY < 80) current = "";
+      setActive(current);
+    };
 
-			<div className={`px-4 pb-4 pt-2 backdrop-blur-xl md:hidden ${open ? "block" : "hidden"}`}>
-				<nav className="mx-auto flex w-full max-w-7xl flex-col gap-2" aria-label="Mobile navigation">
-					{links.map((link) => (
-						<a
-							key={link.label}
-							href={link.href}
-							onClick={() => setOpen(false)}
-							className="rounded-2xl px-4 py-3 text-sm text-white/75 transition-colors hover:bg-white/5 hover:text-white"
-						>
-							{link.label}
-						</a>
-					))}
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-					<div className="mt-2 flex gap-3 px-1">
-						<a
-							href="#features"
-							onClick={() => setOpen(false)}
-							className="flex-1 rounded-full border border-white/10 px-4 py-3 text-center text-sm text-white/80 transition-colors hover:border-white/20 hover:text-white"
-						>
-							Learn more
-						</a>
-						<a
-							href="https://github.com/bhavv04/thunderhead"
-							target="_blank"
-							rel="noreferrer"
-							onClick={() => setOpen(false)}
-							className="flex-1 rounded-full bg-[var(--accent)] px-4 py-3 text-center text-sm font-semibold text-black transition-opacity hover:opacity-90"
-						>
-							View on GitHub
-						</a>
-					</div>
-				</nav>
-			</div>
-		</header>
-	);
+  const linkClass = (id: string) =>
+    `px-4 py-1.5 rounded-full text-sm transition-all duration-300 ease-in-out ${
+      active === id
+        ? "text-white bg-white/15"
+        : "text-white/50 hover:text-white/90 hover:bg-white/8"
+    }`;
+
+  return (
+    <nav className="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-max max-w-[calc(100vw-2rem)]">
+      {/* Desktop */}
+      <div
+        className={`
+          hidden sm:flex items-center gap-1 px-3 py-2 rounded-full
+          border border-white/10 backdrop-blur-md bg-white/5
+          shadow-[0_0_0_1px_rgba(255,255,255,0.04),0_8px_32px_rgba(0,0,0,0.4)]
+          transition-all duration-500 ease-in-out
+          ${scrolled ? "bg-white/8 shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_12px_40px_rgba(0,0,0,0.6)]" : ""}
+        `}
+      >
+        <a
+          href="#"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="px-4 py-1.5 rounded-full text-sm text-white tracking-tight transition-all duration-300 hover:bg-white/10 cursor-pointer font-semibold tracking-tight"
+        >
+          thunderhead
+        </a>
+
+        <span className="w-px h-4 bg-white/10 mx-1" />
+
+        {links.map((link) => (
+          <a
+            key={link.label}
+            href={link.href}
+            className={linkClass(link.href.replace("#", ""))}
+          >
+            {link.label}
+          </a>
+        ))}
+
+        <span className="w-px h-4 bg-white/10 mx-1" />
+
+        <a
+          href={GITHUB_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          onMouseEnter={() => setHoveringGithub(true)}
+          onMouseLeave={() => setHoveringGithub(false)}
+          className="flex items-center gap-2 px-4 py-1.5 rounded-full text-sm
+            bg-white/10 border border-white/15 text-white
+            hover:bg-white/20 hover:border-white/25
+            transition-all duration-300 ease-in-out overflow-hidden"
+        >
+          <span>View on GitHub</span>
+          <span
+            className={`inline-flex transition-transform duration-300 ease-in-out
+              ${hoveringGithub ? "translate-x-0.5 -translate-y-0.5" : ""}`}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="13" height="13"
+              viewBox="0 0 24 24"
+              fill="none" stroke="currentColor"
+              strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+              className={`transition-all duration-300 ${hoveringGithub ? "opacity-100" : "opacity-60"}`}
+            >
+              <line x1="7" y1="17" x2="17" y2="7" />
+              <polyline points="7 7 17 7 17 17" />
+            </svg>
+          </span>
+        </a>
+      </div>
+
+      {/* Mobile */}
+      <div className="sm:hidden flex flex-col items-center gap-2">
+        {/* Mobile pill bar */}
+        <div
+          className={`
+            flex items-center justify-between px-3 py-2 rounded-full w-[calc(100vw-2rem)]
+            border border-white/10 backdrop-blur-md bg-white/5
+            shadow-[0_0_0_1px_rgba(255,255,255,0.04),0_8px_32px_rgba(0,0,0,0.4)]
+            transition-all duration-500
+            ${scrolled ? "bg-white/8" : ""}
+          `}
+        >
+          <a
+            href="#"
+            onClick={() => { window.scrollTo({ top: 0, behavior: "smooth" }); setMenuOpen(false); }}
+            className="px-3 py-1 rounded-full text-sm text-white tracking-tight"
+          >
+            thunderhead
+          </a>
+
+          <div className="flex items-center gap-2">
+            <a
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs
+                bg-white/10 border border-white/15 text-white
+                hover:bg-white/20 transition-all duration-300"
+            >
+              GitHub
+              <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                className="opacity-70">
+                <line x1="7" y1="17" x2="17" y2="7" />
+                <polyline points="7 7 17 7 17 17" />
+              </svg>
+            </a>
+
+            {/* Hamburger */}
+            <button
+              onClick={() => setMenuOpen((o) => !o)}
+              className="w-8 h-8 flex flex-col items-center justify-center gap-1.5 rounded-full hover:bg-white/10 transition-all duration-300"
+              aria-label="Toggle menu"
+            >
+              <span className={`block w-4 h-px bg-white/70 transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-[3.5px]" : ""}`} />
+              <span className={`block w-4 h-px bg-white/70 transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-[3.5px]" : ""}`} />
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile dropdown */}
+        <div
+          className={`
+            flex flex-col w-[calc(100vw-2rem)] rounded-2xl overflow-hidden
+            border border-white/10 backdrop-blur-md bg-white/5
+            transition-all duration-300 ease-in-out
+            ${menuOpen ? "max-h-48 opacity-100" : "max-h-0 opacity-0 pointer-events-none"}
+          `}
+        >
+          {links.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+              className={`px-5 py-3 text-sm border-b border-white/5 last:border-0 transition-all duration-200
+                ${active === link.href.replace("#", "") ? "text-white bg-white/10" : "text-white/50 hover:text-white hover:bg-white/8"}`}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </div>
+    </nav>
+  );
 }

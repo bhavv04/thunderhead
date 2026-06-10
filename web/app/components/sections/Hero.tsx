@@ -21,16 +21,17 @@ export default function Hero() {
           <div className="flex flex-col items-center gap-6 text-center md:items-start md:text-left">
             {/* Badge */}
             <div
-              className="transition-[opacity,transform] duration-700"
+              className="transition-[opacity,transform] duration-700 inline-flex items-center gap-2"
               style={{
                 opacity: mounted ? 1 : 0,
                 transform: mounted ? "translateY(0)" : "translateY(12px)",
                 transitionDelay: "0ms",
               }}
             >
-              <div className="inline-flex items-center border border-white/20 px-3 py-1 text-xs text-zinc-400 rounded-full">
-                Open source · No third-party services
-              </div>
+              <img src="/thunderhead.png" alt="Thunderhead Logo" className="h-12 w-12" />
+              <span className="text-white">
+                open source, no third party software
+              </span>
             </div>
 
             {/* Headline */}
