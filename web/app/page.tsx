@@ -8,7 +8,7 @@ import { BackgroundBeams } from "@/components/ui/beams" // adjust path
 
 export default function Home() {
   return (
-    <main id="top" className="min-h-screen font-sans mesh-bg">
+    <main id="top" className="min-h-screen font-sans bg-neutral-950">
       <BackgroundBeams />
       <Navbar />
       <Hero />
