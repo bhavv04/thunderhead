@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react";
 
 const links = [
-  { label: "Methodology", href: "#methodology" },
-  { label: "Features", href: "#features" },
-  { label: "Quickstart", href: "#quickstart" },
+    { label: "Methodology", href: "#methodology" },
+    { label: "Features", href: "#features" },
+    { label: "Quickstart", href: "#quickstart" },
 ];
 
 const GITHUB_URL = "https://github.com/bhavv04/thunderhead";
@@ -19,11 +19,8 @@ export default function Navbar() {
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 20);
-
-      // Determine active section based on scroll position
       const sectionIds = links.map((l) => l.href.replace("#", ""));
       let current = "";
-
       for (const id of sectionIds) {
         const el = document.getElementById(id);
         if (el) {
@@ -31,18 +28,15 @@ export default function Navbar() {
           if (rect.top <= 120) current = id;
         }
       }
-
-      // If scrolled near top, clear active
       if (window.scrollY < 80) current = "";
       setActive(current);
     };
-
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const linkClass = (id: string) =>
-    `px-4 py-1.5 rounded-full text-sm transition-all duration-300 ease-in-out ${
+    `px-3 py-1.5 rounded-full text-sm transition-all duration-300 ease-in-out ${
       active === id
         ? "text-white bg-white/15"
         : "text-white/50 hover:text-white/90 hover:bg-white/8"
@@ -53,45 +47,45 @@ export default function Navbar() {
       {/* Desktop */}
       <div
         className={`
-          hidden sm:flex items-center gap-1 px-3 py-2 rounded-full
+          hidden sm:flex items-center px-2 py-2 rounded-full
           border border-white/10 backdrop-blur-md bg-white/5
           shadow-[0_0_0_1px_rgba(255,255,255,0.04),0_8px_32px_rgba(0,0,0,0.4)]
           transition-all duration-500 ease-in-out
           ${scrolled ? "bg-white/8 shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_12px_40px_rgba(0,0,0,0.6)]" : ""}
         `}
       >
+        {/* Brand */}
         <a
-          href="#"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="px-2 py-1.5 rounded-full text-sm transition-all duration-300 ease-in-out text-white hover:bg-white/10"
+          href="#top"
+          className="px-3 py-1.5 text-sm text-white/90 font-medium rounded-full hover:text-white transition-all duration-300 hover:text-white/90 hover:bg-white/8"
         >
           thunderhead
         </a>
 
-        <span className="w-px h-4 bg-white/10 mx-1" />
+        {/* Nav links */}
+        <div className="flex items-center gap-0.5">
+          {links.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              className={linkClass(link.href.replace("#", ""))}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
 
-        {links.map((link) => (
-          <a
-            key={link.label}
-            href={link.href}
-            className={linkClass(link.href.replace("#", ""))}
-          >
-            {link.label}
-          </a>
-        ))}
-
-        <span className="w-px h-4 bg-white/10 mx-1" />
-
+        {/* GitHub */}
         <a
           href={GITHUB_URL}
           target="_blank"
           rel="noopener noreferrer"
           onMouseEnter={() => setHoveringGithub(true)}
           onMouseLeave={() => setHoveringGithub(false)}
-          className="flex items-center gap-2 px-4 py-1.5 rounded-full text-sm
+          className="ml-1 flex items-center gap-2 px-3 py-1.5 rounded-full text-sm
             bg-white/10 border border-white/15 text-white
             hover:bg-white/20 hover:border-white/25
-            transition-all duration-300 ease-in-out overflow-hidden"
+            transition-all duration-300 ease-in-out"
         >
           <span>View on GitHub</span>
           <span
@@ -115,7 +109,6 @@ export default function Navbar() {
 
       {/* Mobile */}
       <div className="sm:hidden flex flex-col items-center gap-2">
-        {/* Mobile pill bar */}
         <div
           className={`
             flex items-center justify-between px-3 py-2 rounded-full w-[calc(100vw-2rem)]
@@ -126,9 +119,9 @@ export default function Navbar() {
           `}
         >
           <a
-            href="#"
+            href="#top"
             onClick={() => { window.scrollTo({ top: 0, behavior: "smooth" }); setMenuOpen(false); }}
-            className="px-3 py-1 rounded-full text-sm text-white tracking-tight"
+            className="px-3 py-1 rounded-full text-sm text-white font-medium"
           >
             thunderhead
           </a>
@@ -150,8 +143,6 @@ export default function Navbar() {
                 <polyline points="7 7 17 7 17 17" />
               </svg>
             </a>
-
-            {/* Hamburger */}
             <button
               onClick={() => setMenuOpen((o) => !o)}
               className="w-8 h-8 flex flex-col items-center justify-center gap-1.5 rounded-full hover:bg-white/10 transition-all duration-300"
@@ -163,7 +154,6 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile dropdown */}
         <div
           className={`
             flex flex-col w-[calc(100vw-2rem)] rounded-2xl overflow-hidden

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import CopyButton from "../ui/Hero/CopyButton";
 import LogFeed from "../ui/Hero/Logfeed";
 import { FiGithub } from "react-icons/fi";
 import { RainbowButton } from "@/components/ui/rainbow-button";
