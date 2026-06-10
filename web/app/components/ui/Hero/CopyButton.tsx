@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export default function CopyButton({ text }: { text: string }) {
+export default function CopyButton({ text, className }: { text: string; className?: string }) {
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {
@@ -15,7 +15,7 @@ export default function CopyButton({ text }: { text: string }) {
     <button
       onClick={copy}
       title="Copy command"
-      className={`flex items-center bg-transparent border-none cursor-pointer p-[2px] transition-colors duration-200 ${copied ? "text-green-500" : "text-zinc-600"}`}
+      className={`flex items-center bg-transparent border-none cursor-pointer p-[2px] transition-colors duration-200 ${copied ? "text-green-500" : "text-zinc-600"} ${className || ""}`}
     >
       {copied ? (
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

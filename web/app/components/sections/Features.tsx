@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import SectionLabel from "../ui/SectionLabel";
 import { useInView } from "../ui/Methodology/useInView";
 import FeatureCard, { type FeatureCardProps } from "../ui/Features/FeatureCard";

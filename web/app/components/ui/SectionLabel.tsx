@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 export default function SectionLabel({ children }: { children: ReactNode }) {
   return (
-    <span className="inline-flex items-center text-xs font-bold">
+    <span className="inline-flex items-center text-xs font-bold text-white">
       {children}
     </span>
   );

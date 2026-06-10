@@ -63,7 +63,7 @@ export default function Navbar() {
         <a
           href="#"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="px-4 py-1.5 rounded-full text-sm text-white tracking-tight transition-all duration-300 hover:bg-white/10 cursor-pointer font-semibold tracking-tight"
+          className="px-2 py-1.5 rounded-full text-sm transition-all duration-300 ease-in-out text-white hover:bg-white/10"
         >
           thunderhead
         </a>

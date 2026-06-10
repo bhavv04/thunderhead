@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import CopyButton from "../ui/Hero/CopyButton";
 import LogFeed from "../ui/Hero/Logfeed";
+import { FiGithub } from "react-icons/fi";
+import { RainbowButton } from "@/components/ui/rainbow-button";
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
@@ -28,10 +30,8 @@ export default function Hero() {
                 transitionDelay: "0ms",
               }}
             >
-              <img src="/thunderhead.png" alt="Thunderhead Logo" className="h-12 w-12" />
-              <span className="text-white">
-                open source, no third party software
-              </span>
+              <img src="/thunderhead.png" alt="Thunderhead" className="h-6 w-6 rounded-full" />
+            <span className="text-sm text-zinc-400">open source · no third-party software</span>
             </div>
 
             {/* Headline */}
@@ -74,20 +74,19 @@ export default function Hero() {
                 transitionDelay: "240ms",
               }}
             >
-              <a
-                href="https://github.com/bhavv04/thunderhead"
-                className="btn btn-primary"
-              >
-                View on GitHub
-              </a>
+              <RainbowButton variant="default" asChild size="lg" className="!bg-[linear-gradient(#fff,#fff),linear-gradient(#fff_50%,rgba(255,255,255,0.6)_80%,rgba(0,0,0,0)),linear-gradient(90deg,var(--color-1),var(--color-5),var(--color-3),var(--color-4),var(--color-2))] !text-black">
+                <a href="https://github.com/bhavv04/thunderhead" target="_blank" rel="noopener noreferrer">
+                    <FiGithub className="size-4" />
+                    View on GitHub
+                </a>
+                </RainbowButton>
 
-              <div className="flex items-center gap-2 rounded-lg border border-white/10 backdrop-blur-xl bg-black/70 px-4 py-2">
-                <span className="text-sm text-zinc-400">
-                  <span className="text-zinc-600">$</span>{" "}
-                  <span className="text-zinc-200">go run ./cmd/thunderhead</span>
-                </span>
-                <CopyButton text="go run ./cmd/thunderhead" />
-              </div>
+                <div className="inline-flex items-center gap-2.5 rounded-lg border border-white/10 bg-white/5 px-3 py-2">
+                    <span className="text-sm text-zinc-600 select-none">$</span>
+                    <span className="text-sm text-zinc-200">go run ./cmd/thunderhead</span>
+                    <span className="h-4 w-px bg-white/10 shrink-0" />
+                    <CopyButton text="go run ./cmd/thunderhead" />
+                </div>
             </div>
           </div>
 
