@@ -81,12 +81,6 @@ export default function Hero() {
                 </a>
                 </RainbowButton>
 
-                <div className="inline-flex items-center gap-2.5 rounded-lg border border-white/10 bg-white/5 px-3 py-2">
-                    <span className="text-sm text-zinc-600 select-none">$</span>
-                    <span className="text-sm text-zinc-200">go run ./cmd/thunderhead</span>
-                    <span className="h-4 w-px bg-white/10 shrink-0" />
-                    <CopyButton text="go run ./cmd/thunderhead" />
-                </div>
             </div>
           </div>
 
