@@ -32,8 +32,11 @@ type Config struct {
 	Thresholds  Thresholds       `json:"thresholds"`
 	Tarpit      TarpitConfig     `json:"tarpit"`
 	LogFile     string           `json:"log_file"`
+	ExpiryDays  int              `json:"expiry_days"`
 	Allowlist   allowlist.Config `json:"allowlist"`
-	Blocklist blocklist.Config `json:"blocklist"`
+	Blocklist   blocklist.Config `json:"blocklist"`
+	TLSCert     string           `json:"tls_cert"`
+	TLSKey      string           `json:"tls_key"`
 }
 
 func Default() *Config {
@@ -47,7 +50,8 @@ func Default() *Config {
 		Tarpit: TarpitConfig{
 			Delay: 5 * time.Second,
 		},
-		LogFile: "",
+		LogFile:    "",
+		ExpiryDays: 30,
 		Allowlist: allowlist.Config{
 			IPs:        []string{},
 			UserAgents: []string{"Googlebot", "Bingbot", "archive.org_bot"},
@@ -56,7 +60,7 @@ func Default() *Config {
 			CIDRs: []string{},
 			IPs:   []string{},
 		},
-		}
+	}
 }
 
 func Load(path string) (*Config, error) {

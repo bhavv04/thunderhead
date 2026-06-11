@@ -245,3 +245,26 @@ func (a *Analyzer) Snapshot() map[string]store.ClientRecord {
 	}
 	return out
 }
+
+func (a *Analyzer) PruneExpired(days int) int {
+	if days <= 0 {
+		return 0
+	}
+
+	cutoff := time.Now().AddDate(0, 0, -days)
+	a.mu.Lock()
+	defer a.mu.Unlock()
+
+	pruned := 0
+	for ip, client := range a.clients {
+		client.mu.Lock()
+		lastSeen := client.lastSeen
+		client.mu.Unlock()
+
+		if !lastSeen.IsZero() && lastSeen.Before(cutoff) {
+			delete(a.clients, ip)
+			pruned++
+		}
+	}
+	return pruned
+}

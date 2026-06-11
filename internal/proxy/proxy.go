@@ -28,6 +28,7 @@ type Proxy struct {
 	allowlist *allowlist.Allowlist
 	blocklist *blocklist.Blocklist
 	metrics *metrics.Counters
+	dryRun    bool
 }
 
 //go:embed dashboard.html
@@ -121,10 +122,14 @@ func (p *Proxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	switch action {
 	case "block":
-		http.Error(w, "Forbidden", http.StatusForbidden)
-		return
+		if !p.dryRun {
+			http.Error(w, "Forbidden", http.StatusForbidden)
+			return
+		}
 	case "tarpit":
-		time.Sleep(p.cfg.Tarpit.Delay)
+		if !p.dryRun {
+			time.Sleep(p.cfg.Tarpit.Delay)
+		}
 	}
 
 	p.upstream.ServeHTTP(w, r)
@@ -212,10 +217,10 @@ func extractIP(r *http.Request) string {
 	return ip
 }
 
-func NewWithMetrics(cfg *config.Config, az *analyzer.Analyzer, log *logger.Logger,
-    al *allowlist.Allowlist, bl *blocklist.Blocklist, mx *metrics.Counters) (*Proxy, error) {
+func NewWithMetrics(cfg *config.Config, az *analyzer.Analyzer, log *logger.Logger, al *allowlist.Allowlist, bl *blocklist.Blocklist, mx *metrics.Counters, dryRun bool) (*Proxy, error) {
     p, err := New(cfg, az, log, al, bl)
     if err != nil { return nil, err }
     p.metrics = mx
+    p.dryRun = dryRun
     return p, nil
 }

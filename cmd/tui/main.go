@@ -365,6 +365,7 @@ func min(a, b int) int {
 func main() {
 	cfgPath   := flag.String("config", "", "path to config file (optional)")
 	statePath := flag.String("state", "state.json", "path to state file")
+	dryRun := flag.Bool("dry-run", false, "score requests but never tarpit or block")
 	flag.Parse()
 
 	log.SetOutput(os.Stderr)
@@ -406,7 +407,7 @@ func main() {
 	al := allowlist.New(cfg.Allowlist)
 	bl := blocklist.New(cfg.Blocklist)
 
-	p, err := proxy.NewWithMetrics(cfg, az, lg, al, bl, mx)
+	p, err := proxy.NewWithMetrics(cfg, az, lg, al, bl, mx, *dryRun)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "failed to init proxy: %v\n", err)
 		os.Exit(1)
@@ -420,6 +421,19 @@ func main() {
 		}
 	}()
 
+	go func() {
+		ticker := time.NewTicker(24 * time.Hour)
+		defer ticker.Stop()
+		for range ticker.C {
+			pruned := az.PruneExpired(cfg.ExpiryDays)
+			if pruned > 0 {
+				fmt.Fprintf(os.Stderr, "thunderhead: pruned %d expired clients\n", pruned)
+			}
+		}
+	}()
+
+	watchConfig(*cfgPath, cfg)
+
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	go func() {
@@ -429,7 +443,14 @@ func main() {
 	}()
 
 	go func() {
-		if err := http.ListenAndServe(cfg.ListenAddr, p); err != nil {
+		var err error
+		if cfg.TLSCert != "" && cfg.TLSKey != "" {
+			fmt.Fprintf(os.Stderr, "thunderhead: TLS enabled\n")
+			err = http.ListenAndServeTLS(cfg.ListenAddr, cfg.TLSCert, cfg.TLSKey, p)
+		} else {
+			err = http.ListenAndServe(cfg.ListenAddr, p)
+		}
+		if err != nil {
 			fmt.Fprintf(os.Stderr, "server error: %v\n", err)
 			os.Exit(1)
 		}
@@ -443,4 +464,37 @@ func main() {
 		fmt.Fprintf(os.Stderr, "tui error: %v\n", err)
 		os.Exit(1)
 	}
+}
+
+func watchConfig(path string, cfg *config.Config) {
+	if path == "" {
+		return
+	}
+
+	var lastMod time.Time
+
+	go func() {
+		ticker := time.NewTicker(3 * time.Second)
+		defer ticker.Stop()
+		for range ticker.C {
+			info, err := os.Stat(path)
+			if err != nil {
+				continue
+			}
+			if info.ModTime().After(lastMod) {
+				lastMod = info.ModTime()
+				newCfg, err := config.Load(path)
+				if err != nil {
+					fmt.Fprintf(os.Stderr, "thunderhead: config reload failed: %v\n", err)
+					continue
+				}
+				cfg.Thresholds = newCfg.Thresholds
+				cfg.Tarpit = newCfg.Tarpit
+				cfg.Allowlist = newCfg.Allowlist
+				cfg.Blocklist = newCfg.Blocklist
+				cfg.ExpiryDays = newCfg.ExpiryDays
+				fmt.Fprintf(os.Stderr, "thunderhead: config reloaded\n")
+			}
+		}
+	}()
 }

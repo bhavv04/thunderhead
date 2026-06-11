@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -70,6 +71,17 @@ func main() {
 				log.Printf("warning: could not save state: %v", err)
 			} else {
 				log.Printf("thunderhead: state flushed to disk")
+			}
+		}
+	}()
+
+	go func() {
+		ticker := time.NewTicker(24 * time.Hour)
+		defer ticker.Stop()
+		for range ticker.C {
+			pruned := az.PruneExpired(cfg.ExpiryDays)
+			if pruned > 0 {
+				fmt.Fprintf(os.Stderr, "thunderhead: pruned %d expired clients\n", pruned)
 			}
 		}
 	}()
