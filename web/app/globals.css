@@ -427,3 +427,24 @@
   overflow: hidden;
 }
 
+.gradient-blinds-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+
+.beams-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.prism-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+
