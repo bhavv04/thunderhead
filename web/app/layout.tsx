@@ -7,9 +7,17 @@ const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
 const mono = Geist_Mono({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Thunderhead",
-  description: "Passive intent-scoring reverse proxy. No CAPTCHAs, no Cloudflare — just behavior.",
+export const metadata = {
+    title: "Thunderhead",
+    description: "Passive intent-scoring reverse proxy. No CAPTCHAs, no Cloudflare - just behavior.",
+    icons: {
+        icon: [
+        { url: "/favicon-16.png", sizes: "16x16", type: "image/png" },
+        { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+        { url: "/favicon-192.png", sizes: "192x192", type: "image/png" },
+        ],
+        apple: "/apple-touch-icon.png",
+    },
 };
 
 export default function RootLayout({

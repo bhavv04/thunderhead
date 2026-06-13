@@ -12,7 +12,7 @@ export function Sidebar({ page, setPage, blockCount, proxyUp, latency }: {
   return (
     <div className="w-[196px] shrink-0 bg-zinc-900 border-r border-zinc-800 flex flex-col">
       <div className="flex items-center gap-2.5 px-3.5 pt-3.5 pb-3 border-b border-zinc-800">
-        <div className="w-[26px] h-[26px] rounded-md bg-zinc-100 flex items-center justify-center shrink-0">
+        <div className="w-[26px] h-[26px] rounded-md bg-white flex items-center justify-center shrink-0">
           <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="#09090b" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
             <polyline points="3,9 7,2 11,9" />
             <line x1={4.5} y1={6.5} x2={9.5} y2={6.5} />
