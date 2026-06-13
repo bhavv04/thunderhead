@@ -4,20 +4,20 @@ import Hero from "./components/sections/Hero";
 import Methodology from "./components/sections/Methodology";
 import Features from "./components/sections/Features";
 import Quickstart from "./components/sections/Quickstart";
-import Prism  from '@/components/ui/prism'; 
+import PlasmaWave  from '@/components/ui/plasmawave'; 
 
 export default function Home() {
   return (
-    <main id="top" className="min-h-screen font-sans bg-black">
+    <main id="top" className="min-h-screen font-sans bg-black/95">
       <Navbar />
-      <div className="relative">
-        <div className="absolute inset-0 z-0 pointer-events-none">
-            <Prism />
-        </div>
-        <div className="relative z-10">
-          <Hero />
-        </div>
-      </div>
+<div className="relative">
+  <div className="absolute inset-0 z-0 pointer-events-none h-full">
+    <PlasmaWave />
+  </div>
+  <div className="relative z-10">
+    <Hero />
+  </div>
+</div>
       <Methodology />
       <Features />
       <Quickstart />

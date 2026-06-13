@@ -39,7 +39,7 @@ export default function InstallTerminal({ animate }: { animate: boolean }) {
             <div key={c} style={{ background: c }} className="w-3 h-3 rounded-full" />
           ))}
         </div>
-        <span className="text-sm">
+        <span className="text-sm text-white/70">
           thunderhead — install & run
         </span>
         <div className="w-10" />
