@@ -15,15 +15,15 @@ export function LiveFeedPage({ logs, onExport }: { logs: LogEntry[]; onExport: (
   );
 
   return (
-    <div className="flex-1 overflow-y-auto p-3 sm:p-[14px_18px] flex flex-col gap-2.5">
-      <div className="bg-zinc-900 border border-zinc-800 rounded-lg overflow-hidden flex flex-col" style={{ minHeight: 400 }}>
-        <div className="flex items-center justify-between px-3 py-2 border-b border-zinc-800 flex-wrap gap-2">
-          <div className="flex items-center gap-1.5">
+<div className="flex-1 overflow-hidden p-4 flex flex-col min-h-0">
+    <div className="bg-zinc-900 border border-zinc-800 rounded-lg overflow-hidden flex flex-col flex-1 min-h-0">
+      <div className="flex items-center justify-between px-3 py-2 flex-wrap gap-2 shrink-0">
+          <div className="flex items-center gap-2">   
             {(["all", "allow", "tarpit", "block"] as const).map(f => (
               <button
                 key={f}
                 onClick={() => setFilter(f)}
-                className={`px-2.5 py-0.5 rounded text-[10px] font-medium capitalize transition-colors cursor-pointer
+                className={`px-3 py-1 rounded text-xs transition-colors cursor-pointer
                   ${filter === f ? "bg-zinc-700 text-zinc-100" : "text-zinc-500 hover:text-zinc-300"}`}
               >
                 {f}
@@ -35,12 +35,12 @@ export function LiveFeedPage({ logs, onExport }: { logs: LogEntry[]; onExport: (
             <Btn size="xs" onClick={onExport}>Export CSV</Btn>
           </div>
         </div>
-        <div className="flex-1 overflow-y-auto" style={{ maxHeight: 480 }}>
+      <div className="flex-1 overflow-y-auto min-h-0">
           <LogTable logs={filtered} maxHeight={9999} flash />
         </div>
-        <div className="px-3 py-1.5 border-t border-zinc-800 text-[10px] text-zinc-500 flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-          Live — {filtered.length} of {logs.length} entries
+      <div className="px-3 py-1.5 border-t border-zinc-800 text-xs text-zinc-500 flex items-center gap-1.5 shrink-0">
+          <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+          Live — {filtered.length} of {logs.length} entries since last view
         </div>
       </div>
     </div>

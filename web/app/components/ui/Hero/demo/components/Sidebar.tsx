@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import type { Page } from "../types";
 import { NAV } from "../data";
 import { COLOR } from "../theme";
@@ -9,6 +10,9 @@ import { COLOR } from "../theme";
 export function Sidebar({ page, setPage, blockCount, proxyUp, latency }: {
   page: Page; setPage: (p: Page) => void; blockCount: number; proxyUp: boolean; latency: number;
 }) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   return (
     <div className="w-[196px] shrink-0 bg-zinc-900 border-r border-zinc-800 flex flex-col">
       <div className="flex items-center gap-2.5 px-3.5 pt-3.5 pb-3 border-b border-zinc-800">
@@ -38,7 +42,7 @@ export function Sidebar({ page, setPage, blockCount, proxyUp, latency }: {
               >
                 <i className={`ti ti-${item.icon} text-[15px] w-4 text-center shrink-0`} aria-hidden="true" />
                 <span className="flex-1 text-left">{item.label}</span>
-                {item.label === "Live feed" && blockCount > 0 && (
+                {item.label === "Live feed" && mounted && blockCount > 0 && (
                   <span
                     className="text-[10px] rounded px-[5px] py-px"
                     style={{ background: COLOR.block.bg, color: COLOR.block.text, border: `0.5px solid ${COLOR.block.border}` }}
@@ -54,10 +58,9 @@ export function Sidebar({ page, setPage, blockCount, proxyUp, latency }: {
 
       <div className="p-2 border-t border-zinc-800">
         <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-zinc-800 border border-zinc-700">
-          <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${proxyUp ? "bg-green-500" : "bg-red-500"}`} />
-          <span className="text-[11px] text-zinc-400">Proxy</span>
-          <span className="text-[11px] font-medium ml-auto text-zinc-100 tabular-nums">
-            {proxyUp ? `:8080 · ${latency}ms` : "offline"}
+          <span className="text-xs text-zinc-400">Proxy</span>
+          <span className="text-xs font-medium ml-auto text-zinc-100 tabular-nums">
+            {proxyUp ? "thunderhead.app": "offline"}
           </span>
         </div>
       </div>

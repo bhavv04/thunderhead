@@ -1,22 +1,22 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { LogEntry } from "../types";
 import { ActionBadge, ScoreChip } from "./ui";
-
-// ─── Log table (shared between Overview, Live feed, Logs) ──────────────────────
 
 export function LogTable({ logs, showTime = true, maxHeight = 186, flash = false }: {
   logs: LogEntry[]; showTime?: boolean; maxHeight?: number; flash?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   useEffect(() => { if (ref.current) ref.current.scrollTop = ref.current.scrollHeight; }, [logs]);
 
-  if (logs.length === 0) return <div className="px-3 py-4 text-[11px] text-zinc-500">No entries.</div>;
+  if (logs.length === 0) return <div className="px-3 py-4 text-zinc-500">No entries.</div>;
 
   return (
     <div ref={ref} style={{ maxHeight }} className="overflow-y-auto">
-      <table className="w-full border-collapse text-[11px]">
+      <table className="w-full border-collapse text-xs">
         <thead>
           <tr>
             {showTime && (
@@ -42,7 +42,7 @@ export function LogTable({ logs, showTime = true, maxHeight = 186, flash = false
           {logs.map((log, idx) => (
             <tr
               key={log.id}
-              className={`border-b border-zinc-800/60 transition-colors ${flash && idx === logs.length - 1 ? "animate-pulse" : ""}`}
+              className={`border-b border-zinc-800/60 transition-colors ${mounted && flash && idx === logs.length - 1 ? "" : ""}`}
             >
               {showTime && <td className="hidden sm:table-cell px-2.5 py-[5px] text-zinc-500 whitespace-nowrap tabular-nums">{log.time}</td>}
               <td className="px-2.5 py-[5px] text-zinc-400 whitespace-nowrap tabular-nums">{log.ip}</td>

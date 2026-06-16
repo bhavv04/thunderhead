@@ -16,12 +16,31 @@ import { SignalsPage } from "./pages/SignalsPage";
 import { LogsPage } from "./pages/LogsPage";
 import { SettingsPage } from "./pages/SettingsPage";
 import type { Action, LogEntry, Counts } from "./types";
+import type { TrafficBucket } from "./components/charts";
+import { SEED_LOGS, SEED_COUNTS, SEED_TRAFFIC } from "./seed";
 
 // ─── Main ──────────────────────────────────────────────────────────────────────
 
+function generateTrafficSeed(): TrafficBucket[] {
+  return Array.from({ length: 60 }, (_, i) => {
+    const base = 4 + Math.sin(i * 0.3) * 2 + Math.random() * 3;
+    const spike = i % 13 === 0 ? 6 : 0;
+    return {
+      allow:  Math.round(Math.max(base + spike, 1)),
+      tarpit: Math.round(Math.random() < 0.4 ? 1 + Math.random() * 2 : 0),
+      block:  Math.round(Math.random() < 0.15 ? 1 : 0),
+    };
+  });
+}
+
 export default function Demo() {
-  const [logs, setLogs]             = useState<LogEntry[]>([]);
-  const [counts, setCounts]         = useState<Counts>({ total: 0, allow: 0, tarpit: 0, block: 0 });
+    const BASE = 47_832;
+const [logs, setLogs]   = useState<LogEntry[]>(SEED_LOGS);
+const [counts, setCounts] = useState<Counts>(() =>
+  typeof window === "undefined"
+    ? { total: 0, allow: 0, tarpit: 0, block: 0 }
+    : SEED_COUNTS
+);
   const [clock, setClock]           = useState<string | null>(null);
   const [sparkData, setSparkData]   = useState<number[]>(new Array(20).fill(0));
   const [rpsDisplay, setRpsDisplay] = useState(0);
@@ -29,9 +48,15 @@ export default function Demo() {
   const [proxyUp, setProxyUp]       = useState(true);
   const [latency, setLatency]       = useState(12);
   const [thresholds, setThresholds] = useState({ tarpit: 40, block: 75 });
+  const [trafficBuckets, setTrafficBuckets] = useState<TrafficBucket[]>(
+  () => typeof window === "undefined"
+    ? Array.from({ length: 60 }, () => ({ allow: 3, tarpit: 1, block: 0 }))
+    : generateTrafficSeed()
+);
+  
 
   const accumRef = useRef(0);
-  const idRef    = useRef(0);
+  const idRef = useRef(SEED_LOGS.length);
 
   const addEntry = useCallback(() => {
     if (!proxyUp) return;
@@ -54,28 +79,43 @@ export default function Demo() {
     let timeout: ReturnType<typeof setTimeout>;
     let mounted = true;
     const schedule = () => {
-      const delay = Math.floor(Math.random() * 2000) + 2000;
+      const delay = Math.floor(Math.random() * 4000) + 12000;
       timeout = setTimeout(() => { if (!mounted) return; addEntry(); schedule(); }, delay);
     };
     schedule();
     return () => { mounted = false; clearTimeout(timeout); };
   }, [addEntry]);
 
-  useEffect(() => {
+useEffect(() => {
+  setClock(getTime());
+  const interval = setInterval(() => {
     setClock(getTime());
-    const interval = setInterval(() => {
-      setClock(getTime());
-      const rps = accumRef.current;
-      accumRef.current = 0;
-      setRpsDisplay(rps);
-      setSparkData(prev => [...prev.slice(1), rps]);
-      setLatency(Math.floor(Math.random() * 30) + 5 + (proxyUp ? 0 : 0));
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [proxyUp]);
+    const rps = accumRef.current;
+    accumRef.current = 0;
+    setRpsDisplay(rps);
+    setSparkData(prev => [...prev.slice(1), rps]);
+    setTrafficBuckets(prev => {                                          // add this
+      const base = 4 + Math.sin(prev.length * 0.3) * 2 + Math.random() * 3;
+      const spike = Math.random() < 0.08 ? 5 + Math.random() * 4 : 0;
+      return [
+        ...prev.slice(1),
+        {
+          allow:  Math.round(Math.max(base + spike, 1)),
+          tarpit: Math.round(Math.random() < 0.35 ? 1 + Math.random() * 2 : 0),
+          block:  Math.round(Math.random() < 0.12 ? 1 : 0),
+        },
+      ];
+    });                                                                   // end
+    setLatency(Math.floor(Math.random() * 30) + 5);
+  }, 1000);
+  return () => clearInterval(interval);
+}, [proxyUp]);
 
   const onExport  = () => downloadCSV(logs);
-  const onRefresh = () => { setLogs([]); setCounts({ total: 0, allow: 0, tarpit: 0, block: 0 }); };
+const onRefresh = () => {
+  setLogs(SEED_LOGS);
+  setCounts(SEED_COUNTS);
+};
 
   const pageTitle: Record<Page, string> = {
     "Overview": "Overview", "Live feed": "Live feed", "Analytics": "Analytics",
@@ -85,9 +125,9 @@ export default function Demo() {
 
   const renderPage = () => {
     switch (page) {
-      case "Overview":   return <OverviewPage logs={logs} counts={counts} sparkData={sparkData} rpsDisplay={rpsDisplay} latency={latency} proxyUp={proxyUp} onExport={onExport} onRefresh={onRefresh} />;
+      case "Overview": return <OverviewPage logs={logs} counts={counts} sparkData={sparkData} trafficBuckets={trafficBuckets} rpsDisplay={rpsDisplay} latency={latency} proxyUp={proxyUp} onExport={onExport} onRefresh={onRefresh} />;
       case "Live feed":  return <LiveFeedPage logs={logs} onExport={onExport} />;
-      case "Analytics":  return <AnalyticsPage logs={logs} counts={counts} sparkData={sparkData} />;
+      case "Analytics":  return <AnalyticsPage logs={logs} counts={counts} sparkData={sparkData} trafficBuckets={trafficBuckets} />;
       case "Thresholds": return <ThresholdsPage thresholds={thresholds} onChange={setThresholds} />;
       case "Allowlist":  return <AllowlistPage />;
       case "Signals":    return <SignalsPage />;

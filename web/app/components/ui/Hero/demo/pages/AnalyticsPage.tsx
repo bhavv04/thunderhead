@@ -1,12 +1,32 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import type { LogEntry, Counts } from "../types";
 import { COLOR } from "../theme";
 import { StatCard, Panel } from "../components/ui";
-import { AreaSpark } from "../components/charts";
+import { AreaSpark, TrafficChart } from "../components/charts";
+import type { TrafficBucket } from "../components/charts";
 import { pct } from "../utils";
 
-export function AnalyticsPage({ logs, counts, sparkData }: { logs: LogEntry[]; counts: Counts; sparkData: number[] }) {
+export function AnalyticsPage({
+  logs,
+  counts,
+  sparkData,
+  trafficBuckets,
+}: {
+  logs: LogEntry[];
+  counts: Counts;
+  sparkData: number[];
+  trafficBuckets: TrafficBucket[];
+}) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  const allowPct = mounted ? pct(counts.allow, counts.total) : "—";
+  const tarpitPct = mounted ? pct(counts.tarpit, counts.total) : "—";
+  const blockPct = mounted ? pct(counts.block, counts.total) : "—";
+
   // Top paths
   const pathCounts = logs.reduce<Record<string, number>>((acc, l) => ({ ...acc, [l.path]: (acc[l.path] ?? 0) + 1 }), {});
   const topPaths = Object.entries(pathCounts).sort((a, b) => b[1] - a[1]).slice(0, 6);
@@ -28,9 +48,19 @@ export function AnalyticsPage({ logs, counts, sparkData }: { logs: LogEntry[]; c
     <div className="flex-1 overflow-y-auto p-3 sm:p-[14px_18px] flex flex-col gap-2.5">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
         <StatCard label="Total requests" value={counts.total} sub="all time" />
-        <StatCard label="Allowed"   value={counts.allow}  sub={pct(counts.allow, counts.total)}  valueColor={COLOR.allow.text}  />
-        <StatCard label="Tarpitted" value={counts.tarpit} sub={pct(counts.tarpit, counts.total)} valueColor={COLOR.tarpit.text} />
-        <StatCard label="Blocked"   value={counts.block}  sub={pct(counts.block, counts.total)}  valueColor={COLOR.block.text}  />
+        <StatCard label="Allowed"   value={counts.allow}  sub={allowPct}  valueColor={COLOR.allow.text}  />
+        <StatCard label="Tarpitted" value={counts.tarpit} sub={tarpitPct} valueColor={COLOR.tarpit.text} />
+        <StatCard label="Blocked"   value={counts.block}  sub={blockPct}  valueColor={COLOR.block.text}  />
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-[1.35fr_1fr] gap-2.5">
+        <Panel title="Request trend" right="last 20 s">
+          <AreaSpark data={sparkData} />
+        </Panel>
+
+        <Panel title="Request volume" right="last 60 s">
+          <TrafficChart data={trafficBuckets} />
+        </Panel>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -82,8 +112,6 @@ export function AnalyticsPage({ logs, counts, sparkData }: { logs: LogEntry[]; c
           })}
         </div>
       </Panel>
-
-      <Panel title="Request volume" right="last 20 s"><AreaSpark data={sparkData} /></Panel>
     </div>
   );
 }

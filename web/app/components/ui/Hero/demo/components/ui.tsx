@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import type { Action } from "../types";
 import { COLOR } from "../theme";
 
@@ -26,13 +27,26 @@ export function ScoreChip({ score, action }: { score: number; action: Action }) 
 }
 
 export function StatCard({ label, value, sub, valueColor }: {
-  label: string; value: number; sub: string; valueColor?: string;
+  label: string; value: number | string; sub: string; valueColor?: string;
 }) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  const display = mounted
+    ? (typeof value === "number" ? value.toLocaleString() : value)
+    : (typeof value === "number" ? value : value);
+
   return (
-    <div className="bg-zinc-900 border border-zinc-800 rounded-lg px-3.5 py-3">
+    <div className="bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3">
       <div className="text-[10px] text-zinc-500 uppercase tracking-widest mb-1.5">{label}</div>
-      <div className="text-[22px] font-medium leading-none tabular-nums" style={{ color: valueColor ?? "#f4f4f5" }}>{value}</div>
-      <div className="text-[10px] text-zinc-500 mt-1.5">{sub}</div>
+      <div
+        className="text-[22px] font-medium leading-none tabular-nums"
+        style={{ color: valueColor ?? "#f4f4f5" }}
+        suppressHydrationWarning
+      >
+        {display}
+      </div>
+      <div className="text-[10px] text-zinc-500 mt-1.5" suppressHydrationWarning>{sub}</div>
     </div>
   );
 }
@@ -44,7 +58,7 @@ export function Panel({ title, right, children, padBody = true }: {
     <div className="bg-zinc-900 border border-zinc-800 rounded-lg overflow-hidden">
       <div className="flex items-center justify-between px-3 py-2 border-b border-zinc-800">
         <span className="text-[11px] font-medium text-zinc-100">{title}</span>
-        {right && <span className="text-[10px] text-zinc-500">{right}</span>}
+        {right && <span className="text-[10px] text-zinc-500" suppressHydrationWarning>{right}</span>}
       </div>
       <div className={padBody ? "p-3.5" : ""}>{children}</div>
     </div>

@@ -53,7 +53,7 @@ export default function InstallTerminal({ animate }: { animate: boolean }) {
           </div>
         ))}
         {visibleCount < LINES.length && visibleCount > 0 && (
-          <div className="inline-block w-2 h-4 bg-blue-400 opacity-80 animate-pulse" />
+          <div className="inline-block w-2 h-4 bg-blue-400 opacity-80" />
         )}
       </div>
     </div>

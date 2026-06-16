@@ -1,28 +1,40 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import type { LogEntry, Counts } from "../types";
 import { COLOR } from "../theme";
 import { pct } from "../utils";
 import { StatCard, Panel, Btn } from "../components/ui";
-import { AreaSpark, DonutChart } from "../components/charts";
+import { DonutChart, TrafficChart } from "../components/charts";
+import type { TrafficBucket } from "../components/charts";
 import { LogTable } from "../components/LogTable";
 import type { Action } from "../types";
 
-export function OverviewPage({ logs, counts, sparkData, rpsDisplay, latency, proxyUp, onExport, onRefresh }: {
-  logs: LogEntry[]; counts: Counts; sparkData: number[]; rpsDisplay: number;
-  latency: number; proxyUp: boolean; onExport: () => void; onRefresh: () => void;
+export function OverviewPage({ logs, counts, sparkData, trafficBuckets, rpsDisplay, latency, proxyUp, onExport, onRefresh }: {
+  logs: LogEntry[]; counts: Counts; sparkData: number[]; trafficBuckets: TrafficBucket[];
+  rpsDisplay: number; latency: number; proxyUp: boolean; onExport: () => void; onRefresh: () => void;
 }) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  const allowPct = mounted ? pct(counts.allow, counts.total) : "—";
+  const tarpitPct = mounted ? pct(counts.tarpit, counts.total) : "—";
+  const blockPct = mounted ? pct(counts.block, counts.total) : "—";
+
   return (
     <div className="flex-1 overflow-y-auto p-3 sm:p-[14px_18px] flex flex-col gap-2.5">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-        <StatCard label="Total requests" value={counts.total} sub={`${rpsDisplay} req/s`} />
-        <StatCard label="Allowed"   value={counts.allow}  sub={pct(counts.allow, counts.total)}  valueColor={COLOR.allow.text}  />
-        <StatCard label="Tarpitted" value={counts.tarpit} sub={pct(counts.tarpit, counts.total)} valueColor={COLOR.tarpit.text} />
-        <StatCard label="Blocked"   value={counts.block}  sub={pct(counts.block, counts.total)}  valueColor={COLOR.block.text}  />
+        <StatCard label="Total requests" value={counts.total.toLocaleString()} sub={`${rpsDisplay} req/s`} />
+        <StatCard label="Allowed"   value={counts.allow.toLocaleString()}  sub={allowPct}  valueColor={COLOR.allow.text}  />
+        <StatCard label="Tarpitted" value={counts.tarpit.toLocaleString()} sub={tarpitPct} valueColor={COLOR.tarpit.text} />
+        <StatCard label="Blocked"   value={counts.block.toLocaleString()}  sub={blockPct}  valueColor={COLOR.block.text}  />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-[1.35fr_1fr] gap-2.5">
-        <Panel title="Request volume" right="last 20 s"><AreaSpark data={sparkData} /></Panel>
+        <Panel title="Request volume" right="last 60 s">
+          <TrafficChart data={trafficBuckets} />
+        </Panel>
         <Panel title="Action breakdown" right={`${counts.total} total`} padBody={false}>
           <div className="flex items-center gap-3.5 p-2.5">
             <DonutChart counts={counts} />
@@ -31,7 +43,7 @@ export function OverviewPage({ logs, counts, sparkData, rpsDisplay, latency, pro
                 <div key={a} className="flex items-center gap-1.5 text-[11px]">
                   <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: COLOR[a].text }} />
                   <span className="text-zinc-400 flex-1 capitalize">{a}</span>
-                  <span className="font-medium text-zinc-100">{pct(counts[a], counts.total)}</span>
+                  <span className="font-medium text-zinc-100">{mounted ? pct(counts[a], counts.total) : "—"}</span>
                 </div>
               ))}
             </div>
@@ -55,7 +67,7 @@ export function OverviewPage({ logs, counts, sparkData, rpsDisplay, latency, pro
             </div>
             <div className="flex items-center justify-between text-[11px]">
               <span className="text-zinc-400">Listen port</span>
-              <span className="font-medium text-zinc-100">:8080</span>
+              <span className="font-medium text-zinc-100">thunderhead.app</span>
             </div>
             <div className="flex items-center justify-between text-[11px]">
               <span className="text-zinc-400">Mode</span>

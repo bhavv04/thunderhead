@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import type { Counts } from "../types";
 import { COLOR } from "../theme";
 
@@ -78,5 +79,82 @@ export function DonutChart({ counts }: { counts: Counts }) {
         />
       ))}
     </svg>
+  );
+}
+
+export type TrafficBucket = { allow: number; tarpit: number; block: number };
+
+export function TrafficChart({ data, height = 72 }: { data: TrafficBucket[]; height?: number }) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return <div style={{ height }} />;
+
+  const W = 280;
+  const N = data.length;
+  if (N < 2) return null;
+
+  // shared max across all series so proportions are correct
+  const globalMax = Math.max(...data.map(d => d.allow + d.tarpit + d.block), 1);
+
+  const series: { key: keyof TrafficBucket; color: string }[] = [
+    { key: "allow",  color: COLOR.allow.text  },
+    { key: "tarpit", color: COLOR.tarpit.text },
+    { key: "block",  color: COLOR.block.text  },
+  ];
+
+  function buildPath(values: number[]) {
+    const pts = values.map((v, i) => ({
+      x: (i / (N - 1)) * W,
+      y: height - 4 - (v / globalMax) * (height - 10),
+    }));
+    const line = pts.reduce((acc, p, i) => {
+      if (i === 0) return `M ${p.x},${p.y}`;
+      const prev = pts[i - 1];
+      const cx = (prev.x + p.x) / 2;
+      return `${acc} C ${cx},${prev.y} ${cx},${p.y} ${p.x},${p.y}`;
+    }, "");
+    return { line, area: `${line} L ${W},${height} L 0,${height} Z` };
+  }
+
+  const gridYs = [0.25, 0.5, 0.75].map(f => height - 4 - f * (height - 10));
+
+  return (
+    <div className="flex flex-col gap-1.5">
+      <svg viewBox={`0 0 ${W} ${height}`} width="100%" height={height} preserveAspectRatio="none">
+        <defs>
+          {series.map(({ key, color }) => (
+            <linearGradient key={key} id={`tg-${key}`} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stopColor={color} stopOpacity={0.12} />
+              <stop offset="100%" stopColor={color} stopOpacity={0}    />
+            </linearGradient>
+          ))}
+        </defs>
+
+        {gridYs.map((y, i) => (
+          <line key={i} x1={0} y1={y} x2={W} y2={y} stroke="#27272a" strokeWidth={0.5} />
+        ))}
+
+        {/* draw allow first (tallest, at back), then tarpit, block on top */}
+        {series.map(({ key, color }) => {
+          const { line, area } = buildPath(data.map(d => d[key]));
+          return (
+            <g key={key}>
+              <path d={area} fill={`url(#tg-${key})`} />
+              <path d={line} fill="none" stroke={color} strokeWidth={1.5}
+                    strokeLinecap="round" strokeLinejoin="round" />
+            </g>
+          );
+        })}
+      </svg>
+
+      <div className="flex items-center gap-3">
+        {series.map(({ key, color }) => (
+          <span key={key} className="flex items-center gap-1 text-[10px] text-zinc-500">
+            <span className="w-1.5 h-1.5 rounded-full" style={{ background: color }} />
+            {key}
+          </span>
+        ))}
+      </div>
+    </div>
   );
 }
