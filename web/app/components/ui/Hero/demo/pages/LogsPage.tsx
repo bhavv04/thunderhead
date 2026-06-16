@@ -16,9 +16,9 @@ export function LogsPage({ logs, onExport }: { logs: LogEntry[]; onExport: () =>
   );
 
   return (
-    <div className="flex-1 overflow-y-auto p-3 sm:p-[14px_18px] flex flex-col gap-2.5">
-      <div className="bg-zinc-900 border border-zinc-800 rounded-lg overflow-hidden">
-        <div className="flex items-center justify-between px-3 py-2 border-b border-zinc-800 flex-wrap gap-2">
+    <div className="flex-1 overflow-y-auto p-4 flex flex-col min-h-0">
+      <div className="bg-zinc-900 border border-zinc-800 rounded-lg overflow-hidden flex flex-col min-h-0">
+        <div className="flex items-center justify-between px-3 py-2 border-b border-zinc-800 flex-wrap gap-2 shrink-0">
           <div className="flex items-center gap-1.5">
             {(["all", "allow", "tarpit", "block"] as const).map(f => (
               <button
@@ -37,7 +37,7 @@ export function LogsPage({ logs, onExport }: { logs: LogEntry[]; onExport: () =>
           </div>
         </div>
         <LogTable logs={filtered} maxHeight={500} />
-        <div className="px-3 py-1.5 border-t border-zinc-800 text-[10px] text-zinc-500">
+        <div className="px-3 py-1.5 border-t border-zinc-800 text-xs text-zinc-500">
           Snapshot from session start — {filtered.length} of {frozen.length} entries
         </div>
       </div>

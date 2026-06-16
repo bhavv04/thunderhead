@@ -20,6 +20,7 @@ export interface PoolEntry {
 }
 
 export interface LogEntry extends PoolEntry {
+  timestamp: number;
   id: number;
   time: string;
   ts: number;

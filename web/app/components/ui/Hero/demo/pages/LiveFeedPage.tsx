@@ -36,7 +36,7 @@ export function LiveFeedPage({ logs, onExport }: { logs: LogEntry[]; onExport: (
           </div>
         </div>
       <div className="flex-1 overflow-y-auto min-h-0">
-          <LogTable logs={filtered} maxHeight={9999} flash />
+          <LogTable logs={filtered} maxHeight={9999} flash className="h-full" />
         </div>
       <div className="px-3 py-1.5 border-t border-zinc-800 text-xs text-zinc-500 flex items-center gap-1.5 shrink-0">
           <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
