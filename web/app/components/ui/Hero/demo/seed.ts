@@ -24,7 +24,7 @@ function makeEntry(id: number, offsetMs: number): LogEntry {
     score >= 75 ? "block" :
     score >= 40 ? "tarpit" : "allow";
   const ts = SEED_BASE_TS - offsetMs;
-  return { id, ip, path, score, action, time: formatTime(ts), ts };
+  return { id, ip, path, score, action, time: formatTime(ts), ts, timestamp: ts };
 }
 
 export const SEED_LOGS: LogEntry[] = Array.from({ length: 48 }, (_, i) =>
