@@ -36,11 +36,7 @@ function generateTrafficSeed(): TrafficBucket[] {
 export default function Demo() {
     const BASE = 47_832;
 const [logs, setLogs]   = useState<LogEntry[]>(SEED_LOGS);
-const [counts, setCounts] = useState<Counts>(() =>
-  typeof window === "undefined"
-    ? { total: 0, allow: 0, tarpit: 0, block: 0 }
-    : SEED_COUNTS
-);
+const [counts, setCounts] = useState<Counts>(SEED_COUNTS);
   const [clock, setClock]           = useState<string | null>(null);
   const [sparkData, setSparkData]   = useState<number[]>(new Array(20).fill(0));
   const [rpsDisplay, setRpsDisplay] = useState(0);
@@ -48,11 +44,7 @@ const [counts, setCounts] = useState<Counts>(() =>
   const [proxyUp, setProxyUp]       = useState(true);
   const [latency, setLatency]       = useState(12);
   const [thresholds, setThresholds] = useState({ tarpit: 40, block: 75 });
-  const [trafficBuckets, setTrafficBuckets] = useState<TrafficBucket[]>(
-  () => typeof window === "undefined"
-    ? Array.from({ length: 60 }, () => ({ allow: 3, tarpit: 1, block: 0 }))
-    : generateTrafficSeed()
-);
+  const [trafficBuckets, setTrafficBuckets] = useState<TrafficBucket[]>(SEED_TRAFFIC);
   
 
   const accumRef = useRef(0);

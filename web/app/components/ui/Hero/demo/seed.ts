@@ -1,4 +1,5 @@
 import type { LogEntry } from "./types";
+import { formatTime } from "./utils";
 
 const IPS = [
   "203.0.113.42", "198.51.100.7", "192.168.1.101",
@@ -10,6 +11,8 @@ const PATHS = [
   "/api/login", "/api/checkout", "/api/products", "/api/admin/users", "/contact",
 ];
 
+const SEED_BASE_TS = Date.UTC(2026, 5, 16, 12, 0, 0);
+
 function makeEntry(id: number, offsetMs: number): LogEntry {
   const ip = IPS[id % IPS.length];
   const path = PATHS[id % PATHS.length];
@@ -20,9 +23,8 @@ function makeEntry(id: number, offsetMs: number): LogEntry {
   const action =
     score >= 75 ? "block" :
     score >= 40 ? "tarpit" : "allow";
-  const d = new Date(Date.now() - offsetMs);
-  const time = d.toTimeString().slice(0, 8);
-  return { id, ip, path, score, action, time, ts: d.getTime() };
+  const ts = SEED_BASE_TS - offsetMs;
+  return { id, ip, path, score, action, time: formatTime(ts), ts };
 }
 
 export const SEED_LOGS: LogEntry[] = Array.from({ length: 48 }, (_, i) =>

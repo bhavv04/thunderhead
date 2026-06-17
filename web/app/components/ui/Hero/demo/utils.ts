@@ -2,8 +2,12 @@ import type { LogEntry } from "./types";
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
 
+export function formatTime(timestamp: number): string {
+  return new Date(timestamp).toISOString().slice(11, 19);
+}
+
 export function getTime(): string {
-  return new Date().toTimeString().slice(0, 8);
+  return formatTime(Date.now());
 }
 
 export function pct(n: number, total: number): string {
