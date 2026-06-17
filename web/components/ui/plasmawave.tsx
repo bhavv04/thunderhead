@@ -135,14 +135,18 @@ export default function PlasmaWave(props: PlasmaWaveProps) {
   propsRef.current = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const sizeRef = useRef({ width: 0, height: 0 });
 
   useEffect(() => {
     const ctn = containerRef.current;
     if (!ctn) return;
 
+    const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
+    const dpr = isCoarsePointer ? 1 : Math.min(window.devicePixelRatio, 1.5);
+
     const renderer = new Renderer({
       alpha: true,
-      dpr: Math.min(window.devicePixelRatio, 1.5),
+      dpr,
       antialias: false,
       depth: false,
       stencil: false,
@@ -191,6 +195,10 @@ export default function PlasmaWave(props: PlasmaWaveProps) {
     function resize() {
       if (!ctn) return;
       const { width, height } = ctn.getBoundingClientRect();
+      const nextWidth = Math.round(width);
+      const nextHeight = Math.round(height);
+      if (nextWidth === sizeRef.current.width && nextHeight === sizeRef.current.height) return;
+      sizeRef.current = { width: nextWidth, height: nextHeight };
       renderer.setSize(width, height);
       uniformResolution[0] = width * renderer.dpr;
       uniformResolution[1] = height * renderer.dpr;
@@ -247,5 +255,10 @@ export default function PlasmaWave(props: PlasmaWaveProps) {
     };
   }, []);
 
-  return <div ref={containerRef} className="plasma-wave-container" />;
+  return (
+  <div
+    ref={containerRef}
+    className="plasma-wave-container pointer-events-none absolute inset-0 h-full w-full"
+  />
+);
 }

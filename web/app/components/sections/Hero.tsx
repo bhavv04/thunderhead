@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Demo from "@/app/components/ui/Hero/demo/Demo";
 import { FiGithub } from "react-icons/fi";
 import { RainbowButton } from "@/components/ui/rainbow-button";
+import PlasmaWave from "@/components/ui/plasmawave";
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
@@ -21,7 +22,10 @@ export default function Hero() {
   });
 
   return (
-    <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-24 md:py-32">
+    <section className="relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden  px-6 py-24 md:py-32">
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <PlasmaWave />
+      </div>
       <div className="relative z-10 flex w-full max-w-5xl flex-col items-center gap-16">
 
         {/* ── Copy block ── */}
