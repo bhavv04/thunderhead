@@ -56,5 +56,5 @@ export function generateEntry(): Omit<LogEntry, "id" | "time" | "ts"> {
     action === "block"  ? 75 + Math.floor(Math.random() * 25) :
     action === "tarpit" ? 40 + Math.floor(Math.random() * 35) :
                            0  + Math.floor(Math.random() * 40);
-  return { ip, path, score, action };
+  return { ip, path, score, action, timestamp: Date.now() };
 }
