@@ -22,7 +22,9 @@ export default function Hero() {
   });
 
   return (
-    <section className="relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden  px-6 py-24 md:py-32">
+   <section className="relative isolate flex flex-col items-center justify-center overflow-hidden px-6 py-24 md:py-32"
+    style={{ minHeight: '100dvh' }}   
+    >
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <PlasmaWave />
       </div>
