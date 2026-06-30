@@ -21,3 +21,7 @@ config.json
 .idea/
 
 state.json
+
+data/
+state.json
+*.log

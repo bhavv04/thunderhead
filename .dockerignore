@@ -1,0 +1,11 @@
+.git
+.gitignore
+data/
+*.log
+state.json
+README.md
+web/node_modules
+web/.next
+*.md
+.dockerignore
+docker-compose.yml
