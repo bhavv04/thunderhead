@@ -30,20 +30,33 @@ func (p *Proxy) apiAuth(next http.HandlerFunc) http.HandlerFunc {
 func (p *Proxy) apiMux() http.Handler {
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("GET /api/v1/health",     p.apiAuth(p.handleHealth))
-	mux.HandleFunc("GET /api/v1/clients",    p.apiAuth(p.handleClients))
-	mux.HandleFunc("GET /api/v1/metrics",    p.apiAuth(p.handleMetrics))
-	mux.HandleFunc("GET /api/v1/config",     p.apiAuth(p.handleConfig))
-	mux.HandleFunc("GET /api/v1/blocklist",  p.apiAuth(p.handleBlocklistGet))
-	mux.HandleFunc("POST /api/v1/blocklist", p.apiAuth(p.handleBlocklistAdd))
-	mux.HandleFunc("DELETE /api/v1/blocklist", p.apiAuth(p.handleBlocklistRemove))
-	mux.HandleFunc("GET /api/v1/allowlist",  p.apiAuth(p.handleAllowlistGet))
-	mux.HandleFunc("POST /api/v1/allowlist", p.apiAuth(p.handleAllowlistAdd))
-	mux.HandleFunc("DELETE /api/v1/allowlist", p.apiAuth(p.handleAllowlistRemove))
+	mux.HandleFunc("GET /api/v1/health",          p.apiAuth(p.handleHealth))
+	mux.HandleFunc("GET /api/v1/clients",         p.apiAuth(p.handleClients))
+	mux.HandleFunc("GET /api/v1/metrics",         p.apiAuth(p.handleMetrics))
+	mux.HandleFunc("GET /api/v1/config",          p.apiAuth(p.handleConfig))
+	mux.HandleFunc("GET /api/v1/blocklist",       p.apiAuth(p.handleBlocklistGet))
+	mux.HandleFunc("POST /api/v1/blocklist",      p.apiAuth(p.handleBlocklistAdd))
+	mux.HandleFunc("DELETE /api/v1/blocklist",    p.apiAuth(p.handleBlocklistRemove))
+	mux.HandleFunc("GET /api/v1/allowlist",       p.apiAuth(p.handleAllowlistGet))
+	mux.HandleFunc("POST /api/v1/allowlist",      p.apiAuth(p.handleAllowlistAdd))
+	mux.HandleFunc("DELETE /api/v1/allowlist",    p.apiAuth(p.handleAllowlistRemove))
 
-	return mux
+	return corsMiddleware(mux)
 }
 
+func corsMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, X-API-Key")
+
+		if r.Method == http.MethodOptions {
+			w.WriteHeader(http.StatusNoContent)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
+}
 // ─── Handlers ─────────────────────────────────────────────────────────────────
 
 func (p *Proxy) handleHealth(w http.ResponseWriter, r *http.Request) {
@@ -161,7 +174,6 @@ func (p *Proxy) handleAllowlistRemove(w http.ResponseWriter, r *http.Request) {
 
 func apiJSON(w http.ResponseWriter, v any) {
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	json.NewEncoder(w).Encode(v)
 }
 
