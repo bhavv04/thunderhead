@@ -37,6 +37,7 @@ type Config struct {
 	Blocklist   blocklist.Config `json:"blocklist"`
 	TLSCert     string           `json:"tls_cert"`
 	TLSKey      string           `json:"tls_key"`
+	APIKey      string           `json:"api_key"`  // ← add this
 }
 
 func Default() *Config {

@@ -27,8 +27,9 @@ type Proxy struct {
 	upstream  *httputil.ReverseProxy
 	allowlist *allowlist.Allowlist
 	blocklist *blocklist.Blocklist
-	metrics *metrics.Counters
+	metrics   *metrics.Counters
 	dryRun    bool
+	startTime time.Time 
 }
 
 //go:embed dashboard.html
@@ -64,10 +65,18 @@ func New(cfg *config.Config, az *analyzer.Analyzer, log *logger.Logger, al *allo
 		upstream:  rp,
 		allowlist: al,
 		blocklist: bl,
+		startTime: time.Now(),  
 	}, nil
 }
 
 func (p *Proxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	
+	// API routes
+	if strings.HasPrefix(r.URL.Path, "/api/v1/") {
+		p.apiMux().ServeHTTP(w, r)
+		return
+	}
+
 	if r.URL.Path == "/thunderhead/status" {
 		p.handleStatus(w, r)
 		return

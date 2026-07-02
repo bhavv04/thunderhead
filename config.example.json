@@ -1,0 +1,11 @@
+{
+  "listen_addr": ":8080",
+  "upstream_url": "http://host.docker.internal:3000",
+  "thresholds": { "tarpit": 40, "block": 75 },
+  "tarpit": { "delay": 5000000000 },
+  "allowlist": { "ips": [], "user_agents": ["Googlebot", "Bingbot", "archive.org_bot"] },
+  "blocklist": { "ips": [], "cidrs": [] },
+  "expiry_days": 30,
+  "log_file": "/app/data/thunderhead.log",
+  "api_key": "super-secret-key"
+}
