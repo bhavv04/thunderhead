@@ -39,12 +39,12 @@ export default function Hero() {
             style={fade(0)}
           >
             <img
-              src="/thunderhead.png"
+              src="/reaper.png"
               alt="Thunderhead"
-              className="h-5 w-5 rounded-full"
+              className="h-8 w-8"
             />
             <span className="text-sm text-zinc-500">
-              open source · no third-party software
+              open source, no third-party software
             </span>
           </div>
 

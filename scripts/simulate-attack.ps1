@@ -15,7 +15,7 @@ $attackers = @(
   @{
     IP    = "203.0.113.42"
     UA    = "python-requests/2.28.0"
-    Label = "Python scraper — high rate + robots violation"
+    Label = "Python scraper -high rate + robots violation"
     Paths = @("/admin", "/robots.txt", "/api/users", "/api/orders", "/api/products",
               "/api/admin/users", "/api/keys", "/api/tokens", "/api/passwords", "/api/secrets")
     Count = 40
@@ -23,7 +23,7 @@ $attackers = @(
   @{
     IP    = "198.51.100.7"
     UA    = "scrapy/2.7.0"
-    Label = "Scrapy — sequential crawl + no headers"
+    Label = "Scrapy -sequential crawl + no headers"
     Paths = @("/about", "/blog", "/careers", "/contact", "/docs",
               "/faq", "/home", "/legal", "/pricing", "/team")
     Count = 35
@@ -31,14 +31,14 @@ $attackers = @(
   @{
     IP    = "45.33.32.156"
     UA    = ""
-    Label = "Headless client — no UA, no Accept, no Accept-Language"
+    Label = "Headless client -no UA, no Accept, no Accept-Language"
     Paths = @("/", "/api/users", "/api/data", "/export", "/dump")
     Count = 38
   },
   @{
     IP    = "185.220.101.5"
     UA    = "curl/7.68.0"
-    Label = "curl — robots + high rate"
+    Label = "curl -robots + high rate"
     Paths = @("/admin", "/wp-admin", "/phpmyadmin", "/.env", "/config", "/backup")
     Count = 42
   }
@@ -62,11 +62,11 @@ foreach ($attacker in $attackers) {
         -TimeoutSec 15 `
         -ErrorAction SilentlyContinue | Out-Null
     } catch {
-      # tarpitted requests will timeout — that's expected
+      # tarpitted requests will timeout -that's expected
     }
   }
 
-  Write-Host "  done — $($attacker.Count) requests sent" -ForegroundColor DarkGray
+  Write-Host "  done -$($attacker.Count) requests sent" -ForegroundColor DarkGray
   Write-Host ""
 }
 

@@ -15,12 +15,13 @@ import (
 	"github.com/bhavv04/thunderhead/internal/blocklist"
 	"github.com/bhavv04/thunderhead/internal/config"
 	"github.com/bhavv04/thunderhead/internal/logger"
+	"github.com/bhavv04/thunderhead/internal/metrics"
 	"github.com/bhavv04/thunderhead/internal/proxy"
 	"github.com/bhavv04/thunderhead/internal/store"
 )
 
 func main() {
-	cfgPath := flag.String("config", "", "path to config file (optional)")
+	cfgPath   := flag.String("config", "", "path to config file (optional)")
 	statePath := flag.String("state", "state.json", "path to state file")
 	flag.Parse()
 
@@ -57,7 +58,8 @@ func main() {
 
 	al := allowlist.New(cfg.Allowlist)
 	bl := blocklist.New(cfg.Blocklist)
-	p, err := proxy.New(cfg, az, lg, al, bl)
+	mx := metrics.New()
+	p, err := proxy.NewWithMetrics(cfg, az, lg, al, bl, mx, false)
 	if err != nil {
 		log.Fatalf("failed to init proxy: %v", err)
 	}
