@@ -14,7 +14,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="border-t border-white/10 bg-zinc-950/95 backdrop-blur-xl px-6 py-16">
+    <footer className="bg-zinc-950 px-6 py-16">
       <div className="mx-auto max-w-6xl">
 
         {/* Top row */}
@@ -22,8 +22,9 @@ export default function Footer() {
 
           {/* Brand */}
           <div className="max-w-sm">
-            <div className="mb-3 text-white">
-              thunderhead
+            <div className="mb-4 text-white flex flex-row gap-2 items-end">
+              <img src="/reaper.png" alt="Thunderhead" className="h-8 w-8" />
+              Thunderhead
             </div>
             <p className="m-0 max-w-[36ch] text-sm leading-relaxed text-zinc-500">
               Passive intent-scoring reverse proxy. Silently watches, scores,

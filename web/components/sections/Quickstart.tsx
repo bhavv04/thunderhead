@@ -2,9 +2,8 @@
 
 import SectionLabel from "../ui/SectionLabel";
 import Steps from "../ui/Quickstart/Steps";
-import InstallTerminal from "../ui/Quickstart/InstallTerminal";
-import ConfigVisual from "../ui/Features/ConfigVisual";
-import { useInView } from "../ui/Methodology/useInView";
+import InstallTerminal from "@/components/ui/Quickstart/InstallTerminal";
+import { useInView } from "@/components/ui/Methodology/useInView";
 
 export default function Quickstart() {
   const { ref: headerRef, inView: headerInView } = useInView(0.2);
@@ -15,9 +14,7 @@ export default function Quickstart() {
   return (
     <section id="quickstart" className="relative px-4 md:px-6 py-16 md:py-32">
       <div className="absolute top-0 left-[10%] right-[10%] h-px pointer-events-none" />
-
-      <div className="w-full max-w-[1200px] mx-auto flex flex-col gap-20">
-
+      <div className="w-full max-w-6xl mx-auto flex flex-col gap-20">
         {/* Header */}
         <div ref={headerRef} className="flex flex-col gap-4 max-w-lg"
           style={{

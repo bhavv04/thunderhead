@@ -1,13 +1,13 @@
 "use client";
 
 import SectionLabel from "../ui/SectionLabel";
-import HowItWorksSteps from "../ui/Methodology/HowItWorksSteps";
-import PipelineDiagram from "../ui/Methodology/PipelineDiagram";
-import SignalDiagram from "../ui/Methodology/SignalDiagram";
-import GaugeDiagram from "../ui/Methodology/GaugeDiagram";
-import DiagramBlock from "../ui/Methodology/DiagramBlock";
-import BottomCallout from "../ui/Methodology/BottomCallout";
-import { useInView } from "../ui/Methodology/useInView";
+import HowItWorksSteps from "@/components/ui/Methodology/HowItWorksSteps";
+import PipelineDiagram from "@/components/ui/Methodology/PipelineDiagram";
+import SignalDiagram from "@/components/ui/Methodology/SignalDiagram";
+import GaugeDiagram from "@/components/ui/Methodology/GaugeDiagram";
+import DiagramBlock from "@/components/ui/Methodology/DiagramBlock";
+import BottomCallout from "@/components/ui/Methodology/BottomCallout";
+import { useInView } from "@/components/ui/Methodology/useInView";
 
 export default function Methodology() {
   const { ref: headerRef, inView: headerInView } = useInView(0.2);

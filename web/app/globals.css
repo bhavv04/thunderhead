@@ -66,11 +66,12 @@
   --sidebar-accent-foreground:        oklch(0.205 0 0);
   --sidebar-border:        oklch(0.922 0 0);
   --sidebar-ring:        oklch(0.708 0 0);
-    --color-1: hsl(0, 100%, 63%);
-    --color-2: hsl(270, 100%, 63%);
-    --color-3: hsl(210, 100%, 63%);
-    --color-4: hsl(195, 100%, 63%);
-    --color-5: hsl(90, 100%, 63%);
+  --color-1: hsl(0, 100%, 63%);
+  --color-2: hsl(270, 100%, 63%);
+  --color-3: hsl(210, 100%, 63%);
+  --color-4: hsl(195, 100%, 63%);
+  --color-5: hsl(90, 100%, 63%);
+  --footer: oklch(62.793% 0.25768 29.223);
 }
 
 /* Base */
@@ -130,73 +131,6 @@
 
 /* Components  */
 @layer components {
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.8125rem;
-    font-weight: 500;
-    letter-spacing: -0.01em;
-    padding: 0.5625rem 1.125rem;
-    border-radius: 0.5rem;
-    border: 1px solid transparent;
-    cursor: pointer;
-    white-space: nowrap;
-    text-decoration: none;
-    transition: background-color 120ms, border-color 120ms, box-shadow 120ms, transform 120ms;
-  }
-  .btn:active { transform: scale(0.98); }
-
-  .btn-primary {
-    background: var(--white);
-    color: var(--black);
-    border-color: var(--white);
-  }
-  .btn-primary:hover {
-    background: var(--gray-100);
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.3), 0 1px 2px rgba(0,0,0,0.5);
-  }
-
-  .btn-ghost {
-    background: transparent;
-    color: var(--gray-300);
-    border-color: var(--border);
-  }
-  .btn-ghost:hover {
-    background: var(--gray-900);
-    color: var(--white);
-    border-color: var(--border-hover);
-  }
-
-  .btn-accent {
-    background: var(--accent);
-    color: var(--white);
-    border-color: var(--accent);
-  }
-  .btn-accent:hover {
-    filter: brightness(1.1);
-    box-shadow: 0 0 20px var(--accent-dim);
-  }
-
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    font-family: var(--font-sans);
-    font-size: 0.6875rem;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    padding: 0.25rem 0.625rem;
-    border-radius: 9999px;
-    border: 1px solid;
-  }
-  .badge-default { background: var(--gray-900); color: var(--gray-400); border-color: var(--border); }
-  .badge-green   { background: var(--green-dim); color: var(--green); border-color: rgba(34,197,94,0.25); }
-  .badge-amber   { background: var(--amber-dim); color: var(--amber); border-color: rgba(245,158,11,0.25); }
-  .badge-red     { background: var(--red-dim);   color: var(--red);   border-color: rgba(239,68,68,0.25); }
-  .badge-blue    { background: var(--accent-dim); color: var(--accent); border-color: rgba(59,130,246,0.25); }
-
   .card {
     background: var(--bg-subtle);
     border: 1px solid var(--border);
@@ -252,14 +186,6 @@
 .delay-3 { animation-delay: 240ms; }
 .delay-4 { animation-delay: 320ms; }
 .delay-5 { animation-delay: 400ms; }
-
-.mesh-bg {
-  background-color: #000000;
-  background-image:
-    radial-gradient(ellipse 70% 60% at 15% 0%, rgba(255, 255, 255, 0.07) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 40% at 0% 30%, rgba(255, 255, 255, 0.04) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 30% at 50% 0%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
-}
 
 @theme inline {
   --font-heading:        var(--font-sans);
@@ -418,33 +344,6 @@
       transform: translateZ(0) rotate(360deg);
     }
   }
-}
-
-.ferrofluid-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.gradient-blinds-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-
-.beams-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.prism-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
 }
 
 .plasma-wave-container {

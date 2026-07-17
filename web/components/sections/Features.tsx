@@ -1,14 +1,14 @@
 "use client";
 
 import SectionLabel from "../ui/SectionLabel";
-import { useInView } from "../ui/Methodology/useInView";
-import FeatureCard, { type FeatureCardProps } from "../ui/Features/FeatureCard";
-import PassiveVisual from "../ui/Features/PassiveVisual";
-import TarpitVisual from "../ui/Features/TarpitVisual";
-import LogVisual from "../ui/Features/LogVisual";
-import AllowlistVisual from "../ui/Features/AllowlistVisual";
-import ConfigVisual from "../ui/Features/ConfigVisual";
-import RoadmapVisual from "../ui/Features/RoadmapVisual";
+import { useInView } from "@/components/ui/Methodology/useInView";
+import FeatureCard, { type FeatureCardProps } from "@/components/ui/Features/FeatureCard";
+import PassiveVisual from "@/components/ui/Features/PassiveVisual";
+import TarpitVisual from "@/components/ui/Features/TarpitVisual";
+import LogVisual from "@/components/ui/Features/LogVisual";
+import AllowlistVisual from "@/components/ui/Features/AllowlistVisual";
+import ConfigVisual from "@/components/ui/Features/ConfigVisual";
+import RoadmapVisual from "@/components/ui/Features/RoadmapVisual";
 
 const FEATURES: FeatureCardProps[] = [
   {

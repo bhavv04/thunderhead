@@ -1,4 +1,4 @@
-import SectionLabel from "../SectionLabel";
+import SectionLabel from "@/components/ui/SectionLabel";
 import { useInView } from "./useInView";
 
 const logLines = [

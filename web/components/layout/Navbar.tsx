@@ -7,7 +7,7 @@ import {
   GithubButtonDesktop,
   GithubButtonMobile,
   MenuToggle,
-} from "@/app/components/ui/Button";
+} from "@/components/ui/Buttons";
 
 const links = [
   { label: "Methodology", href: "/#methodology" },
