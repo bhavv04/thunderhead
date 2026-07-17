@@ -27,17 +27,18 @@ type TarpitConfig struct {
 }
 
 type Config struct {
-	ListenAddr  string           `json:"listen_addr"`
-	UpstreamURL string           `json:"upstream_url"`
-	Thresholds  Thresholds       `json:"thresholds"`
-	Tarpit      TarpitConfig     `json:"tarpit"`
-	LogFile     string           `json:"log_file"`
-	ExpiryDays  int              `json:"expiry_days"`
-	Allowlist   allowlist.Config `json:"allowlist"`
-	Blocklist   blocklist.Config `json:"blocklist"`
-	TLSCert     string           `json:"tls_cert"`
-	TLSKey      string           `json:"tls_key"`
-	APIKey      string           `json:"api_key"`  // ← add this
+	ListenAddr      string           `json:"listen_addr"`
+	UpstreamURL     string           `json:"upstream_url"`
+	Thresholds      Thresholds       `json:"thresholds"`
+	Tarpit          TarpitConfig     `json:"tarpit"`
+	LogFile         string           `json:"log_file"`
+	ExpiryDays      int              `json:"expiry_days"`
+	Allowlist       allowlist.Config `json:"allowlist"`
+	Blocklist       blocklist.Config `json:"blocklist"`
+	TLSCert         string           `json:"tls_cert"`
+	TLSKey          string           `json:"tls_key"`
+	APIKey          string           `json:"api_key"`
+	DisallowedPaths []string         `json:"disallowed_paths"` 
 }
 
 func Default() *Config {
@@ -53,6 +54,15 @@ func Default() *Config {
 		},
 		LogFile:    "",
 		ExpiryDays: 30,
+		DisallowedPaths: []string{
+			"/admin",
+			"/admin/",
+			"/.env",
+			"/config",
+			"/backup",
+			"/wp-admin",
+			"/phpmyadmin",
+		},
 		Allowlist: allowlist.Config{
 			IPs:        []string{},
 			UserAgents: []string{"Googlebot", "Bingbot", "archive.org_bot"},

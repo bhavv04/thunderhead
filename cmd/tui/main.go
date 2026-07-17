@@ -388,7 +388,8 @@ func main() {
 		state = &store.State{Clients: make(map[string]store.ClientRecord)}
 	}
 
-	disallowed := analyzer.FetchDisallowedPaths(cfg.UpstreamURL)
+	fetched := analyzer.FetchDisallowedPaths(cfg.UpstreamURL)
+	disallowed := append(fetched, cfg.DisallowedPaths...)
 	az := analyzer.New(disallowed, state.Clients)
 
 	if cfg.LogFile == "" {

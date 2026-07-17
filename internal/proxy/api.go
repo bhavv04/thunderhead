@@ -92,12 +92,13 @@ func (p *Proxy) handleMetrics(w http.ResponseWriter, r *http.Request) {
 
 func (p *Proxy) handleConfig(w http.ResponseWriter, r *http.Request) {
 	apiJSON(w, map[string]any{
-		"listen_addr":  p.cfg.ListenAddr,
-		"upstream_url": p.cfg.UpstreamURL,
-		"thresholds":   p.cfg.Thresholds,
-		"tarpit_delay": p.cfg.Tarpit.Delay.String(),
-		"expiry_days":  p.cfg.ExpiryDays,
-		"dry_run":      p.dryRun,
+		"listen_addr":      p.cfg.ListenAddr,
+		"upstream_url":     p.cfg.UpstreamURL,
+		"thresholds":       p.cfg.Thresholds,
+		"tarpit_delay":     p.cfg.Tarpit.Delay.String(),
+		"expiry_days":      p.cfg.ExpiryDays,
+		"dry_run":          p.dryRun,
+		"disallowed_paths": p.cfg.DisallowedPaths,
 	})
 }
 

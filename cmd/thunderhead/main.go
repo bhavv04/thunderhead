@@ -48,7 +48,8 @@ func main() {
 	}
 	log.Printf("thunderhead: loaded %d known clients from state", len(state.Clients))
 
-	disallowed := analyzer.FetchDisallowedPaths(cfg.UpstreamURL)
+	fetched := analyzer.FetchDisallowedPaths(cfg.UpstreamURL)
+	disallowed := append(fetched, cfg.DisallowedPaths...)
 	az := analyzer.New(disallowed, state.Clients)
 
 	lg, err := logger.New(cfg.LogFile)

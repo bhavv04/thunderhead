@@ -28,6 +28,7 @@ type clientState struct {
 	requests       []requestRecord
 	robotsViolated bool
 	lastScore      float64
+	peakScore      float64
 	lastSeen       time.Time
 }
 
@@ -35,7 +36,7 @@ type clientState struct {
 type Analyzer struct {
 	mu      sync.RWMutex
 	clients map[string]*clientState
-	robots  map[string]struct{} // disallowed paths from robots.txt
+	robots  map[string]struct{}
 }
 
 func New(disallowedPaths []string, initial map[string]store.ClientRecord) *Analyzer {
@@ -51,6 +52,7 @@ func New(disallowedPaths []string, initial map[string]store.ClientRecord) *Analy
 		a.clients[ip] = &clientState{
 			robotsViolated: rec.RobotsViolated,
 			lastScore:      rec.LastScore,
+			peakScore:      rec.PeakScore,
 			lastSeen:       rec.LastSeen,
 		}
 	}
@@ -101,7 +103,7 @@ func (a *Analyzer) Score(r *http.Request, ip string) float64 {
 		score += WeightRobotsViolation
 	}
 
-	// 2. Sequential crawling — paths incrementing or alphabetically ordered
+	// 2. Sequential crawling
 	if isSequentialCrawl(client.requests) {
 		score += WeightSequentialCrawl
 	}
@@ -124,6 +126,9 @@ func (a *Analyzer) Score(r *http.Request, ip string) float64 {
 		score = 100
 	}
 	client.lastScore = score
+	if score > client.peakScore {
+		client.peakScore = score
+	}
 	client.lastSeen = time.Now()
 	return score
 }
@@ -143,7 +148,6 @@ func isSequentialCrawl(records []requestRecord) bool {
 			ordered++
 		}
 	}
-	// if 80%+ of paths are in ascending order, likely sequential
 	return float64(ordered)/float64(len(recent)-1) >= 0.8
 }
 
@@ -165,12 +169,10 @@ func headerSuspicion(r *http.Request) float64 {
 		}
 	}
 
-	// Missing Accept header is unusual for browsers
 	if r.Header.Get("Accept") == "" {
 		suspicion += 0.3
 	}
 
-	// Missing Accept-Language is unusual for browsers
 	if r.Header.Get("Accept-Language") == "" {
 		suspicion += 0.2
 	}
@@ -208,6 +210,7 @@ func min(a, b float64) float64 {
 
 type ClientStatus struct {
 	Score          float64 `json:"score"`
+	PeakScore      float64 `json:"peak_score"`
 	RequestCount   int     `json:"request_count"`
 	RobotsViolated bool    `json:"robots_violated"`
 }
@@ -221,6 +224,7 @@ func (a *Analyzer) Status() map[string]ClientStatus {
 		client.mu.Lock()
 		out[ip] = ClientStatus{
 			Score:          client.lastScore,
+			PeakScore:      client.peakScore,
 			RequestCount:   len(client.requests),
 			RobotsViolated: client.robotsViolated,
 		}
@@ -238,6 +242,7 @@ func (a *Analyzer) Snapshot() map[string]store.ClientRecord {
 		client.mu.Lock()
 		out[ip] = store.ClientRecord{
 			LastScore:      client.lastScore,
+			PeakScore:      client.peakScore,
 			RobotsViolated: client.robotsViolated,
 			LastSeen:       client.lastSeen,
 		}

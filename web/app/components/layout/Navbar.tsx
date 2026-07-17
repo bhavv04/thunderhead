@@ -1,177 +1,95 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import {
+  NavLink,
+  MobileNavLink,
+  GithubButtonDesktop,
+  GithubButtonMobile,
+  MenuToggle,
+} from "@/app/components/ui/Button";
 
 const links = [
-    { label: "Methodology", href: "#methodology" },
-    { label: "Features", href: "#features" },
-    { label: "Quickstart", href: "#quickstart" },
+  { label: "Methodology", href: "/#methodology" },
+  { label: "Features", href: "/#features" },
+  { label: "Quickstart", href: "/#quickstart" },
+  { label: "Docs", href: "/docs" }, 
 ];
 
 const GITHUB_URL = "https://github.com/bhavv04/thunderhead";
 
+const pill =
+  "backdrop-blur-xl bg-white/5 transition-all duration-500";
+const pillScrolled =
+  "backdrop-blur-xl bg-white/8";
+
+const Logo = ({ onClick }: { onClick?: () => void }) => (
+  <a href="#top" onClick={onClick} className="px-2 py-1">
+    <img src="/favicon-192.png" alt="thunderhead" className="h-6 w-6" />
+  </a>
+);
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("");
-  const [hoveringGithub, setHoveringGithub] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 20);
-      const sectionIds = links.map((l) => l.href.replace("#", ""));
-      let current = "";
-      for (const id of sectionIds) {
-        const el = document.getElementById(id);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 120) current = id;
-        }
-      }
-      if (window.scrollY < 80) current = "";
-      setActive(current);
+      const current = links
+        .map((l) => l.href.slice(1))
+        .find((id) => (document.getElementById(id)?.getBoundingClientRect().top ?? Infinity) <= 120);
+      setActive(window.scrollY < 80 ? "" : current ?? "");
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const linkClass = (id: string) =>
-    `px-3 py-1.5 rounded-full text-sm transition-all duration-300 ease-in-out ${
-      active === id
-        ? "text-white bg-white/15"
-        : "text-white/50 hover:text-white/90 hover:bg-white/8"
-    }`;
+  const scrollTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setMenuOpen(false);
+  };
 
   return (
     <nav className="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-max max-w-[calc(100vw-2rem)]">
       {/* Desktop */}
-      <div
-        className={`
-          hidden sm:flex items-center px-2 py-2 rounded-full
-          border border-white/10 backdrop-blur-md bg-white/5
-          shadow-[0_0_0_1px_rgba(255,255,255,0.04),0_8px_32px_rgba(0,0,0,0.4)]
-          transition-all duration-500 ease-in-out
-          ${scrolled ? "bg-white/8 shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_12px_40px_rgba(0,0,0,0.6)]" : ""}
-        `}
-      >
-        {/* Brand */}
-        <a
-          href="#top"
-          className="px-3 py-1.5 text-sm text-white/90 font-medium rounded-full hover:text-white transition-all duration-300 hover:text-white/90 hover:bg-white/8"
-        >
-          thunderhead
-        </a>
-
-        {/* Nav links */}
-        <div className="flex items-center gap-0.5">
-          {links.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className={linkClass(link.href.replace("#", ""))}
-            >
-              {link.label}
-            </a>
+      <div className={`hidden sm:flex items-center px-2 py-2 rounded-full ${pill} ${scrolled ? pillScrolled : ""}`}>
+        <Logo />
+        <div className="flex items-center">
+          {links.map(({ label, href }) => (
+            <NavLink key={label} href={href} active={active === href.slice(1)}>
+              {label}
+            </NavLink>
           ))}
         </div>
-
-        {/* GitHub */}
-        <a
-          href={GITHUB_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          onMouseEnter={() => setHoveringGithub(true)}
-          onMouseLeave={() => setHoveringGithub(false)}
-          className="ml-1 flex items-center gap-2 px-3 py-1.5 rounded-full text-sm
-            bg-white/10 border border-white/15 text-white
-            hover:bg-white/20 hover:border-white/25
-            transition-all duration-300 ease-in-out"
-        >
-          <span>View on GitHub</span>
-          <span
-            className={`inline-flex transition-transform duration-300 ease-in-out
-              ${hoveringGithub ? "translate-x-0.5 -translate-y-0.5" : ""}`}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="13" height="13"
-              viewBox="0 0 24 24"
-              fill="none" stroke="currentColor"
-              strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-              className={`transition-all duration-300 ${hoveringGithub ? "opacity-100" : "opacity-60"}`}
-            >
-              <line x1="7" y1="17" x2="17" y2="7" />
-              <polyline points="7 7 17 7 17 17" />
-            </svg>
-          </span>
-        </a>
+        <GithubButtonDesktop href={GITHUB_URL} />
       </div>
 
       {/* Mobile */}
       <div className="sm:hidden flex flex-col items-center gap-2">
-        <div
-          className={`
-            flex items-center justify-between px-3 py-2 rounded-full w-[calc(100vw-2rem)]
-            border border-white/10 backdrop-blur-md bg-white/5
-            shadow-[0_0_0_1px_rgba(255,255,255,0.04),0_8px_32px_rgba(0,0,0,0.4)]
-            transition-all duration-500
-            ${scrolled ? "bg-white/8" : ""}
-          `}
-        >
-          <a
-            href="#top"
-            onClick={() => { window.scrollTo({ top: 0, behavior: "smooth" }); setMenuOpen(false); }}
-            className="px-3 py-1 rounded-full text-sm text-white font-medium"
-          >
-            thunderhead
-          </a>
-
+        <div className={`flex items-center justify-between px-3 py-2 rounded-full w-[calc(100vw-2rem)] ${pill} ${scrolled ? "bg-white/8" : ""}`}>
+          <Logo onClick={scrollTop} />
           <div className="flex items-center gap-2">
-            <a
-              href={GITHUB_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs
-                bg-white/10 border border-white/15 text-white
-                hover:bg-white/20 transition-all duration-300"
-            >
-              GitHub
-              <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                className="opacity-70">
-                <line x1="7" y1="17" x2="17" y2="7" />
-                <polyline points="7 7 17 7 17 17" />
-              </svg>
-            </a>
-            <button
-              onClick={() => setMenuOpen((o) => !o)}
-              className="w-8 h-8 flex flex-col items-center justify-center gap-1.5 rounded-full hover:bg-white/10 transition-all duration-300"
-              aria-label="Toggle menu"
-            >
-              <span className={`block w-4 h-px bg-white/70 transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-[3.5px]" : ""}`} />
-              <span className={`block w-4 h-px bg-white/70 transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-[3.5px]" : ""}`} />
-            </button>
+            <GithubButtonMobile href={GITHUB_URL} />
+            <MenuToggle open={menuOpen} onToggle={() => setMenuOpen((o) => !o)} />
           </div>
         </div>
 
         <div
-          className={`
-            flex flex-col w-[calc(100vw-2rem)] rounded-2xl overflow-hidden
-            border border-white/10 backdrop-blur-md bg-white/5
-            transition-all duration-300 ease-in-out
-            ${menuOpen ? "max-h-48 opacity-100" : "max-h-0 opacity-0 pointer-events-none"}
-          `}
+          className={`flex flex-col w-[calc(100vw-2rem)] rounded-2xl overflow-hidden ${pill} transition-all duration-300 ease-in-out ${
+            menuOpen ? "max-h-56 opacity-100" : "max-h-0 opacity-0 pointer-events-none"
+          }`}
         >
-          {links.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
+          {links.map(({ label, href }) => (
+            <MobileNavLink
+              key={label}
+              href={href}
+              active={active === href.slice(1)}
               onClick={() => setMenuOpen(false)}
-              className={`px-5 py-3 text-sm border-b border-white/5 last:border-0 transition-all duration-200
-                ${active === link.href.replace("#", "") ? "text-white bg-white/10" : "text-white/50 hover:text-white hover:bg-white/8"}`}
             >
-              {link.label}
-            </a>
+              {label}
+            </MobileNavLink>
           ))}
         </div>
       </div>

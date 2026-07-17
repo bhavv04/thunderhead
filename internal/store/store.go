@@ -9,6 +9,7 @@ import (
 
 type ClientRecord struct {
 	LastScore      float64   `json:"last_score"`
+	PeakScore      float64   `json:"peak_score"`
 	RobotsViolated bool      `json:"robots_violated"`
 	LastSeen       time.Time `json:"last_seen"`
 }
@@ -32,7 +33,6 @@ func (s *Store) Load() (*State, error) {
 
 	f, err := os.Open(s.path)
 	if os.IsNotExist(err) {
-		// No state file yet, return empty state
 		return &State{Clients: make(map[string]ClientRecord)}, nil
 	}
 	if err != nil {
