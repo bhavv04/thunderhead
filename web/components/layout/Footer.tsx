@@ -8,9 +8,9 @@ export default function Footer() {
   ];
 
   const docLinks = [
-    { label: "Quickstart",  href: "#quickstart"  },
-    { label: "Methodology", href: "#methodology" },
-    { label: "Features",    href: "#features"    },
+    { label: "Quickstart",  href: "/docs/quickstart"  },
+    { label: "Methodology", href: "/docs" },
+    { label: "Features",    href: "/docs/api"    },
   ];
 
   return (

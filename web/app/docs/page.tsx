@@ -4,10 +4,10 @@ const GITHUB_URL = "https://github.com/bhavv04/thunderhead";
 
 export default function DocsPage() {
   return (
-    <section className="relative flex min-h-screen flex-col items-center justify-center gap-6 px-6 text-center">
+    <section className="bg-foreground relative flex min-h-screen flex-col items-center justify-center gap-6 px-6 text-center">
 
       <a href="/" className="animate-fade-up delay-1 text-sm text-muted-foreground hover:text-white transition-colors">
-        Go back
+        ← Go back
       </a>
 
       <h1 className="animate-fade-up delay-1 text-4xl md:text-5xl">
