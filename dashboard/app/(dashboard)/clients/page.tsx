@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { api } from "../../../lib/api";
-import { usePoll } from "../../../lib/hooks";
+import { api } from "@/lib/api";
+import { usePoll } from "@/lib/hooks";
 
 function scoreColor(score: number) {
   if (score >= 75) return "#f87171";

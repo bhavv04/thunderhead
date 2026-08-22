@@ -1,9 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { api } from "../../../lib/api";
-import { usePoll } from "../../../lib/hooks";
-import type { ClientsResponse } from "../../../lib/types";
+import { api } from "@/lib/api";
+import { usePoll } from "@/lib/hooks";
+import type { ClientsResponse } from "@/lib/types";
 
 interface LogEntry {
   id:     number;

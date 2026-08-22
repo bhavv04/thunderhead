@@ -1,27 +1,27 @@
 "use client";
 
-import SectionLabel from "../ui/SectionLabel";
-import Steps from "../ui/Quickstart/Steps";
+import SectionLabel from "@/components/ui/SectionLabel";
+import Steps from "@/components/ui/Quickstart/Steps";
 import InstallTerminal from "@/components/ui/Quickstart/InstallTerminal";
 import { useInView } from "@/components/ui/Methodology/useInView";
 
+const fadeUp = (inView: boolean, delayMs = 0): React.CSSProperties => ({
+  opacity: inView ? 1 : 0,
+  transform: inView ? "translateY(0)" : "translateY(20px)",
+  transition: `opacity 700ms ease ${delayMs}ms, transform 700ms cubic-bezier(0.16,1,0.3,1) ${delayMs}ms`,
+});
+
 export default function Quickstart() {
   const { ref: headerRef, inView: headerInView } = useInView(0.2);
-  const { ref: stepsRef,  inView: stepsInView  } = useInView(0.15);
-  const { ref: termRef,   inView: termInView   } = useInView(0.15);
-  const { ref: configRef, inView: configInView } = useInView(0.15);
+  const { ref: stepsRef, inView: stepsInView } = useInView(0.15);
+  const { ref: termRef, inView: termInView } = useInView(0.15);
 
   return (
-    <section id="quickstart" className="relative px-4 md:px-6 py-16 md:py-32">
-      <div className="absolute top-0 left-[10%] right-[10%] h-px pointer-events-none" />
+    <section id="quickstart" className="relative px-4 py-16">
+
       <div className="w-full max-w-6xl mx-auto flex flex-col gap-20">
         {/* Header */}
-        <div ref={headerRef} className="flex flex-col gap-4 max-w-lg"
-          style={{
-            opacity: headerInView ? 1 : 0,
-            transform: headerInView ? "translateY(0)" : "translateY(20px)",
-            transition: "opacity 700ms ease, transform 700ms cubic-bezier(0.16,1,0.3,1)",
-          }}>
+        <div ref={headerRef} className="flex flex-col gap-4 max-w-lg" style={fadeUp(headerInView)}>
           <SectionLabel>Quickstart</SectionLabel>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight m-0">
             Up and running
@@ -39,15 +39,10 @@ export default function Quickstart() {
           <div ref={stepsRef}>
             <Steps inView={stepsInView} />
           </div>
-          <div ref={termRef} style={{
-            opacity: termInView ? 1 : 0,
-            transform: termInView ? "translateY(0)" : "translateY(20px)",
-            transition: "opacity 700ms ease 100ms, transform 700ms cubic-bezier(0.16,1,0.3,1) 100ms",
-          }}>
+          <div ref={termRef} style={fadeUp(termInView, 100)}>
             <InstallTerminal animate={termInView} />
           </div>
         </div>
-
       </div>
     </section>
   );

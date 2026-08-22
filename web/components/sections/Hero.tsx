@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import Demo from "@/components/ui/Hero/demo/Demo";
 import { FiGithub } from "react-icons/fi";
-import { RainbowButton } from "@/components/ui/Buttons";
-import PlasmaWave from "@/components/ui/PlasmaWave";
-import { ArrowUpRight } from "lucide-react";
+import { ScrollText } from "lucide-react";
+import { Button } from "@/components/ui/Buttons";
+import NeuralNetwork from "@/components/ui/NeuralNetwork";
 
 const GITHUB_URL = "https://github.com/bhavv04/thunderhead";
+const DOCS_URL = "/docs";
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
@@ -26,14 +26,13 @@ export default function Hero() {
   });
 
   return (
-    <section className="min-h-screen relative isolate flex flex-col items-center justify-center overflow-hidden px-6 py-24 md:py-32">
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        <PlasmaWave />
+    <section className="relative isolate overflow-hidden">
+      <div className="absolute inset-x-0 sm:top-20 h-screen -z-10 pointer-events-none">
+        <NeuralNetwork />
       </div>
 
-      <div className="relative z-10 flex w-full max-w-5xl flex-col items-center gap-16">
+      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center justify-center gap-16 pt-16 md:pt-28 pb-12 px-4">
         <div className="flex flex-col items-center gap-6 text-center">
-
           <div className="inline-flex items-center gap-2" style={fade(0)}>
             <img src="/reaper.png" alt="Thunderhead" className="h-8 w-8" />
             <span className="text-sm text-zinc-500">
@@ -42,7 +41,7 @@ export default function Hero() {
           </div>
 
           <h1
-            className="text-balance text-4xl font-semibold tracking-tight text-white md:text-6xl"
+            className="text-balance text-4xl font-normal tracking-tight text-white md:text-5xl"
             style={fade(80)}
           >
             Bots don't belong on your site.
@@ -61,26 +60,33 @@ export default function Hero() {
             Humans never notice.
           </p>
 
-          <div style={fade(240)}>
-            <RainbowButton variant="outline" size="default" className="text-black" asChild>
+          <div style={fade(240)} className="flex gap-2">
+            <Button variant="default" size="default" asChild>
               <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
                 <FiGithub className="size-4" />
                 View on GitHub
               </a>
-            </RainbowButton>
+            </Button>
+
+            <Button variant="default" size="default" asChild>
+              <a href={DOCS_URL}>
+                <ScrollText className="size-4" />
+                Docs
+              </a>
+            </Button>
           </div>
         </div>
 
         {/* Dashboard demo */}
-        <div className="w-full -mt-5" style={fade(360)}>
-          <div className="relative rounded-xl bg-neutral-900/40 backdrop-blur-sm overflow-hidden p-2">
+        <div className="hidden md:block w-full -mt-5" style={fade(360)}>
+        <div className="relative rounded-xl bg-neutral-900/40 backdrop-blur-sm overflow-hidden p-2">
             <div className="flex items-center gap-2 px-3 py-3">
-              <span className="h-3 w-3 rounded-full bg-red-500/70" />
-              <span className="h-3 w-3 rounded-full bg-amber-400/70" />
-              <span className="h-3 w-3 rounded-full bg-green-500/70" />
+            <span className="h-3 w-3 rounded-full bg-red-500/70" />
+            <span className="h-3 w-3 rounded-full bg-amber-400/70" />
+            <span className="h-3 w-3 rounded-full bg-green-500/70" />
             </div>
             <Demo />
-          </div>
+        </div>
         </div>
       </div>
     </section>

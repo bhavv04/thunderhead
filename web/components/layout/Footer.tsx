@@ -14,7 +14,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-zinc-950 px-6 py-16">
+    <footer className="px-6 py-16">
       <div className="mx-auto max-w-6xl">
 
         {/* Top row */}
@@ -58,7 +58,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom row */}
-        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-8">
+        <div className="flex flex-wrap items-center justify-between gap-4">
           <span className="text-xs text-zinc-600">
             © 2026 Bhavdeep Arora · MIT License
           </span>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Panel, Input, Btn } from "../components/ui";
+import { Panel, Input, Btn } from "@/components/ui/Hero/demo/components/ui";
 
 export function AllowlistPage() {
   const [entries, setEntries] = useState<string[]>(["66.249.64.0/24", "54.92.0.0/16", "172.16.0.0/12"]);

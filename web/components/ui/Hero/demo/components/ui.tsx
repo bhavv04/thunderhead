@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import type { Action } from "../types";
-import { COLOR } from "../theme";
+import type { Action } from "@/components/ui/Hero/demo/types";
+import { COLOR } from "@/components/ui/Hero/demo/theme";
 
 // ─── Reusable UI ───────────────────────────────────────────────────────────────
 

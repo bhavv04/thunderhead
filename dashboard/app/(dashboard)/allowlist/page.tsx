@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { api } from "../../../lib/api";
-import { usePoll } from "../../../lib/hooks";
+import { api } from "@/lib/api";
+import { usePoll } from "@/lib/hooks";
 
 export default function AllowlistPage() {
   const [input,   setInput]   = useState("");

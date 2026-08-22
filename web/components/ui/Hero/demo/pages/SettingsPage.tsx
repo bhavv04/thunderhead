@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Panel, Btn } from "../components/ui";
+import { Panel, Btn } from "@/components/ui/Hero/demo/components/ui";
 
 export function SettingsPage({ proxyUp, onToggleProxy }: { proxyUp: boolean; onToggleProxy: () => void }) {
   const [port, setPort] = useState("8080");

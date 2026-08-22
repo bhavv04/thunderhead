@@ -1,6 +1,6 @@
 "use client";
 
-import SectionLabel from "../ui/SectionLabel";
+import SectionLabel from "@/components/ui/SectionLabel";
 import HowItWorksSteps from "@/components/ui/Methodology/HowItWorksSteps";
 import PipelineDiagram from "@/components/ui/Methodology/PipelineDiagram";
 import SignalDiagram from "@/components/ui/Methodology/SignalDiagram";
@@ -11,13 +11,11 @@ import { useInView } from "@/components/ui/Methodology/useInView";
 
 export default function Methodology() {
   const { ref: headerRef, inView: headerInView } = useInView(0.2);
-  const { ref: stepsRef,  inView: stepsInView  } = useInView(0.15);
+  const { ref: stepsRef, inView: stepsInView } = useInView(0.15);
 
   return (
-    <section id="methodology" className="relative overflow-hidden px-6 py-24 md:py-32">
-
+    <section id="methodology" className="relative overflow-hidden px-6 py-24">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-16 md:gap-20">
-
         {/* Header */}
         <div
           ref={headerRef}
@@ -43,7 +41,6 @@ export default function Methodology() {
 
         {/* Pipeline */}
         <DiagramBlock
-          label=""
           title="Request pipeline"
           description="Every request enters the proxy, gets scored, and is dispatched to one of three actions — all within a single hop."
           delay={80}
@@ -59,7 +56,6 @@ export default function Methodology() {
 
         {/* Signal weights */}
         <DiagramBlock
-          label=""
           title="Signal weights"
           description="Five passive signals are sampled per request. Each contributes an additive score. No single signal is decisive — the combination is what matters."
         >
@@ -68,7 +64,6 @@ export default function Methodology() {
 
         {/* Gauge */}
         <DiagramBlock
-          label=""
           title="Score thresholds"
           description="The final score determines the action tier. Thresholds are configurable in config.json — tune them for your traffic profile."
         >

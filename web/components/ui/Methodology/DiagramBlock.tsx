@@ -3,9 +3,9 @@ import SectionLabel from "@/components/ui/SectionLabel";
 import { useInView } from "./useInView";
 
 export default function DiagramBlock({
-  label, title, description, children, delay = 0,
+  label = "", title, description, children, delay = 0,
 }: {
-  label: string;
+  label?: string;
   title: string;
   description: string;
   children: React.ReactElement<any>;
@@ -25,7 +25,7 @@ export default function DiagramBlock({
       }}
     >
       <div className="space-y-2">
-        <SectionLabel>{label}</SectionLabel>
+        {label && <SectionLabel>{label}</SectionLabel>}
         <h3 className="text-xl font-semibold tracking-tight text-white">
           {title}
         </h3>

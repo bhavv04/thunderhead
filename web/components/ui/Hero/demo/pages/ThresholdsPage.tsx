@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import type { Action } from "../types";
-import { COLOR } from "../theme";
-import { Panel, Btn } from "../components/ui";
+import type { Action } from "@/components/ui/Hero/demo/types";
+import { COLOR } from "@/components/ui/Hero/demo/theme";
+import { Panel, Btn } from "@/components/ui/Hero/demo/components/ui";
 
 export function ThresholdsPage({ thresholds, onChange }: {
   thresholds: { tarpit: number; block: number };

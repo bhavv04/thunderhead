@@ -1,5 +1,5 @@
 import React from "react";
-import { useInView } from "../Methodology/useInView";
+import { useInView } from "@/components/ui/Methodology/useInView";
 
 export type FeatureCardProps = {
   tag: string;

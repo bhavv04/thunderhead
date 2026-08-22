@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { LogEntry, Counts } from "../types";
-import { COLOR } from "../theme";
-import { StatCard, Panel } from "../components/ui";
-import { TrafficChart, ScoreHeatmap, ScoreScatter } from "../components/charts";
-import type { TrafficBucket } from "../components/charts";
-import { pct } from "../utils";
+import type { LogEntry, Counts } from "@/components/ui/Hero/demo/types";
+import { COLOR } from "@/components/ui/Hero/demo/theme";
+import { StatCard, Panel } from "@/components/ui/Hero/demo/components/ui";
+import { TrafficChart, ScoreHeatmap, ScoreScatter } from "@/components/ui/Hero/demo/components/charts";
+import type { TrafficBucket } from "@/components/ui/Hero/demo/components/charts";
+import { pct } from "@/components/ui/Hero/demo/utils";
 
 export function AnalyticsPage({
   logs,

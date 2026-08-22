@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { LogEntry } from "../types";
-import { ActionBadge, ScoreChip } from "./ui";
+import type { LogEntry } from "@/components/ui/Hero/demo/types";
+import { ActionBadge, ScoreChip } from "@/components/ui/Hero/demo/components/ui";
 
 export function LogTable({ logs, showTime = true, maxHeight = 186, flash = false }: {
   logs: LogEntry[]; showTime?: boolean; maxHeight?: number; flash?: boolean;

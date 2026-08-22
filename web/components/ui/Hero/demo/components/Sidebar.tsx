@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import type { Page } from "../types";
-import { NAV } from "../data";
-import { COLOR } from "../theme";
+import type { Page } from "@/components/ui/Hero/demo/types";
+import { NAV } from "@/components/ui/Hero/demo/data";
+import { COLOR } from "@/components/ui/Hero/demo/theme";
 
 // ─── Sidebar ───────────────────────────────────────────────────────────────────
 

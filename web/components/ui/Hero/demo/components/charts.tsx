@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { Counts, LogEntry } from "../types";
-import { COLOR } from "../theme";
+import type { Counts, LogEntry } from "@/components/ui/Hero/demo/types";
+import { COLOR } from "@/components/ui/Hero/demo/theme";
 
 // ─── Charts ────────────────────────────────────────────────────────────────────
 

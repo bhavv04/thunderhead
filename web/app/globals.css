@@ -72,6 +72,25 @@
   --color-4: hsl(195, 100%, 63%);
   --color-5: hsl(90, 100%, 63%);
   --footer: oklch(62.793% 0.25768 29.223);
+  --bg-canvas:     #060b15;
+  --bg-accent:     #e31414;
+  --bg-secondary:  #0ea5e9;
+  --bg-accent-2:   #f43f5e;
+  --bg-accent-3:   #10b981;
+  --bg-line:       #7dd3fc;
+  --bg-border:     #2a4468;
+  --bg-foreground: #dde4ef;
+}
+
+@theme {
+  --color-bg-canvas:     var(--bg-canvas);
+  --color-bg-accent:     var(--bg-accent);
+  --color-bg-secondary:  var(--bg-secondary);
+  --color-bg-accent-2:   var(--bg-accent-2);
+  --color-bg-accent-3:   var(--bg-accent-3);
+  --color-bg-line:     var(--bg-line);
+  --color-bg-border:     var(--bg-border);
+  --color-bg-foreground: var(--bg-foreground);
 }
 
 /* Base */
@@ -84,14 +103,14 @@
     @apply font-sans;
   }
 
-  body {
-    font-family: var(--font-sans);
-    background-color: var(--black);
-    color: var(--gray-200);
-    min-height: 100vh;
-    overflow-x: hidden;
-    @apply bg-background text-foreground;
-  }
+body {
+  font-family: var(--font-sans);
+  background-color: var(--black);   /* ← sets black */
+  color: var(--gray-200);
+  min-height: 100vh;
+  overflow-x: hidden;
+  @apply bg-background text-foreground;  /* ← overrides it right after */
+}
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-sans);
@@ -344,12 +363,4 @@
       transform: translateZ(0) rotate(360deg);
     }
   }
-}
-
-.plasma-wave-container {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
 }

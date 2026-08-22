@@ -1,10 +1,10 @@
-import { RainbowButton } from "@/components/ui/Buttons";
+import { Button } from "@/components/ui/Buttons";
 
 const GITHUB_URL = "https://github.com/bhavv04/thunderhead";
 
 export default function DocsPage() {
   return (
-    <section className="bg-foreground relative flex min-h-screen flex-col items-center justify-center gap-6 px-6 text-center">
+    <section className="bg-bg-canvas relative flex min-h-screen flex-col items-center justify-center gap-6 px-6 text-center">
 
       <a href="/" className="animate-fade-up delay-1 text-sm text-muted-foreground hover:text-white transition-colors">
         ← Go back
@@ -20,11 +20,11 @@ export default function DocsPage() {
       </p>
 
       <div className="animate-fade-up delay-3">
-        <RainbowButton variant="outline" size="default" className="text-black" asChild>
+        <Button variant="outline" size="default" asChild>
           <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
             Read the README
-            </a>
-        </RainbowButton>
+          </a>
+        </Button>
       </div>
     </section>
   );

@@ -1,157 +1,36 @@
+// components/ui/Buttons.tsx
 "use client";
 
-import React, { useState } from "react";
-import Link from "next/link";
+import React from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import { Slot } from "@radix-ui/react-slot";
-import { cva, VariantProps } from "class-variance-authority";
+import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
-/* ---------- Nav link pill ---------- */
+/* ---------- Base button ---------- */
 
-interface NavLinkProps {
-  href: string;
-  active: boolean;
-  children: React.ReactNode;
-}
-
-export function NavLink({ href, active, children }: NavLinkProps) {
-  return (
-    <a
-      href={href}
-      className={`px-3 py-1.5 rounded-full text-sm transition-all duration-300 ease-in-out ${
-        active
-          ? "text-white bg-white/15"
-          : "text-white/50 hover:text-white/90 hover:bg-white/8"
-      }`}
-    >
-      {children}
-    </a>
-  );
-}
-
-/* ---------- Mobile nav link (list row, not pill) ---------- */
-
-interface MobileNavLinkProps {
-  href: string;
-  active: boolean;
-  onClick?: () => void;
-  children: React.ReactNode;
-}
-
-export function MobileNavLink({ href, active, onClick, children }: MobileNavLinkProps) {
-  return (
-    <a
-      href={href}
-      onClick={onClick}
-      className={`px-5 py-3 text-sm border-b border-white/5 last:border-0 transition-all duration-200 ${
-        active
-          ? "text-white bg-white/10"
-          : "text-white/50 hover:text-white hover:bg-white/8"
-      }`}
-    >
-      {children}
-    </a>
-  );
-}
-
-/* ---------- GitHub button (desktop, full "View on GitHub" pill) ---------- */
-
-export function GithubButtonDesktop({ href }: { href: string }) {
-  const [hovering, setHovering] = useState(false);
-
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      onMouseEnter={() => setHovering(true)}
-      onMouseLeave={() => setHovering(false)}
-      className="ml-1 flex items-center gap-2 px-3 py-1.5 rounded-full text-sm
-        bg-white/10 text-white
-        hover:bg-white/20 hover:border-white/25
-        transition-all duration-300 ease-in-out"
-    >
-      <span className="flex flex-row gap-1.5">
-        <FaGithub size={18} className="opacity-70" /> View on GitHub
-      </span>
-      <ArrowUpRight
-        size={13}
-        strokeWidth={2.5}
-        className={`transition-all duration-300 ${
-          hovering ? "translate-x-0.5 -translate-y-0.5 opacity-100" : "opacity-60"
-        }`}
-      />
-    </a>
-  );
-}
-
-/* ---------- GitHub button (mobile, compact icon pill) ---------- */
-
-export function GithubButtonMobile({ href }: { href: string }) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs
-        bg-white/10 border border-white/15 text-white
-        hover:bg-white/20 transition-all duration-300"
-    >
-      GitHub
-      <FaGithub size={11} className="opacity-70" />
-    </a>
-  );
-}
-
-/* ---------- Mobile menu toggle (hamburger / close) ---------- */
-
-interface MenuToggleProps {
-  open: boolean;
-  onToggle: () => void;
-}
-
-export function MenuToggle({ open, onToggle }: MenuToggleProps) {
-  return (
-    <button
-      onClick={onToggle}
-      className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 transition-all duration-300"
-      aria-label="Toggle menu"
-    >
-      {open ? (
-        <X size={16} strokeWidth={2.5} className="text-white/70" />
-      ) : (
-        <Menu size={16} strokeWidth={2.5} className="text-white/70" />
-      )}
-    </button>
-  );
-}
-
-/* ---------- Rainbow button (primary CTA) ---------- */
-
-const rainbowButtonVariants = cva(
+const buttonVariants = cva(
   cn(
-    "relative cursor-pointer group transition-all animate-rainbow",
     "inline-flex items-center justify-center gap-2 shrink-0",
-    "rounded-sm outline-none focus-visible:ring-[3px] aria-invalid:border-destructive",
-    "text-sm font-medium whitespace-nowrap",
-    "disabled:pointer-events-none disabled:opacity-50",
+    "rounded-lg text-sm font-medium whitespace-nowrap",
+    "transition-colors duration-200 outline-none",
+    "focus-visible:ring-1 focus-visible:ring-white/40",
+    "disabled:pointer-events-none disabled:opacity-40",
     "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0"
   ),
   {
     variants: {
       variant: {
-        default:
-          "border-0 bg-[linear-gradient(#ffffff,#ffffff),linear-gradient(#ffffff_50%,rgba(255,255,255,0.6)_80%,rgba(0,0,0,0)),linear-gradient(90deg,var(--color-1),var(--color-5),var(--color-3),var(--color-4),var(--color-2))] bg-[length:200%] text-primary-foreground [background-clip:padding-box,border-box,border-box] [background-origin:border-box] [border:calc(0.125rem)_solid_transparent] before:absolute before:bottom-[-20%] before:left-1/2 before:z-0 before:h-1/5 before:w-3/5 before:-translate-x-1/2 before:animate-rainbow before:bg-[linear-gradient(90deg,var(--color-1),var(--color-5),var(--color-3),var(--color-4),var(--color-2))] before:bg-[length:200%] before:[filter:blur(0.75rem)] dark:bg-[linear-gradient(#fff,#fff),linear-gradient(#fff_50%,rgba(255,255,255,0.6)_80%,rgba(0,0,0,0)),linear-gradient(90deg,var(--color-1),var(--color-5),var(--color-3),var(--color-4),var(--color-2))]",
-        outline:
-          "border border-input border-b-transparent bg-[linear-gradient(#ffffff,#ffffff),linear-gradient(#ffffff_50%,rgba(18,18,19,0.6)_80%,rgba(18,18,19,0)),linear-gradient(90deg,var(--color-1),var(--color-5),var(--color-3),var(--color-4),var(--color-2))] bg-[length:200%] text-accent-foreground [background-clip:padding-box,border-box,border-box] [background-origin:border-box] before:absolute before:bottom-[-20%] before:left-1/2 before:z-0 before:h-1/5 before:w-3/5 before:-translate-x-1/2 before:animate-rainbow before:bg-[linear-gradient(90deg,var(--color-1),var(--color-5),var(--color-3),var(--color-4),var(--color-2))] before:bg-[length:200%] before:[filter:blur(0.75rem)] dark:bg-[linear-gradient(#0a0a0a,#0a0a0a),linear-gradient(#0a0a0a_50%,rgba(255,255,255,0.6)_80%,rgba(0,0,0,0)),linear-gradient(90deg,var(--color-1),var(--color-5),var(--color-3),var(--color-4),var(--color-2))]",
+        default: "bg-white text-black hover:bg-white/90",
+        outline: "border border-white/15 text-white hover:border-white/30 hover:bg-white/5",
+        ghost: "text-white/70 hover:text-white hover:bg-white/5",
       },
       size: {
-        default: "h-10 px-4 rounded-xl",
-        sm: "h-8 rounded-xl px-3 text-xs",
-        lg: "h-11 rounded-xl px-4",
+        default: "h-10 px-4",
+        sm: "h-8 px-3 text-xs",
+        lg: "h-11 px-5",
         icon: "size-9",
       },
     },
@@ -162,51 +41,142 @@ const rainbowButtonVariants = cva(
   }
 );
 
-interface RainbowButtonProps
+export interface ButtonProps
   extends
     React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof rainbowButtonVariants> {
+    VariantProps<typeof buttonVariants> {
   asChild?: boolean;
 }
 
-export const RainbowButton = React.forwardRef<HTMLButtonElement, RainbowButtonProps>(
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
     return (
       <Comp
         data-slot="button"
-        className={cn(rainbowButtonVariants({ variant, size, className }))}
+        className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
       />
     );
   }
 );
-RainbowButton.displayName = "RainbowButton";
+Button.displayName = "Button";
 
-/* ---------- Secondary button (quiet CTA) ---------- */
+/* ---------- Nav link styles (shared between desktop pill + mobile row) ---------- */
 
-interface SecondaryButtonProps {
+const navLinkVariants = cva(
+  "text-sm transition-colors duration-200 outline-none focus-visible:ring-1 focus-visible:ring-white/40",
+  {
+    variants: {
+      variant: {
+        desktop: "px-3 py-1.5 rounded-full",
+        mobile: "px-5 py-3 border-b border-white/5 last:border-0",
+      },
+      active: {
+        true: "",
+        false: "",
+      },
+    },
+    compoundVariants: [
+      { variant: "desktop", active: true, className: "text-white" },
+      { variant: "desktop", active: false, className: "text-white/45 hover:text-white/85" },
+      { variant: "mobile", active: true, className: "text-white bg-white/5" },
+      { variant: "mobile", active: false, className: "text-white/45 hover:text-white" },
+    ],
+    defaultVariants: {
+      variant: "desktop",
+      active: false,
+    },
+  }
+);
+
+interface BaseNavLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string;
-  external?: boolean;
+  active: boolean;
   children: React.ReactNode;
 }
 
-export function SecondaryButton({ href, external, children }: SecondaryButtonProps) {
-  const className =
-    "inline-flex h-11 items-center gap-2 rounded-xl border border-white/15 px-4 text-sm font-medium text-zinc-200 transition-colors hover:border-white/25 hover:bg-white/5";
+/* ---------- Nav link pill (desktop) ---------- */
 
-  if (external) {
-    return (
-      <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
-        {children}
-      </a>
-    );
-  }
-
+export function NavLink({ href, active, children, className, ...props }: BaseNavLinkProps) {
   return (
-    <Link href={href} className={className}>
+    <a
+      href={href}
+      aria-current={active ? "page" : undefined}
+      className={cn(navLinkVariants({ variant: "desktop", active }), className)}
+      {...props}
+    >
       {children}
-    </Link>
+    </a>
+  );
+}
+
+/* ---------- Nav link row (mobile menu) ---------- */
+
+export function MobileNavLink({ href, active, children, className, ...props }: BaseNavLinkProps) {
+  return (
+    <a
+      href={href}
+      aria-current={active ? "page" : undefined}
+      className={cn(navLinkVariants({ variant: "mobile", active }), className)}
+      {...props}
+    >
+      {children}
+    </a>
+  );
+}
+
+/* ---------- GitHub button (desktop) ---------- */
+
+export function GithubButtonDesktop({ href }: { href: string }) {
+  return (
+    <Button variant="ghost" size="sm" className="ml-1 rounded-full group" asChild>
+      <a href={href} target="_blank" rel="noopener noreferrer">
+        <FaGithub size={15} className="opacity-70" aria-hidden="true" />
+        View on GitHub
+        <ArrowUpRight
+          size={13}
+          strokeWidth={2}
+          aria-hidden="true"
+          className=""
+        />
+      </a>
+    </Button>
+  );
+}
+
+/* ---------- GitHub button (mobile) ---------- */
+
+export function GithubButtonMobile({ href }: { href: string }) {
+  return (
+    <Button variant="outline" size="sm" className="rounded-full gap-1.5 text-white/70 hover:text-white" asChild>
+      <a href={href} target="_blank" rel="noopener noreferrer">
+        GitHub
+        <FaGithub size={11} className="opacity-70" aria-hidden="true" />
+      </a>
+    </Button>
+  );
+}
+
+/* ---------- Mobile menu toggle ---------- */
+
+interface MenuToggleProps {
+  open: boolean;
+  onToggle: () => void;
+}
+
+export function MenuToggle({ open, onToggle }: MenuToggleProps) {
+  return (
+    <Button
+      variant="ghost"
+      size="icon"
+      className="rounded-full text-white/60 hover:text-white"
+      onClick={onToggle}
+      aria-label={open ? "Close menu" : "Open menu"}
+      aria-expanded={open}
+    >
+      {open ? <X size={16} strokeWidth={2} /> : <Menu size={16} strokeWidth={2} />}
+    </Button>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import SectionLabel from "../ui/SectionLabel";
+import SectionLabel from "@/components//ui/SectionLabel";
 import { useInView } from "@/components/ui/Methodology/useInView";
 import FeatureCard, { type FeatureCardProps } from "@/components/ui/Features/FeatureCard";
 import PassiveVisual from "@/components/ui/Features/PassiveVisual";
@@ -71,8 +71,7 @@ export default function Features() {
   const { ref: headerRef, inView: headerInView } = useInView(0.2);
 
   return (
-    <section id="features" className="relative px-6 py-24 md:py-32">
-
+    <section id="features" className="relative px-6 py-24">
       {/* Top border line */}
       <div
         className="absolute top-0 left-[10%] right-[10%] h-px pointer-events-none"
@@ -80,7 +79,6 @@ export default function Features() {
       />
 
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-12 md:gap-14">
-
         {/* Header */}
         <div
           ref={headerRef}
@@ -109,7 +107,6 @@ export default function Features() {
             <FeatureCard key={f.tag} {...f} />
           ))}
         </div>
-
       </div>
     </section>
   );

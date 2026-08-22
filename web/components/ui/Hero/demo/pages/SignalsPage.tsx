@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { COLOR } from "../theme";
-import { Panel } from "../components/ui";
+import { COLOR } from "@/components/ui/Hero/demo/theme";
+import { Panel } from "@/components/ui/Hero/demo/components/ui";
 
 export function SignalsPage() {
   const [signals, setSignals] = useState([

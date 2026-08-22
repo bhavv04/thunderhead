@@ -1,6 +1,6 @@
 "use client";
 
-import type { Page } from "../types";
+import type { Page } from "@/components/ui/Hero/demo/types";
 
 // ─── Bottom nav (mobile) ───────────────────────────────────────────────────────
 

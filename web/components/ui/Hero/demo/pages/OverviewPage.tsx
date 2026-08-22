@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { LogEntry, Counts } from "../types";
-import { COLOR } from "../theme";
-import { pct } from "../utils";
-import { StatCard, Panel, Btn } from "../components/ui";
-import { DonutChart, TrafficChart } from "../components/charts";
-import type { TrafficBucket } from "../components/charts";
-import { LogTable } from "../components/LogTable";
-import type { Action } from "../types";
+import type { LogEntry, Counts } from "@/components/ui/Hero/demo/types";
+import { COLOR } from "@/components/ui/Hero/demo/theme";
+import { pct } from "@/components/ui/Hero/demo/utils";
+import { StatCard, Panel, Btn } from "@/components/ui/Hero/demo/components/ui";
+import { DonutChart, TrafficChart } from "@/components/ui/Hero/demo/components/charts";
+import type { TrafficBucket } from "@/components/ui/Hero/demo/components/charts";
+import { LogTable } from "@/components/ui/Hero/demo/components/LogTable";
+import type { Action } from "@/components/ui/Hero/demo/types";
 
 export function OverviewPage({ logs, counts, sparkData, trafficBuckets, rpsDisplay, latency, proxyUp, onExport, onRefresh }: {
   logs: LogEntry[]; counts: Counts; sparkData: number[]; trafficBuckets: TrafficBucket[];

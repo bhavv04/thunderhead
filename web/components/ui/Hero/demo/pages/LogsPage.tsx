@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import type { Action, LogEntry } from "../types";
-import { Input, Btn } from "../components/ui";
-import { LogTable } from "../components/LogTable";
+import type { Action, LogEntry } from "@/components/ui/Hero/demo/types";
+import { Input, Btn } from "@/components/ui/Hero/demo/components/ui";
+import { LogTable } from "@/components/ui/Hero/demo/components/LogTable";
 
 export function LogsPage({ logs, onExport }: { logs: LogEntry[]; onExport: () => void }) {
   const [frozen] = useState([...logs]);

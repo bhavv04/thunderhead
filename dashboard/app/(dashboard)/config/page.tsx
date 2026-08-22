@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback } from "react";
-import { api } from "../../../lib/api";
-import { usePoll } from "../../../lib/hooks";
+import { api } from "@/lib/api";
+import { usePoll } from "@/lib/hooks";
 
 function Row({ label, value }: { label: string; value: string | number | boolean }) {
   return (

@@ -1,9 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { api } from "../../../lib/api";
-import type { MetricsResponse, ClientsResponse, HealthResponse } from "../../../lib/types";
-import { usePoll } from "../../../lib/hooks";
+import { api } from "@/lib/api";
+import type { MetricsResponse, ClientsResponse, HealthResponse } from "@/lib/types";
+import { usePoll } from "@/lib/hooks";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
