@@ -27,7 +27,7 @@ export default function Hero() {
 
   return (
     <section className="relative isolate overflow-hidden">
-      <div className="absolute inset-x-0 sm:top-20 h-screen -z-10 pointer-events-none">
+      <div className="absolute inset-x-0 h-screen -z-10 pointer-events-none">
         <PixelBlast
           variant="square"
           pixelSize={3}
