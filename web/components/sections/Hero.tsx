@@ -5,7 +5,7 @@ import Demo from "@/components/ui/Hero/demo/Demo";
 import { FiGithub } from "react-icons/fi";
 import { ScrollText } from "lucide-react";
 import { Button } from "@/components/ui/Buttons";
-import NeuralNetwork from "@/components/ui/NeuralNetwork";
+import PixelBlast from "@/components/ui/Background";
 
 const GITHUB_URL = "https://github.com/bhavv04/thunderhead";
 const DOCS_URL = "/docs";
@@ -28,7 +28,23 @@ export default function Hero() {
   return (
     <section className="relative isolate overflow-hidden">
       <div className="absolute inset-x-0 sm:top-20 h-screen -z-10 pointer-events-none">
-        <NeuralNetwork />
+        <PixelBlast
+          variant="square"
+          pixelSize={3}
+          color="#B497CF"
+          patternScale={2}
+          patternDensity={1}
+          enableRipples
+          rippleIntensityScale={1}
+          rippleThickness={0.1}
+          rippleSpeed={0.3}
+          edgeFade={0.5}
+          speed={0.5}
+          transparent
+          antialias
+          autoPauseOffscreen
+          style={{ width: "100%", height: "100%" }}
+        />
       </div>
 
       <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center justify-center gap-16 pt-16 md:pt-28 pb-12 px-4">

@@ -82,17 +82,6 @@
   --bg-foreground: #dde4ef;
 }
 
-@theme {
-  --color-bg-canvas:     var(--bg-canvas);
-  --color-bg-accent:     var(--bg-accent);
-  --color-bg-secondary:  var(--bg-secondary);
-  --color-bg-accent-2:   var(--bg-accent-2);
-  --color-bg-accent-3:   var(--bg-accent-3);
-  --color-bg-line:     var(--bg-line);
-  --color-bg-border:     var(--bg-border);
-  --color-bg-foreground: var(--bg-foreground);
-}
-
 /* Base */
 @layer base {
   html {
@@ -106,7 +95,7 @@
 body {
   font-family: var(--font-sans);
   background-color: var(--black);   /* ← sets black */
-  color: var(--gray-200);
+  color: var(--gray-900);
   min-height: 100vh;
   overflow-x: hidden;
   @apply bg-background text-foreground;  /* ← overrides it right after */
