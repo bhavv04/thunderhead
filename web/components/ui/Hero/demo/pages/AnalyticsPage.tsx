@@ -45,7 +45,7 @@ export function AnalyticsPage({
   const maxBucket = Math.max(...scoreBuckets.map(b => b.count), 1);
 
   return (
-    <div className="h-full overflow-y-auto p-3 flex flex-col gap-2.5">
+    <div className="h-full overflow-y-auto p-2 flex flex-col gap-2.5">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
         <StatCard label="Total requests" value={counts.total} sub="all time" />
         <StatCard label="Allowed"   value={counts.allow}  sub={allowPct}  valueColor={COLOR.allow.text}  />

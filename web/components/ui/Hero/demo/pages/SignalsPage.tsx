@@ -18,7 +18,7 @@ export function SignalsPage() {
   const setWeight = (id: number, w: number) => setSignals(p => p.map(s => s.id === id ? { ...s, weight: w } : s));
 
   return (
-    <div className="flex-1 overflow-y-auto p-3 sm:p-[14px_18px] flex flex-col gap-2.5">
+    <div className="flex-1 overflow-y-auto p-2 flex flex-col gap-3">
       <Panel title="Scoring signals" right="max score 100">
         <div className="flex flex-col divide-y divide-zinc-800">
           {signals.map(s => (

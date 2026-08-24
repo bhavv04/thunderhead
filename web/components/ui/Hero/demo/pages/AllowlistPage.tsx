@@ -18,7 +18,7 @@ export function AllowlistPage() {
   };
 
   return (
-    <div className="flex-1 overflow-y-auto p-3 sm:p-[14px_18px] flex flex-col gap-2.5">
+    <div className="flex-1 overflow-y-auto p-2 flex flex-col gap-3">
       <Panel title="IP / CIDR allowlist" right={`${entries.length} entries`}>
         <div className="flex flex-col gap-3">
           <div className="flex gap-2">

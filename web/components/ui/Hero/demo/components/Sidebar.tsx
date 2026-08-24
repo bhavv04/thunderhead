@@ -4,8 +4,24 @@ import { useState, useEffect } from "react";
 import type { Page } from "@/components/ui/Hero/demo/types";
 import { NAV } from "@/components/ui/Hero/demo/data";
 import { COLOR } from "@/components/ui/Hero/demo/theme";
+import {
+  LayoutDashboard, Rss, BarChart3, SlidersHorizontal,
+  ShieldCheck, Radio, ScrollText, Settings,
+} from "lucide-react";
+import Image from "next/image";
 
-// ─── Sidebar ───────────────────────────────────────────────────────────────────
+const NAV_ICON: Record<string, React.ComponentType<{ className?: string }>> = {
+  "Overview": LayoutDashboard,
+  "Live feed": Rss,
+  "Analytics": BarChart3,
+  "Thresholds": SlidersHorizontal,
+  "Allowlist": ShieldCheck,
+  "Signals": Radio,
+  "Logs": ScrollText,
+  "Settings": Settings,
+};
+
+// ─── Sidebar ───────────────────────────────────────────────────────────────
 
 export function Sidebar({ page, setPage, blockCount, proxyUp, latency }: {
   page: Page; setPage: (p: Page) => void; blockCount: number; proxyUp: boolean; latency: number;
@@ -14,53 +30,50 @@ export function Sidebar({ page, setPage, blockCount, proxyUp, latency }: {
   useEffect(() => setMounted(true), []);
 
   return (
-    <div className="w-[196px] shrink-0 bg-zinc-900 border-r border-zinc-800 flex flex-col">
-      <div className="flex items-center gap-2.5 px-3.5 pt-3.5 pb-3 border-b border-zinc-800">
-        <div className="w-[26px] h-[26px] rounded-md bg-white flex items-center justify-center shrink-0">
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="#09090b" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="3,9 7,2 11,9" />
-            <line x1={4.5} y1={6.5} x2={9.5} y2={6.5} />
-            <line x1={7} y1={9} x2={7} y2={12} />
-          </svg>
-        </div>
+    <div className="w-48 shrink-0 bg-sidebar-bg flex flex-col">
+      <div className="flex items-center gap-2 p-4 pb-3">
+            <Image src="/favicon-192.png" alt="Logo" width={28} height={28} className="rounded-md" />
         <div>
-          <div className="text-[13px] font-medium text-zinc-100 tracking-tight">Thunderhead</div>
-          <div className="text-[10px] text-zinc-500 mt-px">v0.4.1</div>
+          <div className="text-sm font-medium text-zinc-100 tracking-tight">Thunderhead</div>
+          <div className="text-xs text-zinc-500">v0.4.1</div>
         </div>
       </div>
 
       <div className="flex-1 p-2 overflow-y-auto">
         {NAV.map(section => (
           <div key={section.section}>
-            <div className="text-[10px] text-zinc-500 uppercase tracking-widest px-1.5 pt-2 pb-0.5">{section.section}</div>
-            {section.items.map(item => (
-              <button
-                key={item.label}
-                onClick={() => setPage(item.label as Page)}
-                className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-md cursor-pointer text-xs transition-colors border-none bg-transparent
-                  ${page === item.label ? "bg-zinc-800 text-zinc-100 font-medium" : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/50"}`}
-              >
-                <i className={`ti ti-${item.icon} text-[15px] w-4 text-center shrink-0`} aria-hidden="true" />
-                <span className="flex-1 text-left">{item.label}</span>
-                {item.label === "Live feed" && mounted && blockCount > 0 && (
-                  <span
-                    className="text-[10px] rounded px-[5px] py-px"
-                    style={{ background: COLOR.block.bg, color: COLOR.block.text, border: `0.5px solid ${COLOR.block.border}` }}
-                  >
-                    {blockCount}
-                  </span>
-                )}
-              </button>
-            ))}
+            <div className="text-xs text-zinc-500 px-2 pt-2 pb-1">{section.section}</div>
+            {section.items.map(item => {
+              const Icon = NAV_ICON[item.label] ?? LayoutDashboard;
+              return (
+                <button
+                  key={item.label}
+                  onClick={() => setPage(item.label as Page)}
+                  className={`w-full flex items-center gap-2 px-2 py-2 rounded-md cursor-pointer text-xs transition-colors border-none bg-transparent
+                    ${page === item.label ? "bg-zinc-800 text-zinc-100 font-medium" : "text-zinc-400 hover:text-white"}`}
+                >
+                  <Icon className="w-4 h-4 shrink-0" />
+                  <span className="flex-1 text-left">{item.label}</span>
+                  {item.label === "Live feed" && mounted && blockCount > 0 && (
+                    <span
+                      className="text-xxs"
+                      style={{ background: COLOR.block.bg, color: COLOR.block.text, border: `1px solid ${COLOR.block.border}` }}
+                    >
+                      {blockCount}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
         ))}
       </div>
 
-      <div className="p-2 border-t border-zinc-800">
-        <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-zinc-800 border border-zinc-700">
+      <div className="p-2">
+        <div className="flex items-center gap-2 px-3 py-2">
           <span className="text-xs text-zinc-400">Proxy</span>
           <span className="text-xs font-medium ml-auto text-zinc-100 tabular-nums">
-            {proxyUp ? "thunderhead.app": "offline"}
+            {proxyUp ? "thunderhead.app" : "offline"}
           </span>
         </div>
       </div>

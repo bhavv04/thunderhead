@@ -21,7 +21,7 @@ export function ThresholdsPage({ thresholds, onChange }: {
   const blockW    = 100 - local.block;
 
   return (
-    <div className="flex-1 overflow-y-auto p-3 sm:p-[14px_18px] flex flex-col gap-2.5">
+    <div className="flex-1 overflow-y-auto p-2 flex flex-col gap-3">
       <Panel title="Intent score thresholds" right="drag to adjust">
         <div className="flex flex-col gap-5">
           {/* Visual band */}

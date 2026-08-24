@@ -15,7 +15,7 @@ export function LiveFeedPage({ logs, onExport }: { logs: LogEntry[]; onExport: (
   );
 
   return (
-<div className="flex-1 overflow-hidden p-4 flex flex-col min-h-0">
+<div className="flex-1 overflow-hidden p-2 flex flex-col min-h-0">
     <div className="bg-zinc-900 border border-zinc-800 rounded-lg overflow-hidden flex flex-col flex-1 min-h-0">
       <div className="flex items-center justify-between px-3 py-2 flex-wrap gap-2 shrink-0">
           <div className="flex items-center gap-2">   

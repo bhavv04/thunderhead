@@ -47,7 +47,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center justify-center gap-16 pt-16 md:pt-28 pb-12 px-4">
+      <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center justify-center gap-16 pt-16 md:pt-28 pb-12 px-4">
         <div className="flex flex-col items-center gap-6 text-center">
           <div className="inline-flex items-center gap-2" style={fade(0)}>
             <img src="/reaper.png" alt="Thunderhead" className="h-8 w-8" />
@@ -68,7 +68,7 @@ export default function Hero() {
           </h1>
 
           <p
-            className="max-w-xl text-base leading-relaxed text-zinc-400 md:text-lg"
+            className="max-w-xl text-base leading-relaxed text-zinc-300 text-lg"
             style={fade(160)}
           >
             Thunderhead is a lightweight reverse proxy that silently scores every
@@ -92,17 +92,15 @@ export default function Hero() {
             </Button>
           </div>
         </div>
+      </div>
 
-        {/* Dashboard demo */}
-        <div className="hidden md:block w-full -mt-5" style={fade(360)}>
-        <div className="relative rounded-xl bg-neutral-900/40 backdrop-blur-sm overflow-hidden p-2">
-            <div className="flex items-center gap-2 px-3 py-3">
-            <span className="h-3 w-3 rounded-full bg-red-500/70" />
-            <span className="h-3 w-3 rounded-full bg-amber-400/70" />
-            <span className="h-3 w-3 rounded-full bg-green-500/70" />
-            </div>
-            <Demo />
-        </div>
+      {/* Dashboard demo */}
+      <div
+        className="hidden md:block relative z-10 mx-auto w-full max-w-6xl px-4 pb-12"
+        style={fade(360)}
+      >
+        <div className="relative rounded-xl bg-neutral-900 overflow-hidden">
+          <Demo />
         </div>
       </div>
     </section>

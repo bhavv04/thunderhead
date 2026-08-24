@@ -11,7 +11,7 @@ export function SettingsPage({ proxyUp, onToggleProxy }: { proxyUp: boolean; onT
   const save = () => { setSaved(true); setTimeout(() => setSaved(false), 2000); };
 
   return (
-    <div className="flex-1 overflow-y-auto p-3 sm:p-[14px_18px] flex flex-col gap-2.5">
+    <div className="flex-1 overflow-y-auto p-2 flex flex-col gap-3">
       <Panel title="Proxy settings">
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
