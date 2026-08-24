@@ -37,8 +37,8 @@ export function StatCard({ label, value, sub, valueColor }: {
     : (typeof value === "number" ? value : value);
 
   return (
-    <div className="bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3">
-      <div className="text-[10px] text-zinc-500 uppercase tracking-widest mb-1.5">{label}</div>
+    <div className="rounded-lg px-4 py-3">
+      <div className="text-xxs text-zinc-500 mb-2">{label}</div>
       <div
         className="text-[22px] font-medium leading-none tabular-nums"
         style={{ color: valueColor ?? "#f4f4f5" }}
@@ -55,10 +55,10 @@ export function Panel({ title, right, children, padBody = true }: {
   title: string; right?: React.ReactNode; children: React.ReactNode; padBody?: boolean;
 }) {
   return (
-    <div className="bg-zinc-900 border border-zinc-800 rounded-lg overflow-hidden">
+    <div className="rounded-lg overflow-hidden">
       <div className="flex items-center justify-between px-3 py-2 border-b border-zinc-800">
-        <span className="text-[11px] font-medium text-zinc-100">{title}</span>
-        {right && <span className="text-[10px] text-zinc-500" suppressHydrationWarning>{right}</span>}
+        <span className="text-xxs font-medium text-zinc-100">{title}</span>
+        {right && <span className="text-xxs text-zinc-500" suppressHydrationWarning>{right}</span>}
       </div>
       <div className={padBody ? "p-3.5" : ""}>{children}</div>
     </div>

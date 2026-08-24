@@ -56,15 +56,15 @@ export function ThresholdsPage({ thresholds, onChange }: {
           {/* Block slider */}
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
-              <label className="text-[11px] font-medium text-zinc-300">Block threshold</label>
-              <span className="text-[11px] font-medium tabular-nums" style={{ color: COLOR.block.text }}>{local.block}</span>
+              <label className="text-xxs font-medium text-zinc-300">Block threshold</label>
+              <span className="text-xxs font-medium tabular-nums" style={{ color: COLOR.block.text }}>{local.block}</span>
             </div>
             <input
               type="range" min={local.tarpit + 1} max={99} value={local.block}
               onChange={e => setLocal(p => ({ ...p, block: +e.target.value }))}
               className="w-full accent-red-400 cursor-pointer"
             />
-            <p className="text-[10px] text-zinc-500">Requests with a score at or above this value are blocked with a 403 response.</p>
+            <p className="text-xxs text-zinc-500">Requests with a score at or above this value are blocked with a 403 response.</p>
           </div>
 
           <div className="flex gap-2 pt-1">
@@ -80,13 +80,12 @@ export function ThresholdsPage({ thresholds, onChange }: {
           { a: "tarpit" as Action, label: "Tarpit zone", range: `${local.tarpit} – ${local.block - 1}`, desc: "Introduce a 5s artificial delay." },
           { a: "block"  as Action, label: "Block zone",  range: `${local.block} – 100`,          desc: "Return 403 Forbidden." },
         ]).map(z => (
-          <div key={z.a} className="bg-zinc-900 border border-zinc-800 rounded-lg p-3.5 flex flex-col gap-1">
+          <div key={z.a} className="rounded-lg p-4 flex flex-col gap-1">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full shrink-0" style={{ background: COLOR[z.a].text }} />
-              <span className="text-[11px] font-medium text-zinc-100">{z.label}</span>
+              <span className="text-xs font-medium text-zinc-100">{z.label}</span>
             </div>
-            <span className="text-[13px] font-semibold tabular-nums" style={{ color: COLOR[z.a].text }}>{z.range}</span>
-            <span className="text-[10px] text-zinc-500">{z.desc}</span>
+            <span className="text-xs font-semibold tabular-nums" style={{ color: COLOR[z.a].text }}>{z.range}</span>
+            <span className="text-xxs text-zinc-500">{z.desc}</span>
           </div>
         ))}
       </div>

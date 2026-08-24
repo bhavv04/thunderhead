@@ -138,34 +138,34 @@ export default function Demo() {
     }
   };
 
-return (
-  <div className="flex h-180 rounded-xl overflow-hidden text-fg bg-zinc-900">
-    <Sidebar page={page} setPage={setPage} blockCount={counts.block} proxyUp={proxyUp} latency={latency} />
+  return (
+    <div className="flex h-180 rounded-xl overflow-hidden text-fg bg-zinc-900">
+      <Sidebar page={page} setPage={setPage} blockCount={counts.block} proxyUp={proxyUp} latency={latency} />
 
-    <div className="flex-1 flex flex-col overflow-hidden p-2 min-w-0">
-      <div className="flex-1 flex flex-col overflow-hidden rounded-lg">
-        <div className="h-12 flex items-center justify-between px-5 shrink-0 text-white">
-          <div className="flex items-center gap-2">
-            {(() => {
-              const Icon = PAGE_ICON[page];
-              return <Icon className="size-4 text-fg-muted" />;
-            })()}
-            <span className="text-sm font-medium text-fg">{PAGE_TITLE[page]}</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <span className="text-xs text-fg-subtle tabular-nums">{clock ?? "--:--:--"} UTC</span>
+      <div className="flex-1 flex flex-col overflow-hidden p-2 min-w-0">
+        <div className="flex-1 flex flex-col overflow-hidden rounded-lg">
+          <div className="h-12 flex items-center justify-between px-5 shrink-0 text-white">
             <div className="flex items-center gap-2">
-              <Btn variant="ghost" size="sm" onClick={onRefresh}>Clear</Btn>
-              <Btn size="sm" onClick={onExport}>Export</Btn>
+              {(() => {
+                const Icon = PAGE_ICON[page];
+                return <Icon className="size-4 text-fg-muted" />;
+              })()}
+              <span className="text-sm font-medium text-fg">{PAGE_TITLE[page]}</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-fg-subtle tabular-nums">{clock ?? "--:--:--"} UTC</span>
+              <div className="flex items-center gap-2">
+                <Btn variant="ghost" size="sm" onClick={onRefresh}>Clear</Btn>
+                <Btn size="sm" onClick={onExport}>Export</Btn>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="flex-1 overflow-y-auto">
-          {renderPage()}
+          <div className="flex-1 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+            {renderPage()}
+          </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
 }

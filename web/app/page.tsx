@@ -8,7 +8,7 @@ import Quickstart from "@/components/sections/Quickstart";
 
 export default function Home() {
   return (
-    <main id="top" className="relative isolate min-h-screen font-sans bg-black/95">
+    <main id="top" className="relative isolate min-h-screen font-sans bg-black">
       <Navbar />
       <div className="relative z-10">
         <Hero />

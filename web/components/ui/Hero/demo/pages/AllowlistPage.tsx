@@ -37,7 +37,7 @@ export function AllowlistPage() {
           </div>
         </div>
       </Panel>
-      <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-3.5 text-[11px] text-zinc-400 leading-relaxed">
+      <div className="p-3 text-xs text-zinc-400 leading-relaxed">
         Allowlisted IPs bypass all scoring and are always passed through. CIDR notation is supported (e.g. <code className="text-zinc-300 font-mono">10.0.0.0/8</code>). Changes take effect immediately.
       </div>
     </div>

@@ -5,7 +5,7 @@ import Demo from "@/components/ui/Hero/demo/Demo";
 import { FiGithub } from "react-icons/fi";
 import { ScrollText } from "lucide-react";
 import { Button } from "@/components/ui/Buttons";
-import PixelBlast from "@/components/ui/Background";
+import Beams   from "@/components/ui/Background";
 
 const GITHUB_URL = "https://github.com/bhavv04/thunderhead";
 const DOCS_URL = "/docs";
@@ -26,29 +26,24 @@ export default function Hero() {
   });
 
   return (
-    <section className="relative isolate overflow-hidden">
-      <div className="absolute inset-x-0 h-screen -z-10 pointer-events-none">
-        <PixelBlast
-          variant="square"
-          pixelSize={3}
-          color="#B497CF"
-          patternScale={2}
-          patternDensity={1}
-          enableRipples
-          rippleIntensityScale={1}
-          rippleThickness={0.1}
-          rippleSpeed={0.3}
-          edgeFade={0.5}
-          speed={0.5}
-          transparent
-          antialias
-          autoPauseOffscreen
-          style={{ width: "100%", height: "100%" }}
+    <section className="relative isolate overflow-hidden min-h-dvh">
+      <div className="absolute inset-x-0 -z-10 pointer-events-none">
+        <div style={{ width: '100%', height: '100dvh', position: 'relative' }}>
+        <Beams
+            beamWidth={3}
+            beamHeight={30}
+            beamNumber={20}
+            lightColor="#ffffff"
+            speed={2}
+            noiseIntensity={1.75}
+            scale={0.2}
+            rotation={30}
         />
+        </div>
       </div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center justify-center gap-16 pt-16 md:pt-28 pb-12 px-4">
-        <div className="flex flex-col items-center gap-6 text-center">
+      <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center justify-center gap-16 pt-28 pb-12 px-4">
+        <div className="flex flex-col items-center gap-6 text-center w-full">
           <div className="inline-flex items-center gap-2" style={fade(0)}>
             <img src="/reaper.png" alt="Thunderhead" className="h-8 w-8" />
             <span className="text-sm text-zinc-500">
@@ -57,12 +52,11 @@ export default function Hero() {
           </div>
 
           <h1
-            className="text-balance text-4xl font-normal tracking-tight text-white md:text-5xl"
+            className="w-full text-4xl font-bold tracking-tight text-white md:text-5xl md:text-balance"
             style={fade(80)}
           >
-            Bots don't belong on your site.
-            <br />
-            <span className="bg-gradient-to-br from-zinc-200 to-zinc-500 bg-clip-text text-transparent">
+            Bots don&apos;t belong on your site.{" "}
+            <span className="block md:inline bg-gradient-to-br from-zinc-200 to-zinc-500 bg-clip-text text-transparent">
               No JS. No CAPTCHAs.
             </span>
           </h1>
@@ -94,15 +88,26 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Dashboard demo */}
-      <div
-        className="hidden md:block relative z-10 mx-auto w-full max-w-6xl px-4 pb-12"
+    {/* Dashboard demo — static image on mobile, live demo on desktop */}
+        <div
+        className="relative z-10 mx-auto w-full max-w-7xl"
         style={fade(360)}
-      >
-        <div className="relative rounded-xl bg-neutral-900 overflow-hidden">
-          <Demo />
-        </div>
-      </div>
+        >
+    <div className="md:hidden w-screen relative left-1/2 right-1/2 -mx-[50vw] h-[55vh]">
+    <img
+        src="/thunderhead_dashboard.png"
+        alt="Thunderhead dashboard"
+        className="w-full h-full object-cover [object-position:20%_center]"
+    />
+    </div>
+
+  {/* Desktop: live interactive demo */}
+  <div className="hidden md:block relative rounded-l-xl md:rounded-xl overflow-hidden">
+    <div className="min-w-7xl">
+      <Demo />
+    </div>
+  </div>
+</div>
     </section>
   );
 }

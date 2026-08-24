@@ -118,7 +118,7 @@ export function OverviewPage({ logs, counts, sparkData, trafficBuckets, rpsDispl
       </div>
 
       {/* Live log */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-lg overflow-hidden shrink-0">
+      <div className="rounded-lg overflow-hidden shrink-0">
         <div className="flex items-center justify-between px-3 py-2">
           <span className="font-medium text-zinc-100 text-xs">Live request log</span>
           <div className="flex items-center gap-2">
