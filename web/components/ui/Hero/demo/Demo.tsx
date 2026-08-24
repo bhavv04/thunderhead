@@ -139,7 +139,7 @@ export default function Demo() {
   };
 
   return (
-    <div className="flex h-180 rounded-xl overflow-hidden text-fg bg-zinc-900">
+    <div className="flex h-180 rounded-xl overflow-hidden text-fg bg-gradient-to-br from-stone-900 via-stone-950 to-neutral-950">
       <Sidebar page={page} setPage={setPage} blockCount={counts.block} proxyUp={proxyUp} latency={latency} />
 
       <div className="flex-1 flex flex-col overflow-hidden p-2 min-w-0">

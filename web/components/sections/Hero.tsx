@@ -5,7 +5,7 @@ import Demo from "@/components/ui/Hero/demo/Demo";
 import { FiGithub } from "react-icons/fi";
 import { ScrollText } from "lucide-react";
 import { Button } from "@/components/ui/Buttons";
-import Beams   from "@/components/ui/Background";
+import DarkVeil  from "@/components/ui/Background";
 
 const GITHUB_URL = "https://github.com/bhavv04/thunderhead";
 const DOCS_URL = "/docs";
@@ -29,15 +29,13 @@ export default function Hero() {
     <section className="relative isolate overflow-hidden min-h-dvh">
       <div className="absolute inset-x-0 -z-10 pointer-events-none">
         <div style={{ width: '100%', height: '100dvh', position: 'relative' }}>
-        <Beams
-            beamWidth={3}
-            beamHeight={30}
-            beamNumber={20}
-            lightColor="#ffffff"
-            speed={2}
-            noiseIntensity={1.75}
-            scale={0.2}
-            rotation={30}
+        <DarkVeil
+        hueShift={0}
+        noiseIntensity={0}
+        scanlineIntensity={0}
+        speed={0.5}
+        scanlineFrequency={0}
+        warpAmount={0}
         />
         </div>
       </div>
