@@ -79,7 +79,6 @@ export function OverviewPage({ logs, counts, sparkData, trafficBuckets, rpsDispl
           <div className="p-4 flex flex-col gap-2">
             <StatRow label="Status">
               <span className={`font-medium flex items-center gap-2 ${proxyUp ? "text-green-400" : "text-red-400"}`}>
-                <span className={`w-1.5 h-1.5 rounded-full ${proxyUp ? "bg-green-400" : "bg-red-400"}`} />
                 {proxyUp ? "Online" : "Offline"}
               </span>
             </StatRow>

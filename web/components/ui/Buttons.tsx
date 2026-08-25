@@ -24,6 +24,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "bg-white/90 text-black hover:bg-white/70",
+        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         outline: "border border-white/15 text-white hover:border-white/30 hover:bg-white/5",
         ghost: "text-white/70 hover:text-white hover:bg-white/5",
       },
@@ -31,7 +32,7 @@ const buttonVariants = cva(
         default: "h-10 px-4",
         sm: "h-8 px-3 text-xs",
         lg: "h-11 px-5",
-        icon: "size-9",
+        icon: "size-8",
       },
     },
     defaultVariants: {
@@ -62,121 +63,3 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   }
 );
 Button.displayName = "Button";
-
-/* ---------- Nav link styles (shared between desktop pill + mobile row) ---------- */
-
-const navLinkVariants = cva(
-  "text-sm transition-colors duration-200 outline-none focus-visible:ring-1 focus-visible:ring-white/40",
-  {
-    variants: {
-      variant: {
-        desktop: "px-3 py-1.5 rounded-full",
-        mobile: "px-5 py-3 border-b border-white/5 last:border-0",
-      },
-      active: {
-        true: "",
-        false: "",
-      },
-    },
-    compoundVariants: [
-      { variant: "desktop", active: true, className: "text-white" },
-      { variant: "desktop", active: false, className: "text-white/45 hover:text-white/85" },
-      { variant: "mobile", active: true, className: "text-white bg-white/5" },
-      { variant: "mobile", active: false, className: "text-white/45 hover:text-white" },
-    ],
-    defaultVariants: {
-      variant: "desktop",
-      active: false,
-    },
-  }
-);
-
-interface BaseNavLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-  href: string;
-  active: boolean;
-  children: React.ReactNode;
-}
-
-/* ---------- Nav link pill (desktop) ---------- */
-
-export function NavLink({ href, active, children, className, ...props }: BaseNavLinkProps) {
-  return (
-    <a
-      href={href}
-      aria-current={active ? "page" : undefined}
-      className={cn(navLinkVariants({ variant: "desktop", active }), className)}
-      {...props}
-    >
-      {children}
-    </a>
-  );
-}
-
-/* ---------- Nav link row (mobile menu) ---------- */
-
-export function MobileNavLink({ href, active, children, className, ...props }: BaseNavLinkProps) {
-  return (
-    <a
-      href={href}
-      aria-current={active ? "page" : undefined}
-      className={cn(navLinkVariants({ variant: "mobile", active }), className)}
-      {...props}
-    >
-      {children}
-    </a>
-  );
-}
-
-/* ---------- GitHub button (desktop) ---------- */
-
-export function GithubButtonDesktop({ href }: { href: string }) {
-  return (
-    <Button variant="ghost" size="sm" className="rounded-full group" asChild>
-      <a href={href} target="_blank" rel="noopener noreferrer">
-        <FaGithub size={16} className="opacity-70 text-lg" aria-hidden="true" />
-        View on GitHub
-        <ArrowUpRight
-          size={16}
-          strokeWidth={2}
-          aria-hidden="true"
-          className=""
-        />
-      </a>
-    </Button>
-  );
-}
-
-/* ---------- GitHub button (mobile) ---------- */
-
-export function GithubButtonMobile({ href }: { href: string }) {
-  return (
-    <Button variant="default" size="sm" className="rounded-full gap-1.5 hover:text-white" asChild>
-      <a href={href} target="_blank" rel="noopener noreferrer">
-        GitHub
-        <FaGithub size={12} className="opacity-70" aria-hidden="true" />
-      </a>
-    </Button>
-  );
-}
-
-/* ---------- Mobile menu toggle ---------- */
-
-interface MenuToggleProps {
-  open: boolean;
-  onToggle: () => void;
-}
-
-export function MenuToggle({ open, onToggle }: MenuToggleProps) {
-  return (
-    <Button
-      variant="ghost"
-      size="icon"
-      className="rounded-full text-white/60 hover:text-white"
-      onClick={onToggle}
-      aria-label={open ? "Close menu" : "Open menu"}
-      aria-expanded={open}
-    >
-      {open ? <X size={16} strokeWidth={2} /> : <Menu size={16} strokeWidth={2} />}
-    </Button>
-  );
-}

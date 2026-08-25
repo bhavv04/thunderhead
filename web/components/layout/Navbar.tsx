@@ -1,56 +1,24 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
-  NavLink,
-  MobileNavLink,
-  GithubButtonDesktop,
-  GithubButtonMobile,
-  MenuToggle,
+  Button,
 } from "@/components/ui/Buttons";
+import { ScrollText } from 'lucide-react';
 
-const links = [
-  { label: "Methodology", href: "/#methodology" },
-  { label: "Features", href: "/#features" },
-  { label: "Quickstart", href: "/#quickstart" },
-  { label: "Docs", href: "/docs" },
-];
-
-const GITHUB_URL = "https://github.com/bhavv04/thunderhead";
-
-const bar =
-  "backdrop-blur-xl bg-white/2 transition-colors duration-500";
-const barScrolled = "bg-white/5";
+const bar = "backdrop-blur-xl bg-white/5";
 
 const Logo = ({ onClick }: { onClick?: () => void }) => (
   <a href="#top" onClick={onClick} className="flex items-center gap-2 shrink-0">
     <img src="/favicon-192.png" alt="thunderhead" className="h-6 w-6" />
     <span className="text-sm font-medium text-zinc-200 tracking-tight">
-      thunderhead
+      thunderhead 
     </span>
   </a>
 );
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 20);
-      const current = links
-        .map((l) => l.href.slice(1))
-        .find(
-          (id) =>
-            (document.getElementById(id)?.getBoundingClientRect().top ??
-              Infinity) <= 120
-        );
-      setActive(window.scrollY < 80 ? "" : current ?? "");
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   const scrollTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -58,52 +26,38 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed inset-x-0 top-0 z-50 w-full">
+    <nav className="fixed inset-x-0 top-0 z-50 w-full flex justify-center px-4 pt-4">
+
       {/* Desktop */}
       <div
-        className={`hidden sm:grid grid-cols-[1fr_auto_1fr] items-center px-6 py-3.5 ${bar} ${
-          scrolled ? barScrolled : ""
-        }`}
+        className={`hidden sm:flex items-center justify-between px-4 py-3 rounded-xl w-full max-w-3xl ${bar}`}
       >
-        <Logo />
+        <Logo /> 
 
-        <div className="flex items-center gap-1 justify-self-center">
-          {links.map(({ label, href }) => (
-            <NavLink key={label} href={href} active={active === href.slice(1)}>
-              {label}
-            </NavLink>
-          ))}
+        <div className="flex items-center gap-2">
+          <Button variant="ghost" size="icon" asChild>
+            <a href="/docs"><ScrollText /></a> 
+          </Button>
+          <Button variant="secondary" size="sm" asChild>
+            <a href="#quickstart">Install</a>
+          </Button>
         </div>
       </div>
 
       {/* Mobile */}
       <div className="sm:hidden flex flex-col w-full">
         <div
-          className={`flex items-center justify-between px-4 py-3 w-full ${bar} ${
-            scrolled ? barScrolled : ""
-          }`}
+          className={`flex items-center justify-between px-4 py-2 w-full rounded-xl shadow-lg shadow-black/20 ${bar}`}
         >
           <Logo onClick={scrollTop} />
           <div className="flex items-center gap-2">
-            <MenuToggle open={menuOpen} onToggle={() => setMenuOpen((o) => !o)} />
+            <Button variant="ghost" size="sm" asChild>
+                <a href="/docs">Documentation</a>
+            </Button>
+            <Button variant="default" size="sm" asChild>
+              <a href="#quickstart">Install</a>
+            </Button>
           </div>
-        </div>
-
-        <div
-          className={`flex flex-col w-full overflow-hidden ${bar} transition-all duration-300 ease-in-out ${
-            menuOpen ? "max-h-56 opacity-100" : "max-h-0 opacity-0 pointer-events-none"
-          }`}
-        >
-          {links.map(({ label, href }) => (
-            <MobileNavLink
-              key={label}
-              href={href}
-              active={active === href.slice(1)}
-              onClick={() => setMenuOpen(false)}
-            >
-              {label}
-            </MobileNavLink>
-          ))}
         </div>
       </div>
     </nav>

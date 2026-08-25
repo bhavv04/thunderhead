@@ -14,7 +14,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="py-16 bg-white/5">
+    <footer className="px-8 py-16 bg-white/5">
       <div className="mx-auto max-w-6xl">
 
         {/* Top row */}
