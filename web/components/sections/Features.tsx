@@ -14,7 +14,7 @@ const FEATURES: FeatureCardProps[] = [
   {
     tag: "Zero friction",
     title: "No JS challenges.\nNo CAPTCHAs.\nNo interruptions.",
-    description: "Thunderhead never touches the client. It reads five passive signals from the raw HTTP request — headers, path patterns, request rate — and scores silently in the background.",
+    description: "Thunderhead never touches the client. It reads five passive signals from the raw HTTP request - headers, path patterns, request rate - and scores silently in the background.",
     visual: PassiveVisual,
     accent: "#22c55e",
     delay: 0,
@@ -72,12 +72,6 @@ export default function Features() {
 
   return (
     <section id="features" className="relative px-6 py-24">
-      {/* Top border line */}
-      <div
-        className="absolute top-0 left-[10%] right-[10%] h-px pointer-events-none"
-        style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)" }}
-      />
-
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-12 md:gap-14">
         {/* Header */}
         <div
@@ -97,7 +91,7 @@ export default function Features() {
           </h2>
           <p className="m-0 text-base leading-relaxed text-zinc-400">
             Thunderhead is deliberately minimal. A single binary, a single config file,
-            and a scoring engine that runs entirely in-process — no sidecars, no databases, no SaaS.
+            and a scoring engine that runs entirely in-process - no sidecars, no databases, no SaaS.
           </p>
         </div>
 

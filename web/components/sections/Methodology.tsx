@@ -34,7 +34,7 @@ export default function Methodology() {
           </h2>
           <p className="m-0 max-w-2xl text-base leading-relaxed text-zinc-400">
             Thunderhead never interrupts real users. It watches how clients move through
-            your site and builds an intent score from passive signals — no fingerprinting,
+            your site and builds an intent score from passive signals - no fingerprinting,
             no cookies, no third-party calls.
           </p>
         </div>
@@ -42,7 +42,7 @@ export default function Methodology() {
         {/* Pipeline */}
         <DiagramBlock
           title="Request pipeline"
-          description="Every request enters the proxy, gets scored, and is dispatched to one of three actions — all within a single hop."
+          description="Every request enters the proxy, gets scored, and is dispatched to one of three actions - all within a single hop."
           delay={80}
         >
           <PipelineDiagram animate={false} />
@@ -57,7 +57,7 @@ export default function Methodology() {
         {/* Signal weights */}
         <DiagramBlock
           title="Signal weights"
-          description="Five passive signals are sampled per request. Each contributes an additive score. No single signal is decisive — the combination is what matters."
+          description="Five passive signals are sampled per request. Each contributes an additive score. No single signal is decisive - the combination is what matters."
         >
           <SignalDiagram animate={false} />
         </DiagramBlock>
@@ -65,7 +65,7 @@ export default function Methodology() {
         {/* Gauge */}
         <DiagramBlock
           title="Score thresholds"
-          description="The final score determines the action tier. Thresholds are configurable in config.json — tune them for your traffic profile."
+          description="The final score determines the action tier. Thresholds are configurable in config.json - tune them for your traffic profile."
         >
           <GaugeDiagram animate={false} />
         </DiagramBlock>

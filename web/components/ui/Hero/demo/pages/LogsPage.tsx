@@ -38,7 +38,7 @@ export function LogsPage({ logs, onExport }: { logs: LogEntry[]; onExport: () =>
         </div>
         <LogTable logs={filtered} maxHeight={570} />
         <div className="px-3 py-1 text-xs text-zinc-500">
-          Snapshot from session start — {filtered.length} of {frozen.length} entries
+          Snapshot from session start - {filtered.length} of {frozen.length} entries
         </div>
       </div>
     </div>

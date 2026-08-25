@@ -40,7 +40,7 @@ export function LiveFeedPage({ logs, onExport }: { logs: LogEntry[]; onExport: (
         </div>
       <div className="px-3 py-1.5 border-t border-zinc-800 text-xs text-zinc-500 flex items-center gap-1.5 shrink-0">
           <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-          Live — {filtered.length} of {logs.length} entries since last view
+          Live - {filtered.length} of {logs.length} entries since last view
         </div>
       </div>
     </div>

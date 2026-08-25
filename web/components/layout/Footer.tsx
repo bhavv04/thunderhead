@@ -2,7 +2,7 @@
 
 export default function Footer() {
   const projectLinks = [
-    { label: "GitHub",  href: "https://github.com/bhavv04/thunderhead" },
+    { label: "Github",  href: "https://github.com/bhavv04/thunderhead" },
     { label: "License", href: "https://github.com/bhavv04/thunderhead/blob/main/LICENSE" },
     { label: "Issues",  href: "https://github.com/bhavv04/thunderhead/issues" },
   ];
@@ -14,7 +14,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="px-6 py-16">
+    <footer className="py-16 bg-white/5">
       <div className="mx-auto max-w-6xl">
 
         {/* Top row */}
@@ -26,9 +26,9 @@ export default function Footer() {
               <img src="/reaper.png" alt="Thunderhead" className="h-8 w-8" />
               Thunderhead
             </div>
-            <p className="m-0 max-w-[36ch] text-sm leading-relaxed text-zinc-500">
+            <p className="m-0 max-w-lg text-sm text-zinc-500">
               Passive intent-scoring reverse proxy. Silently watches, scores,
-              and mitigates bot traffic — no CAPTCHAs, no challenges, just behavior.
+              and mitigates bot traffic, no CAPTCHAs, no challenges, just behavior.
             </p>
           </div>
 
@@ -36,7 +36,7 @@ export default function Footer() {
           <div className="flex flex-wrap gap-12">
             {[{ title: "Project", links: projectLinks }, { title: "Docs", links: docLinks }].map(({ title, links }) => (
               <div key={title}>
-                <div className="mb-4 text-xs uppercase tracking-wide text-zinc-500">
+                <div className="mb-4 text-xs text-zinc-500">
                   {title}
                 </div>
                 <div className="flex flex-col gap-3">

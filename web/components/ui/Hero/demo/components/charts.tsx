@@ -230,7 +230,7 @@ export function ScoreScatter({ logs }: { logs: LogEntry[] }) {
           );
         })}
 
-        {/* dots — render allow first so block/tarpit sit on top */}
+        {/* dots - render allow first so block/tarpit sit on top */}
         {ACTION_LEGEND.map(({ key: action, color }) =>
           logs
             .filter(l => l.action === action)
@@ -258,7 +258,7 @@ export function ScoreScatter({ logs }: { logs: LogEntry[] }) {
           return (
             <g pointerEvents="none">
               <rect x={ttX} y={ttY} width={104} height={38} rx={4} fill="#18181b" />
-              <text x={ttX + 7} y={ttY + 13} fontSize={9} fill="#a1a1aa">{hovered.path ?? hovered.ip ?? "—"}</text>
+              <text x={ttX + 7} y={ttY + 13} fontSize={9} fill="#a1a1aa">{hovered.path ?? hovered.ip ?? "-"}</text>
               <text x={ttX + 7} y={ttY + 25} fontSize={10} fill={COLOR[hovered.action].text}>{hovered.action}</text>
               <text x={ttX + 7} y={ttY + 35} fontSize={9} fill="#71717a">score {hovered.score}</text>
             </g>

@@ -7,7 +7,7 @@ const STEPS = [
   {
     n: "2",
     title: "Signals are sampled",
-    body: "The scorer reads five passive signals from the request — no JavaScript, no cookies, no challenges issued.",
+    body: "The scorer reads five passive signals from the request - no JavaScript, no cookies, no challenges issued.",
   },
   {
     n: "3",
@@ -22,7 +22,7 @@ const STEPS = [
   {
     n: "5",
     title: "Everything is logged",
-    body: "Every decision is emitted as structured JSON to stdout or a file — ready for your existing observability stack.",
+    body: "Every decision is emitted as structured JSON to stdout or a file - ready for your existing observability stack.",
   },
 ];
 

@@ -27,7 +27,7 @@ export default function FeatureCard({
     <div
       ref={ref}
       className={[
-        "flex flex-col overflow-hidden rounded-xl border border-white/10 bg-zinc-950 transition-[opacity,transform] duration-500",
+        "flex flex-col overflow-hidden rounded-xl bg-stone-950 transition-[opacity,transform] duration-500",
         isWide ? "md:col-span-2" : "col-span-1",
       ].join(" ")}
       style={{
@@ -47,13 +47,9 @@ export default function FeatureCard({
           ].join(" ")}
         >
           <span
-            className="inline-flex items-center gap-2 text-xs uppercase tracking-wide"
+            className="inline-flex items-center gap-2 text-xs"
             style={{ color: accent }}
           >
-            <span
-              className="inline-block h-1.5 w-1.5 rounded-full opacity-70"
-              style={{ background: accent }}
-            />
             {tag}
           </span>
 

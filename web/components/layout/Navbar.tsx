@@ -13,19 +13,21 @@ const links = [
   { label: "Methodology", href: "/#methodology" },
   { label: "Features", href: "/#features" },
   { label: "Quickstart", href: "/#quickstart" },
-  { label: "Docs", href: "/docs" }, 
+  { label: "Docs", href: "/docs" },
 ];
 
 const GITHUB_URL = "https://github.com/bhavv04/thunderhead";
 
-const pill =
-  "backdrop-blur-xl bg-white/5 transition-all duration-500";
-const pillScrolled =
-  "backdrop-blur-xl bg-white/8";
+const bar =
+  "backdrop-blur-xl bg-white/2 transition-colors duration-500";
+const barScrolled = "bg-white/5";
 
 const Logo = ({ onClick }: { onClick?: () => void }) => (
-  <a href="#top" onClick={onClick} className="px-2 py-1">
+  <a href="#top" onClick={onClick} className="flex items-center gap-2 shrink-0">
     <img src="/favicon-192.png" alt="thunderhead" className="h-6 w-6" />
+    <span className="text-sm font-medium text-zinc-200 tracking-tight">
+      thunderhead
+    </span>
   </a>
 );
 
@@ -39,7 +41,11 @@ export default function Navbar() {
       setScrolled(window.scrollY > 20);
       const current = links
         .map((l) => l.href.slice(1))
-        .find((id) => (document.getElementById(id)?.getBoundingClientRect().top ?? Infinity) <= 120);
+        .find(
+          (id) =>
+            (document.getElementById(id)?.getBoundingClientRect().top ??
+              Infinity) <= 120
+        );
       setActive(window.scrollY < 80 ? "" : current ?? "");
     };
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -52,32 +58,39 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-max max-w-[calc(100vw-2rem)]">
+    <nav className="fixed inset-x-0 top-0 z-50 w-full">
       {/* Desktop */}
-      <div className={`hidden sm:flex items-center px-2 py-2 rounded-full ${pill} ${scrolled ? pillScrolled : ""}`}>
+      <div
+        className={`hidden sm:grid grid-cols-[1fr_auto_1fr] items-center px-6 py-3.5 ${bar} ${
+          scrolled ? barScrolled : ""
+        }`}
+      >
         <Logo />
-        <div className="flex items-center">
+
+        <div className="flex items-center gap-1 justify-self-center">
           {links.map(({ label, href }) => (
             <NavLink key={label} href={href} active={active === href.slice(1)}>
               {label}
             </NavLink>
           ))}
         </div>
-        <GithubButtonDesktop href={GITHUB_URL} />
       </div>
 
       {/* Mobile */}
-      <div className="sm:hidden flex flex-col items-center gap-2">
-        <div className={`flex items-center justify-between px-3 py-2 rounded-full w-[calc(100vw-2rem)] ${pill} ${scrolled ? "bg-white/8" : ""}`}>
+      <div className="sm:hidden flex flex-col w-full">
+        <div
+          className={`flex items-center justify-between px-4 py-3 w-full ${bar} ${
+            scrolled ? barScrolled : ""
+          }`}
+        >
           <Logo onClick={scrollTop} />
           <div className="flex items-center gap-2">
-            <GithubButtonMobile href={GITHUB_URL} />
             <MenuToggle open={menuOpen} onToggle={() => setMenuOpen((o) => !o)} />
           </div>
         </div>
 
         <div
-          className={`flex flex-col w-[calc(100vw-2rem)] rounded-2xl overflow-hidden ${pill} transition-all duration-300 ease-in-out ${
+          className={`flex flex-col w-full overflow-hidden ${bar} transition-all duration-300 ease-in-out ${
             menuOpen ? "max-h-56 opacity-100" : "max-h-0 opacity-0 pointer-events-none"
           }`}
         >

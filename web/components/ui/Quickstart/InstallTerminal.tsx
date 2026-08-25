@@ -31,7 +31,7 @@ export default function InstallTerminal({ animate }: { animate: boolean }) {
   }, [animate]);
 
   return (
-    <div className="border border-white/10 rounded-xl overflow-hidden sm:mt-8">
+    <div className="bg-zinc-900 rounded-xl overflow-hidden sm:mt-8">
       {/* Title bar */}
       <div className="flex items-center justify-between px-4 py-2 border-b border-white/10 bg-white/5">
         <div className="flex gap-1.5">
@@ -40,7 +40,7 @@ export default function InstallTerminal({ animate }: { animate: boolean }) {
           ))}
         </div>
         <span className="text-sm text-white/70">
-          thunderhead — install & run
+          thunderhead - install & run
         </span>
         <div className="w-10" />
       </div>

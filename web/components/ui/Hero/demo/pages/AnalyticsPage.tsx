@@ -23,9 +23,9 @@ export function AnalyticsPage({
 
   useEffect(() => setMounted(true), []);
 
-  const allowPct = mounted ? pct(counts.allow, counts.total) : "—";
-  const tarpitPct = mounted ? pct(counts.tarpit, counts.total) : "—";
-  const blockPct = mounted ? pct(counts.block, counts.total) : "—";
+  const allowPct = mounted ? pct(counts.allow, counts.total) : "-";
+  const tarpitPct = mounted ? pct(counts.tarpit, counts.total) : "-";
+  const blockPct = mounted ? pct(counts.block, counts.total) : "-";
 
   // Top paths
   const pathCounts = logs.reduce<Record<string, number>>((acc, l) => ({ ...acc, [l.path]: (acc[l.path] ?? 0) + 1 }), {});

@@ -11,7 +11,7 @@ export function getTime(): string {
 }
 
 export function pct(n: number, total: number): string {
-  if (total === 0) return "—";
+  if (total === 0) return "-";
   return Math.round((n / total) * 100) + "%";
 }
 

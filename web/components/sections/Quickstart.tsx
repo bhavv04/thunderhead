@@ -30,7 +30,7 @@ export default function Quickstart() {
           </h2>
           <p className="text-white/40 leading-relaxed m-0">
             Thunderhead sits in front of any HTTP upstream. No code changes
-            to your app required — just install, configure, and run.
+            to your app required - just install, configure, and run.
           </p>
         </div>
 

@@ -36,7 +36,7 @@ export default function Steps({ inView }: { inView: boolean }) {
             <span className="text-sm text-white tracking-tight">{step.title}</span>
             <span className="text-sm text-white/60 leading-relaxed">{step.body}</span>
             {step.code && (
-              <div className="mt-1 border border-white/10 rounded-md px-3 py-2 text-xs text-white/60 overflow-x-auto whitespace-nowrap w-full">
+              <div className="mt-1 bg-zinc-900 rounded-md px-3 py-2 text-xs text-white/60 overflow-x-auto whitespace-nowrap w-full">
                 <span className="text-white/30">$ </span>{step.code}
               </div>
             )}

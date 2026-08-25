@@ -32,7 +32,7 @@ export function OverviewPage({ logs, counts, sparkData, trafficBuckets, rpsDispl
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  const percentOf = (n: number) => (mounted ? pct(n, counts.total) : "—");
+  const percentOf = (n: number) => (mounted ? pct(n, counts.total) : "-");
 
   const blockedLogs = logs.filter(l => l.action === "block");
   const topBlockedIps = Object.entries(

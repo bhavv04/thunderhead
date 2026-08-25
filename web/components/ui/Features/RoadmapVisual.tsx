@@ -6,7 +6,7 @@ export default function RoadmapVisual({ animate }: { animate: boolean }) {
     { label: "Persistent score storage",     done: true  },
     { label: "CIDR range blocking",          done: true  },
     { label: "Dashboard UI",                 done: true },
-    { label: "JS challenge mode",            done: false },
+    { label: "JS challenge mode",            done: true },
     { label: "Middleware (Go library)",      done: false },
   ];
 

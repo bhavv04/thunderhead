@@ -23,7 +23,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-white text-black hover:bg-white/90",
+        default: "bg-white/90 text-black hover:bg-white/70",
         outline: "border border-white/15 text-white hover:border-white/30 hover:bg-white/5",
         ghost: "text-white/70 hover:text-white hover:bg-white/5",
       },
@@ -131,12 +131,12 @@ export function MobileNavLink({ href, active, children, className, ...props }: B
 
 export function GithubButtonDesktop({ href }: { href: string }) {
   return (
-    <Button variant="ghost" size="sm" className="ml-1 rounded-full group" asChild>
+    <Button variant="ghost" size="sm" className="rounded-full group" asChild>
       <a href={href} target="_blank" rel="noopener noreferrer">
-        <FaGithub size={15} className="opacity-70" aria-hidden="true" />
+        <FaGithub size={16} className="opacity-70 text-lg" aria-hidden="true" />
         View on GitHub
         <ArrowUpRight
-          size={13}
+          size={16}
           strokeWidth={2}
           aria-hidden="true"
           className=""
@@ -150,10 +150,10 @@ export function GithubButtonDesktop({ href }: { href: string }) {
 
 export function GithubButtonMobile({ href }: { href: string }) {
   return (
-    <Button variant="outline" size="sm" className="rounded-full gap-1.5 text-white/70 hover:text-white" asChild>
+    <Button variant="default" size="sm" className="rounded-full gap-1.5 hover:text-white" asChild>
       <a href={href} target="_blank" rel="noopener noreferrer">
         GitHub
-        <FaGithub size={11} className="opacity-70" aria-hidden="true" />
+        <FaGithub size={12} className="opacity-70" aria-hidden="true" />
       </a>
     </Button>
   );
