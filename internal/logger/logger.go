@@ -40,7 +40,7 @@ func (l *Logger) Log(e Entry) {
 	if l.Feed != nil {
 		select {
 		case l.Feed <- e:
-		default: // drop if TUI is behind — never block the proxy
+		default: // drop if TUI is behind - never block the proxy
 		}
 	}
 }

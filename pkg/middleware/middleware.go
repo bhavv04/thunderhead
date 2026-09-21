@@ -21,7 +21,7 @@ type Config struct {
 	Allowlist AllowlistConfig
 	// IPs and CIDRs to always block
 	Blocklist BlocklistConfig
-	// Paths disallowed by robots.txt — violations add +30 to score
+	// Paths disallowed by robots.txt - violations add +30 to score
 	DisallowedPaths []string
 }
 

@@ -9,7 +9,7 @@ import (
 	"github.com/bhavv04/thunderhead/internal/store"
 )
 
-// Signal weights — all add up to produce a score 0–100
+// Signal weights - all add up to produce a score 0–100
 const (
 	WeightRobotsViolation  = 30.0
 	WeightSequentialCrawl  = 25.0
@@ -108,7 +108,7 @@ func (a *Analyzer) Score(r *http.Request, ip string) float64 {
 		score += WeightSequentialCrawl
 	}
 
-	// 3. High request rate — more than 30 requests in 60s
+	// 3. High request rate - more than 30 requests in 60s
 	if len(client.requests) > 30 {
 		rate := float64(len(client.requests)) / 60.0
 		score += WeightHighRate * min(rate/2.0, 1.0)

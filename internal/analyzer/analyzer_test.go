@@ -22,7 +22,7 @@ func newReq(path string) *http.Request {
 
 func newBotReq(path string) *http.Request {
 	return httptest.NewRequest(http.MethodGet, path, nil)
-	// no User-Agent, Accept, or Accept-Language — maximally suspicious
+	// no User-Agent, Accept, or Accept-Language - maximally suspicious
 }
 
 func newAnalyzer(disallowed []string) *Analyzer {
@@ -121,7 +121,7 @@ func TestHeaderSuspicion_CleanBrowser_LowSuspicion(t *testing.T) {
 
 func TestHeaderSuspicion_CapsAt1(t *testing.T) {
 	r := httptest.NewRequest(http.MethodGet, "/", nil)
-	// no headers — would normally exceed 1.0 if uncapped (0.5 + 0.3 + 0.2 = 1.0)
+	// no headers - would normally exceed 1.0 if uncapped (0.5 + 0.3 + 0.2 = 1.0)
 	s := headerSuspicion(r)
 	if s > 1.0 {
 		t.Errorf("headerSuspicion exceeded 1.0: got %.2f", s)

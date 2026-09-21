@@ -189,7 +189,7 @@ export default function OverviewPage() {
         </div>
         {clientList.length === 0 ? (
           <div className="px-3 py-6 text-[11px] text-zinc-500 text-center">
-            No clients tracked yet — send some requests through the proxy.
+            No clients tracked yet - send some requests through the proxy.
           </div>
         ) : (
           <table className="w-full text-[11px] border-collapse">

@@ -12,7 +12,7 @@ import (
 func (p *Proxy) apiAuth(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if p.cfg.APIKey == "" {
-			// no key configured — deny all API access
+			// no key configured - deny all API access
 			apiError(w, "API key not configured", http.StatusServiceUnavailable)
 			return
 		}
@@ -117,7 +117,7 @@ func (p *Proxy) handleBlocklistAdd(w http.ResponseWriter, r *http.Request) {
 		Entry string `json:"entry"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil || strings.TrimSpace(body.Entry) == "" {
-		apiError(w, "invalid request body — expected {\"entry\": \"<ip or cidr>\"}", http.StatusBadRequest)
+		apiError(w, "invalid request body - expected {\"entry\": \"<ip or cidr>\"}", http.StatusBadRequest)
 		return
 	}
 	p.blocklist.Add(strings.TrimSpace(body.Entry))
@@ -129,7 +129,7 @@ func (p *Proxy) handleBlocklistRemove(w http.ResponseWriter, r *http.Request) {
 		Entry string `json:"entry"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil || strings.TrimSpace(body.Entry) == "" {
-		apiError(w, "invalid request body — expected {\"entry\": \"<ip or cidr>\"}", http.StatusBadRequest)
+		apiError(w, "invalid request body - expected {\"entry\": \"<ip or cidr>\"}", http.StatusBadRequest)
 		return
 	}
 	p.blocklist.Remove(strings.TrimSpace(body.Entry))
@@ -152,7 +152,7 @@ func (p *Proxy) handleAllowlistAdd(w http.ResponseWriter, r *http.Request) {
 		Entry string `json:"entry"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil || strings.TrimSpace(body.Entry) == "" {
-		apiError(w, "invalid request body — expected {\"entry\": \"<ip, cidr, or ua>\"}", http.StatusBadRequest)
+		apiError(w, "invalid request body - expected {\"entry\": \"<ip, cidr, or ua>\"}", http.StatusBadRequest)
 		return
 	}
 	p.allowlist.Add(strings.TrimSpace(body.Entry))
@@ -164,7 +164,7 @@ func (p *Proxy) handleAllowlistRemove(w http.ResponseWriter, r *http.Request) {
 		Entry string `json:"entry"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil || strings.TrimSpace(body.Entry) == "" {
-		apiError(w, "invalid request body — expected {\"entry\": \"<ip, cidr, or ua>\"}", http.StatusBadRequest)
+		apiError(w, "invalid request body - expected {\"entry\": \"<ip, cidr, or ua>\"}", http.StatusBadRequest)
 		return
 	}
 	p.allowlist.Remove(strings.TrimSpace(body.Entry))
