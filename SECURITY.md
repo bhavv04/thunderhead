@@ -12,9 +12,7 @@ If you discover a security issue, **do not open a public GitHub issue**.
 
 Instead, please report it privately via:
 
-* **Email:** `bhavdeeparora1@gmail.com`
-
-(Replace this with your actual email or security contact.)
+* **Email:** `bhavdeepsa@gmail.com`
 
 ---
 
